@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Imagens</title>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Adicionando o jQuery (já está presente no seu código) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Biblioteca Isotope -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/isotope/3.0.6/isotope.min.css" />
+
+    <!-- Biblioteca Magnific Popup para abrir as imagens em popup -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" rel="stylesheet" />
+
+    <!-- Biblioteca Magnific Popup JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
+    <!-- Isotope JS para filtragem -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/isotope/3.0.6/isotope.pkgd.min.js"></script>
+    
+</head>
+
+<body>
+    <div class="header">
+        <h1><img id="logo" src="img/logo.png" alt="Leo Oli" /></h1>
+        <br>
+    <!--    <p class="portfolio">Portfolio</p> -->
+    </div>
+
+    <!-- Filtro de categorias
+    <div class="filters filter-button-group">
+        <ul>
+            <li class="active"><a href="javascript:void(0);" data-filter="*">Todos</a></li>
+            <li><a href="javascript:void(0);" data-filter="bike">Retratos</a></li>
+            <li><a href="javascript:void(0);" data-filter="bus">Cenários</a></li>
+        </ul>
+    </div> -->
+
+    <!-- Container das imagens -->
+    <div id="container" class="isotope">
+        <!-- As imagens com suas respectivas categorias e links para o popup vão aqui -->
+    </div>
+
+    <div class="footer">
+        <p>&copy; <script>document.write(new Date().getFullYear());</script> Todos os direitos reservados.</p>
+    </div>
+
+    <!-- Script personalizado -->
+    <script src="script.js"></script>
+</body>
+</html>
