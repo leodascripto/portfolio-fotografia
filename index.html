@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon" />
+    <title>Leo Oli</title>
+
+    <link rel="stylesheet" href="./styles/style.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Parisienne&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
+       <!--
+    <a href="https://wa.me/5511983157973?text=Me+chama+pra+fotografar+%F0%9F%98%AD%F0%9F%" class="float" target="_blank">
+        <i class="fa fa-whatsapp my-float"></i>
+    </a> -->
+
+    <div class="header">
+        <h1>
+            <img id="logo" src="assets/img/logo.png" alt="Leo Oli" />
+        </h1>
+        <p class="portfolio">Portfolio</p>
+    </div>
+
+    <div class="filters filter-button-group">
+        <ul>
+            <li class="active"><a href="javascript:void(0);" data-filter="*">Todos</a></li>
+            <li><a href="javascript:void(0);" data-filter=".debora">Débora</a></li>
+            <li><a href="javascript:void(0);" data-filter=".lisa">Lisa</a></li>
+            <li><a href="javascript:void(0);" data-filter=".giovanna">Giovanna</a></li>
+            <li><a href="javascript:void(0);" data-filter=".gustavo">Gustavo</a></li>
+            <li><a href="javascript:void(0);" data-filter=".vitoria">Vitoria</a></li>
+            <li><a href="javascript:void(0);" data-filter=".leooli">Leo Oli</a></li>
+        </ul>
+    </div>
+
+    <div id="container" class="isotope">
+        <!-- Itens serão inseridos aqui via JavaScript -->
+    </div>
+
+    <div class="isotope-pager" style="padding-top: 15px; text-align: center"></div>
+
+    <div class="footer">
+        <p>&copy;
+            <script>document.write(new Date().getFullYear());</script>
+            Todos os direitos reservados.
+            <a href="https://www.instagram.com/leooli321/" target="_blank">Leo Oli</a>
+        </p>
+    </div>
+
+    <!-- Carregar scripts no final -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js"></script>
+    <script src="js/carregafotos.js"></script>
+    <script src="js/magnificpopup.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
