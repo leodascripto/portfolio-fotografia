@@ -13,6 +13,9 @@ $(document).ready(function () {
         $loadingIndicator.show();
     }
     
+    // Verificar se é um dispositivo móvel
+    var isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+    
     // Verificar e corrigir caminhos de imagens
     function verificarImagem(src) {
         // Se a imagem for de URL externa (como i.ibb.co), retornar o src como está
@@ -27,6 +30,82 @@ $(document).ready(function () {
         
         // Caso contrário, adicionar o prefixo assets/ se não estiver presente
         return src;
+    }
+    
+    // Função para inicializar o Magnific Popup de forma otimizada para mobile
+    function initMagnificPopup() {
+        $('.popupimg').magnificPopup({
+            type: 'image',
+            mainClass: 'mfp-with-zoom',
+            gallery: {
+                enabled: true,
+                navigateByImgClick: true,
+                preload: [0, 1],
+                tPrev: 'Anterior',
+                tNext: 'Próxima',
+                tCounter: '%curr% de %total%'
+            },
+            zoom: {
+                enabled: true,
+                duration: 300,
+                easing: 'ease-in-out',
+                opener: function(openerElement) {
+                    return openerElement.is('img') ? openerElement : openerElement.find('img');
+                }
+            },
+            callbacks: {
+                open: function() {
+                    // Adiciona classes para melhorar a acessibilidade
+                    $('.mfp-container').attr('role', 'dialog');
+                    $('.mfp-content').attr('aria-live', 'polite');
+                    
+                    // Habilita gestos de swipe no popup para dispositivos móveis
+                    if (isMobile) {
+                        let startX, moveX;
+                        const popup = document.querySelector('.mfp-container');
+                        
+                        popup.addEventListener('touchstart', function(e) {
+                            startX = e.touches[0].clientX;
+                        });
+                        
+                        popup.addEventListener('touchmove', function(e) {
+                            moveX = e.touches[0].clientX;
+                        });
+                        
+                        popup.addEventListener('touchend', function() {
+                            if (!startX || !moveX) return;
+                            
+                            const diff = moveX - startX;
+                            if (Math.abs(diff) > 50) {
+                                if (diff > 0) {
+                                    // Swipe para a direita - imagem anterior
+                                    $.magnificPopup.instance.prev();
+                                } else {
+                                    // Swipe para a esquerda - próxima imagem
+                                    $.magnificPopup.instance.next();
+                                }
+                            }
+                            
+                            startX = moveX = null;
+                        });
+                    }
+                    
+                    // Disparar evento para que outras funções possam reagir
+                    $(document).trigger('mfpOpen');
+                },
+                beforeOpen: function() {
+                    console.log("Magnific Popup antes de abrir");
+                },
+                elementParse: function(item) {
+                    // Depuração
+                    console.log("Item sendo processado:", item.src);
+                }
+            },
+            disableOn: function() {
+                // Habilitar para todos os dispositivos
+                return true;
+            }
+        });
     }
 
     // Carregar o JSON e adicionar as imagens ao container
@@ -48,7 +127,7 @@ $(document).ready(function () {
                 
                 var imageHTML = `
                     <div class="grid-item ${item.filter}" data-filter="${item.filter}">
-                        <a class="popupimg" href="${imgSrc}">
+                        <a class="popupimg" href="${imgSrc}" aria-label="Ver foto de ${item.name} em tamanho ampliado">
                             <img src="${imgSrc}" alt="${item.name}" />
                         </a>
                         <div class="overlay">${item.name}</div>
@@ -59,6 +138,8 @@ $(document).ready(function () {
 
             // Inicializa o Isotope após adicionar todas as imagens
             $container.imagesLoaded(function() {
+                console.log("Imagens carregadas, inicializando Isotope");
+                
                 // Inicializa o Isotope
                 $container.isotope({
                     itemSelector: itemSelector,
@@ -67,31 +148,20 @@ $(document).ready(function () {
                         columnWidth: '.grid-item',
                         gutter: 15,
                         isFitWidth: true
-                    }
+                    },
+                    percentPosition: true
                 });
+                
+                // Inicializar o Magnific Popup APÓS as imagens estarem carregadas
+                initMagnificPopup();
                 
                 // Ocultar indicador de carregamento
                 $loadingIndicator.hide();
-            });
-
-            // Inicializa o Magnific Popup
-            $('.popupimg').magnificPopup({
-                type: 'image',
-                mainClass: 'mfp-with-zoom',
-                gallery: {
-                    enabled: true,
-                    navigateByImgClick: true,
-                    arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"></button>',
-                    preload: [0, 1],
-                },
-                zoom: {
-                    enabled: true,
-                    duration: 500,
-                    easing: 'ease-in-out',
-                    opener: function(openerElement) {
-                        return openerElement.is('img') ? openerElement : openerElement.find('img');
-                    },
-                },
+                
+                // Relayout após um curto delay para garantir posicionamento correto
+                setTimeout(function() {
+                    $container.isotope('layout');
+                }, 100);
             });
         })
         .fail(function(jqxhr, textStatus, error) {
@@ -107,12 +177,36 @@ $(document).ready(function () {
     // Filtro de categorias + correção do "active"
     $(".filters li a").click(function () {
         var filterValue = $(this).attr("data-filter");
+        console.log("Filtro selecionado:", filterValue);
+        
         $container.isotope({ filter: filterValue });
 
         // Remove "active" de todos e adiciona apenas ao item clicado
         $(".filters li").removeClass("active");
         $(this).parent().addClass("active");
+        
+        // Atualizar propriedades ARIA
+        $(".filters li a").attr("aria-current", "false");
+        $(this).attr("aria-current", "true");
     });
+    
+    // Adicionar evento de clique e toque para abrir imagens no mobile
+    $(document).on('click touchstart', '.popupimg', function(e) {
+        if (isMobile) {
+            console.log("Evento de toque em imagem:", $(this).attr('href'));
+            e.preventDefault();
+            $(this).magnificPopup('open');
+        }
+    });
+    
+    // Em dispositivos móveis, adicionar feedback visual para toque nas imagens
+    if (isMobile) {
+        $('.grid-item').on('touchstart', function() {
+            $(this).addClass('touch-active');
+        }).on('touchend touchcancel', function() {
+            $(this).removeClass('touch-active');
+        });
+    }
     
     // Função de fallback para carregar imagens diretamente
     function carregarImagensFallback() {
@@ -131,7 +225,7 @@ $(document).ready(function () {
         $.each(imagensFallback, function (index, item) {
             var imageHTML = `
                 <div class="grid-item ${item.filter}" data-filter="${item.filter}">
-                    <a class="popupimg" href="${item.src}">
+                    <a class="popupimg" href="${item.src}" aria-label="Ver foto de ${item.name} em tamanho ampliado">
                         <img src="${item.src}" alt="${item.name}" />
                     </a>
                     <div class="overlay">${item.name}</div>
@@ -142,35 +236,25 @@ $(document).ready(function () {
         
         // Reinicializar o Isotope
         setTimeout(function() {
-            $container.isotope({
-                itemSelector: itemSelector,
-                layoutMode: 'masonry',
-                masonry: {
-                    columnWidth: '.grid-item',
-                    gutter: 15,
-                    isFitWidth: true
-                }
-            });
-            
-            // Inicializa o Magnific Popup
-            $('.popupimg').magnificPopup({
-                type: 'image',
-                mainClass: 'mfp-with-zoom',
-                gallery: {
-                    enabled: true,
-                    navigateByImgClick: true,
-                    arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"></button>',
-                    preload: [0, 1],
-                },
-                zoom: {
-                    enabled: true,
-                    duration: 500,
-                    easing: 'ease-in-out',
-                    opener: function(openerElement) {
-                        return openerElement.is('img') ? openerElement : openerElement.find('img');
-                    },
-                },
+            $container.imagesLoaded(function() {
+                $container.isotope({
+                    itemSelector: itemSelector,
+                    layoutMode: 'masonry',
+                    masonry: {
+                        columnWidth: '.grid-item',
+                        gutter: 15,
+                        isFitWidth: true
+                    }
+                });
+                
+                // Inicializar o Magnific Popup
+                initMagnificPopup();
             });
         }, 500);
+    }
+    
+    // Adicionar classes de estilo para feedback visual em dispositivos móveis
+    if (isMobile) {
+        $('<style>.touch-active { transform: scale(0.98); opacity: 0.8; transition: all 0.2s ease; }</style>').appendTo('head');
     }
 });
