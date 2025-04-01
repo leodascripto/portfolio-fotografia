@@ -32,98 +32,15 @@ $(document).ready(function () {
         return src;
     }
     
-    // Função para inicializar o Magnific Popup de forma otimizada para mobile
-    function initMagnificPopup() {
-        $('.popupimg').magnificPopup({
-            type: 'image',
-            mainClass: 'mfp-with-zoom',
-            gallery: {
-                enabled: true,
-                navigateByImgClick: true,
-                preload: [0, 1],
-                tPrev: 'Anterior',
-                tNext: 'Próxima',
-                tCounter: '%curr% de %total%'
-            },
-            zoom: {
-                enabled: true,
-                duration: 300,
-                easing: 'ease-in-out',
-                opener: function(openerElement) {
-                    return openerElement.is('img') ? openerElement : openerElement.find('img');
-                }
-            },
-            callbacks: {
-                open: function() {
-                    // Adiciona classes para melhorar a acessibilidade
-                    $('.mfp-container').attr('role', 'dialog');
-                    $('.mfp-content').attr('aria-live', 'polite');
-                    
-                    // Habilita gestos de swipe no popup para dispositivos móveis
-                    if (isMobile) {
-                        let startX, moveX;
-                        const popup = document.querySelector('.mfp-container');
-                        
-                        popup.addEventListener('touchstart', function(e) {
-                            startX = e.touches[0].clientX;
-                        });
-                        
-                        popup.addEventListener('touchmove', function(e) {
-                            moveX = e.touches[0].clientX;
-                        });
-                        
-                        popup.addEventListener('touchend', function() {
-                            if (!startX || !moveX) return;
-                            
-                            const diff = moveX - startX;
-                            if (Math.abs(diff) > 50) {
-                                if (diff > 0) {
-                                    // Swipe para a direita - imagem anterior
-                                    $.magnificPopup.instance.prev();
-                                } else {
-                                    // Swipe para a esquerda - próxima imagem
-                                    $.magnificPopup.instance.next();
-                                }
-                            }
-                            
-                            startX = moveX = null;
-                        });
-                    }
-                    
-                    // Disparar evento para que outras funções possam reagir
-                    $(document).trigger('mfpOpen');
-                },
-                beforeOpen: function() {
-                    console.log("Magnific Popup antes de abrir");
-                },
-                elementParse: function(item) {
-                    // Depuração
-                    console.log("Item sendo processado:", item.src);
-                }
-            },
-            disableOn: function() {
-                // Habilitar para todos os dispositivos
-                return true;
-            }
-        });
-    }
-
     // Carregar o JSON e adicionar as imagens ao container
     $.getJSON('json/photos.json')
         .done(function (data) {
             // Adicionar uma mensagem de debug para verificar quantos itens foram carregados
             console.log(`Carregando ${data.length} imagens do JSON`);
             
-            // Ativar o debugging para ver os caminhos das imagens no console
-            const debug = true;
-            
             $.each(data, function (index, item) {
                 // Verificar e corrigir o caminho da imagem
                 var imgSrc = verificarImagem(item.src);
-                
-                if (debug) {
-                    console.log(`Item ${index}: ${item.name}, Caminho: ${imgSrc}`);
-                }
                 
                 var imageHTML = `
                     <div class="grid-item ${item.filter}" data-filter="${item.filter}">
@@ -138,8 +55,6 @@ $(document).ready(function () {
 
             // Inicializa o Isotope após adicionar todas as imagens
             $container.imagesLoaded(function() {
-                console.log("Imagens carregadas, inicializando Isotope");
-                
                 // Inicializa o Isotope
                 $container.isotope({
                     itemSelector: itemSelector,
@@ -152,8 +67,8 @@ $(document).ready(function () {
                     percentPosition: true
                 });
                 
-                // Inicializar o Magnific Popup APÓS as imagens estarem carregadas
-                initMagnificPopup();
+                // Configurar a abertura de imagens em dispositivos móveis e desktop
+                setupImageViewer();
                 
                 // Ocultar indicador de carregamento
                 $loadingIndicator.hide();
@@ -174,11 +89,88 @@ $(document).ready(function () {
             carregarImagensFallback();
         });
     
+    // Função para configurar a visualização de imagens
+    function setupImageViewer() {
+        // Inicializar Magnific Popup com configurações padrão
+        $('.popupimg').magnificPopup({
+            type: 'image',
+            gallery: {
+                enabled: true,
+                navigateByImgClick: true,
+                preload: [0, 1]
+            },
+            image: {
+                titleSrc: function(item) {
+                    return item.el.closest('.grid-item').find('.overlay').text();
+                }
+            },
+            callbacks: {
+                elementParse: function(item) {
+                    console.log("Imagem sendo aberta:", item.src);
+                }
+            }
+        });
+        
+        // Para dispositivos móveis, separar o comportamento de toque para scroll e clique
+        if (isMobile) {
+            // Tempo máximo para considerar um toque como clique (ms)
+            var tapTimeout = 200;
+            // Distância máxima de movimento para considerar como clique (px)
+            var tapThreshold = 10;
+            
+            // Remover eventos padrão de clique
+            $('.grid-item a').off('click');
+            
+            // Adicionar controladores de eventos de toque personalizados
+            $('.grid-item').each(function() {
+                var $item = $(this);
+                var $link = $item.find('a.popupimg');
+                var startTime, startX, startY;
+                var moved = false;
+                
+                // Ao iniciar o toque
+                $item.on('touchstart', function(e) {
+                    startTime = new Date().getTime();
+                    startX = e.originalEvent.touches[0].pageX;
+                    startY = e.originalEvent.touches[0].pageY;
+                    moved = false;
+                });
+                
+                // Durante o movimento do toque
+                $item.on('touchmove', function(e) {
+                    // Verificar se o movimento é significativo
+                    var moveX = e.originalEvent.touches[0].pageX;
+                    var moveY = e.originalEvent.touches[0].pageY;
+                    var deltaX = Math.abs(moveX - startX);
+                    var deltaY = Math.abs(moveY - startY);
+                    
+                    // Se o movimento for principalmente vertical, permitir o scroll
+                    if (deltaY > deltaX) {
+                        moved = true;
+                        // NÃO prevenir o comportamento padrão para permitir scroll
+                    } else if (deltaX > tapThreshold) {
+                        moved = true;
+                    }
+                });
+                
+                // Ao finalizar o toque
+                $item.on('touchend', function(e) {
+                    var endTime = new Date().getTime();
+                    var timeDiff = endTime - startTime;
+                    
+                    // Se foi um toque rápido sem muito movimento, abrir a imagem
+                    if (timeDiff < tapTimeout && !moved) {
+                        e.preventDefault();
+                        $link.magnificPopup('open');
+                    }
+                });
+            });
+        }
+    }
+    
     // Filtro de categorias + correção do "active"
     $(".filters li a").click(function () {
         var filterValue = $(this).attr("data-filter");
-        console.log("Filtro selecionado:", filterValue);
-        
         $container.isotope({ filter: filterValue });
 
         // Remove "active" de todos e adiciona apenas ao item clicado
@@ -189,24 +181,6 @@ $(document).ready(function () {
         $(".filters li a").attr("aria-current", "false");
         $(this).attr("aria-current", "true");
     });
-    
-    // Adicionar evento de clique e toque para abrir imagens no mobile
-    $(document).on('click touchstart', '.popupimg', function(e) {
-        if (isMobile) {
-            console.log("Evento de toque em imagem:", $(this).attr('href'));
-            e.preventDefault();
-            $(this).magnificPopup('open');
-        }
-    });
-    
-    // Em dispositivos móveis, adicionar feedback visual para toque nas imagens
-    if (isMobile) {
-        $('.grid-item').on('touchstart', function() {
-            $(this).addClass('touch-active');
-        }).on('touchend touchcancel', function() {
-            $(this).removeClass('touch-active');
-        });
-    }
     
     // Função de fallback para carregar imagens diretamente
     function carregarImagensFallback() {
@@ -247,14 +221,9 @@ $(document).ready(function () {
                     }
                 });
                 
-                // Inicializar o Magnific Popup
-                initMagnificPopup();
+                // Configurar visualização de imagens
+                setupImageViewer();
             });
         }, 500);
-    }
-    
-    // Adicionar classes de estilo para feedback visual em dispositivos móveis
-    if (isMobile) {
-        $('<style>.touch-active { transform: scale(0.98); opacity: 0.8; transition: all 0.2s ease; }</style>').appendTo('head');
     }
 });

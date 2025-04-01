@@ -909,3 +909,95 @@ body {
   object-fit: cover;
   display: block; /* Remove espaços indesejados */
 }
+
+/* Adicione este CSS no final do seu arquivo style.css */
+
+/* Melhorias para interação touch em dispositivos móveis */
+
+/* Permitir scroll ao tocar nas imagens */
+.grid-item {
+  touch-action: pan-y; /* Permitir scroll vertical mesmo ao tocar na imagem */
+}
+
+/* Efeito de feedback ao tocar em uma imagem */
+@media (hover: none) {
+  .grid-item {
+    -webkit-tap-highlight-color: transparent; /* Remover highlight padrão do navegador */
+  }
+  
+  .grid-item:active {
+    opacity: 0.8;
+    transform: scale(0.98);
+    transition: opacity 0.1s ease, transform 0.1s ease;
+  }
+}
+
+/* Melhorar área de toque */
+.grid-item a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Indicação visual para tocar */
+.touch-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.grid-item:first-child .touch-indicator {
+  opacity: 1;
+  animation: fadeOutDelayed 3s forwards;
+}
+
+@keyframes fadeOutDelayed {
+  0%, 70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Melhorar navegação no Magnific Popup para mobile */
+.mfp-container {
+  touch-action: pan-y pinch-zoom;
+}
+
+.mfp-arrow {
+  transform: scale(1.2); /* Área de toque maior para as setas */
+  opacity: 0.7 !important;
+}
+
+/* Ajustar botões para serem mais fáceis de tocar */
+.mfp-close {
+  padding: 15px !important;
+  width: 50px !important;
+  height: 50px !important;
+  line-height: 20px !important;
+}
+
+/* Indicadores visuais claros para swipe */
+.mfp-container::before,
+.mfp-container::after {
+  width: 40px !important;
+  height: 40px !important;
+  border-width: 4px !important;
+}
+
+/* Menos opacidade nas imagens não selecionadas para mostrar que são interativas */
+.isotope-hidden {
+  opacity: 0.5;
+  transition: opacity 0.3s ease;
+}
+
+/* Estilos para o indicador de carregamento */
+.loading-indicator {
+  z-index: 9999;
+}
