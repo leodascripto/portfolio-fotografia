@@ -1001,3 +1001,47 @@ body {
 .loading-indicator {
   z-index: 9999;
 }
+
+/* Adicionar ao arquivo styles/style.css */
+@media (max-width: 768px) {
+  /* Melhorar comportamento de toque em dispositivos móveis */
+  .grid-item {
+      touch-action: pan-y; /* Permite scroll vertical natural */
+  }
+  
+  /* Feedback visual para toque */
+  .grid-item:active::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 0.2);
+      z-index: 1;
+  }
+  
+  /* Melhorar controles do Magnific Popup */
+  .mfp-arrow {
+      transform: scale(1.5); /* Tornar áreas de toque maiores */
+      opacity: 0.8 !important; /* Tornar setas mais visíveis */
+  }
+  
+  .mfp-arrow:active {
+      transform: scale(1.5) translateY(2px); /* Feedback ao tocar */
+  }
+  
+  /* Fechar com área de toque maior */
+  .mfp-close {
+      width: 60px !important;
+      height: 60px !important;
+      line-height: 60px !important;
+  }
+  
+  /* Indicador de carregamento maior para mobile */
+  .loading-indicator {
+      width: 50px;
+      height: 50px;
+      border-width: 4px;
+  }
+}
