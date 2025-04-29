@@ -1,4 +1,9 @@
-/* Reset de estilo e variáveis */
+/* 
+ * Leo Oli - Portfolio Fotográfico
+ * CSS Refatorado e Organizado
+ */
+
+/* =========== 1. VARIÁVEIS E RESET =========== */
 :root {
   --primary-gold: #e3ca66;
   --secondary-gold: #b48e47;
@@ -7,6 +12,12 @@
   --text-light: #d4d4d4;
   --text-lighter: #f5f5f5;
   --transition-speed: 0.3s;
+  --container-max-width: 1400px;
+  --grid-gap: 20px;
+  --grid-radius: 10px;
+  --whatsapp-color: #25d366;
+  --body-font: "Open Sans", sans-serif;
+  --title-font: "Parisienne", cursive;
 }
 
 * {
@@ -15,25 +26,41 @@
   box-sizing: border-box;
 }
 
+/* =========== 2. TIPOGRAFIA BASE =========== */
 body {
   background: linear-gradient(264deg, var(--darker-bg) 0%, var(--dark-bg) 49%, var(--darker-bg) 100%);
-  font-family: "Open Sans", sans-serif;
-  margin: 0;
+  font-family: var(--body-font);
   color: var(--text-light);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-/* Container principal com layout melhorado */
-#container {
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color var(--transition-speed) ease;
+}
+
+/* =========== 3. LAYOUT BASE =========== */
+.container, #container {
   margin: 0 auto;
-  max-width: 1400px;
-  padding: 0 15px;
+  max-width: 95%;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   transition: all var(--transition-speed) ease;
 }
 
-/* Cabeçalho */
+.isotope {
+  width: 100% !important;
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+}
+
+/* =========== 4. CABEÇALHO =========== */
 .header {
   padding: 1.5rem 0;
   text-align: center;
@@ -47,7 +74,7 @@ body {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: clamp(3rem, 5vw, 4.5rem);
-  font-family: "Parisienne", cursive;
+  font-family: var(--title-font);
   text-shadow: 2px 2px 8px rgba(227, 202, 102, 0.4);
   letter-spacing: 1px;
 }
@@ -72,7 +99,7 @@ body {
   transition: transform var(--transition-speed) ease;
 }
 
-/* Filtros de navegação */
+/* =========== 5. NAVEGAÇÃO & FILTROS =========== */
 .filters {
   margin: 1.5rem auto;
   max-width: 1000px;
@@ -132,17 +159,21 @@ body {
   font-weight: 700;
 }
 
-/* Grid Items com Visual Aprimorado */
+/* =========== 6. GRID DE IMAGENS =========== */
 .grid-item {
   position: relative;
   overflow: hidden;
-  margin-bottom: 20px;
-  border-radius: 10px;
+  margin: 10px;
+  border-radius: var(--grid-radius);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   transition: all var(--transition-speed) ease;
   height: auto;
   max-height: 500px;
-  width: 100%; /* Padrão para mobile */
+  width: calc(100% - 20px);
+  max-width: 100%;
+  flex-grow: 0;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .grid-item a {
@@ -159,6 +190,7 @@ body {
   object-fit: cover;
   transition: transform 0.5s ease, filter 0.5s ease;
   filter: brightness(0.9);
+  display: block;
 }
 
 .grid-item:hover img {
@@ -186,7 +218,25 @@ body {
   transform: translateY(0);
 }
 
-/* Paginação */
+/* Efeito visual para toque */
+.grid-item.touch-active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.2);
+  z-index: 1;
+  border-radius: var(--grid-radius);
+}
+
+.grid-item:active {
+  opacity: 0.9;
+  transform: scale(0.98);
+}
+
+/* =========== 7. PAGINAÇÃO =========== */
 .isotope-pager {
   margin: 2rem 0;
   text-align: center;
@@ -213,7 +263,244 @@ body {
   box-shadow: 0 0 10px rgba(227, 202, 102, 0.5);
 }
 
-/* Rodapé */
+/* =========== 8. BOTÕES FLUTUANTES =========== */
+/* WhatsApp Button */
+.float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 30px;
+  right: 30px;
+  background-color: var(--whatsapp-color);
+  color: #fff;
+  border-radius: 50%;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all var(--transition-speed) ease;
+  animation: pulse 1.5s infinite alternate;
+}
+
+.float:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+.my-float {
+  font-size: 24px;
+}
+
+/* Botão de Tema */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(35, 35, 35, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: all var(--transition-speed) ease;
+}
+
+.theme-toggle:hover {
+  transform: rotate(30deg);
+}
+
+.theme-toggle i {
+  color: var(--primary-gold);
+  font-size: 18px;
+}
+
+/* Botão Voltar ao Topo */
+.scroll-to-top {
+  position: fixed;
+  bottom: 30px;
+  right: 100px;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  color: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+  transform: translateY(-5px);
+}
+
+/* =========== 9. POPUP MAGNIFIC =========== */
+.mfp-with-zoom .mfp-container,
+.mfp-with-zoom.mfp-bg {
+  opacity: 0;
+  backface-visibility: hidden;
+  transition: all 0.3s ease-out;
+}
+
+.mfp-with-zoom.mfp-ready .mfp-container {
+  opacity: 1;
+}
+
+.mfp-with-zoom.mfp-ready.mfp-bg {
+  opacity: 0.8;
+}
+
+.mfp-with-zoom.mfp-removing .mfp-container,
+.mfp-with-zoom.mfp-removing.mfp-bg {
+  opacity: 0;
+}
+
+.mfp-arrow {
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.mfp-arrow:hover {
+  opacity: 1;
+}
+
+.mfp-bottom-bar {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+}
+
+.mfp-figure {
+  padding: 0 !important;
+}
+
+.mfp-container {
+  touch-action: pan-y pinch-zoom;
+}
+
+/* =========== 10. LOADING E NOTIFICAÇÕES =========== */
+/* Loading Indicator */
+.loading-indicator {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(227, 202, 102, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-gold);
+  animation: spin 1s ease-in-out infinite;
+  display: none;
+  z-index: 9999;
+}
+
+/* Error Message */
+.error-message {
+  text-align: center;
+  padding: 20px;
+  margin: 20px 0;
+  background-color: rgba(40, 40, 40, 0.8);
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* No Items Message */
+.no-items-message {
+  text-align: center;
+  padding: 15px;
+  margin: 20px auto;
+  background-color: rgba(40, 40, 40, 0.8);
+  border-radius: 10px;
+  color: #fff;
+  max-width: 400px;
+  font-weight: 500;
+}
+
+/* Skeleton Loader */
+.skeleton-loader {
+  background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Mobile Instructions */
+.mobile-instructions {
+  display: none;
+  background-color: rgba(30, 30, 30, 0.9);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 20px auto;
+  max-width: 300px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-instructions p {
+  margin: 8px 0;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-instructions i {
+  margin-right: 8px;
+  color: var(--primary-gold);
+}
+
+/* Touch Feedback */
+.touch-feedback {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  background-color: rgba(255, 255, 255, 0.3);
+  width: 100px;
+  height: 100px;
+  z-index: 9999;
+  animation: touch-ripple 0.6s ease-out;
+}
+
+/* Indicador de Swipe */
+.swipe-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 14px;
+  z-index: 10;
+  pointer-events: none;
+  animation: fadeOut 3s forwards;
+}
+
+/* =========== 11. RODAPÉ =========== */
 .footer {
   padding: 1.5rem 0;
   background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
@@ -252,35 +539,7 @@ body {
   width: 100%;
 }
 
-/* Botão WhatsApp */
-.float {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  bottom: 30px;
-  right: 30px;
-  background-color: #25d366;
-  color: #fff;
-  border-radius: 50%;
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all var(--transition-speed) ease;
-  animation: pulse 1.5s infinite alternate;
-}
-
-.float:hover {
-  transform: scale(1.1) rotate(10deg);
-}
-
-.my-float {
-  font-size: 24px;
-}
-
-/* Animações */
+/* =========== 12. ANIMAÇÕES =========== */
 @keyframes pulse {
   0% {
     box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
@@ -332,104 +591,7 @@ body {
   100% { opacity: 0; }
 }
 
-/* Melhorias para o Magnific Popup */
-.mfp-with-zoom .mfp-container,
-.mfp-with-zoom.mfp-bg {
-  opacity: 0;
-  backface-visibility: hidden;
-  transition: all 0.3s ease-out;
-}
-
-.mfp-with-zoom.mfp-ready .mfp-container {
-  opacity: 1;
-}
-
-.mfp-with-zoom.mfp-ready.mfp-bg {
-  opacity: 0.8;
-}
-
-.mfp-with-zoom.mfp-removing .mfp-container,
-.mfp-with-zoom.mfp-removing.mfp-bg {
-  opacity: 0;
-}
-
-.mfp-arrow {
-  opacity: 0.7;
-  transition: all 0.2s ease;
-}
-
-.mfp-arrow:hover {
-  opacity: 1;
-}
-
-/* Lazy Loading */
-.lazy-load {
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.lazy-load.loaded {
-  opacity: 1;
-}
-
-/* Loading e mensagens */
-.loading-indicator {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
-  border: 3px solid rgba(227, 202, 102, 0.3);
-  border-radius: 50%;
-  border-top-color: var(--primary-gold);
-  animation: spin 1s ease-in-out infinite;
-  display: none;
-  z-index: 9999;
-}
-
-.error-message {
-  text-align: center;
-  padding: 20px;
-  margin: 20px 0;
-  background-color: rgba(40, 40, 40, 0.8);
-  border-radius: 10px;
-  color: #fff;
-  font-weight: 600;
-}
-
-.no-items-message {
-  text-align: center;
-  padding: 15px;
-  margin: 20px auto;
-  background-color: rgba(40, 40, 40, 0.8);
-  border-radius: 10px;
-  color: #fff;
-  max-width: 400px;
-  font-weight: 500;
-}
-
-.skeleton-loader {
-  background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-/* Animações para os itens */
-.animate-on-scroll {
-  opacity: 0;
-}
-
-.animate-on-scroll.animated {
-  animation: fadeInUp 0.5s ease forwards;
-}
-
-/* Acessibilidade */
+/* =========== 13. ACESSIBILIDADE =========== */
 .sr-only {
   position: absolute;
   width: 1px;
@@ -442,65 +604,22 @@ body {
   border-width: 0;
 }
 
-/* Botão de voltar ao topo */
-.scroll-to-top {
-  position: fixed;
-  bottom: 30px;
-  right: 100px;
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
-  color: #000;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(20px);
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-  z-index: 999;
+a:focus,
+button:focus,
+[role="button"]:focus,
+[tabindex="0"]:focus {
+  outline: 2px solid var(--primary-gold);
+  outline-offset: 2px;
 }
 
-.scroll-to-top.visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.scroll-to-top:hover {
+.grid-item:focus,
+.grid-item:focus-within {
+  box-shadow: 0 0 0 3px var(--primary-gold), 0 8px 20px rgba(0, 0, 0, 0.4);
   transform: translateY(-5px);
 }
 
-/* Tema claro/escuro */
-.theme-toggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: rgba(35, 35, 35, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  transition: all var(--transition-speed) ease;
-}
-
-.theme-toggle:hover {
-  transform: rotate(30deg);
-}
-
-.theme-toggle i {
-  color: var(--primary-gold);
-  font-size: 18px;
-}
-
+/* =========== 14. VARIANTES DE TEMA =========== */
+/* Tema Claro */
 body.light-mode {
   background: linear-gradient(264deg, #f5f5f5 0%, #e0e0e0 49%, #f5f5f5 100%);
   color: #333;
@@ -523,91 +642,47 @@ body.light-mode .grid-item {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Feedback tátil */
-.touch-feedback {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(0);
-  background-color: rgba(255, 255, 255, 0.3);
-  width: 100px;
-  height: 100px;
-  z-index: 9999;
-  animation: touch-ripple 0.6s ease-out;
-}
-
-/* Instruções mobile */
-.mobile-instructions {
-  display: none;
-  background-color: rgba(30, 30, 30, 0.9);
-  border-radius: 10px;
-  padding: 15px;
-  margin: 20px auto;
-  max-width: 300px;
-  text-align: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-.mobile-instructions p {
-  margin: 8px 0;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mobile-instructions i {
-  margin-right: 8px;
-  color: var(--primary-gold);
-}
-
-/* Foco para acessibilidade */
-a:focus,
-button:focus,
-[role="button"]:focus,
-[tabindex="0"]:focus {
-  outline: 2px solid var(--primary-gold);
-  outline-offset: 2px;
-}
-
-.grid-item:focus,
-.grid-item:focus-within {
-  box-shadow: 0 0 0 3px var(--primary-gold), 0 8px 20px rgba(0, 0, 0, 0.4);
-  transform: translateY(-5px);
-}
-
-/* Media Queries */
-@media (min-width: 576px) {
-  .grid-item {
-    width: 48%;
-    margin: 1%;
-    float: left;
-  }
-}
-
-@media (min-width: 992px) {
-  .grid-item {
-    width: 31.333%;
-    margin: 1%;
-  }
-}
-
+/* =========== 15. ESTILOS MÓVEIS =========== */
+/* Desktop First - Responsividade */
+/* Telas grandes */
 @media (min-width: 1200px) {
   .grid-item {
-    width: 23%;
-    margin: 1%;
+    width: calc(25% - 20px);
   }
 }
 
+/* Telas médias */
+@media (min-width: 992px) and (max-width: 1199px) {
+  .grid-item {
+    width: calc(33.333% - 20px);
+  }
+}
+
+/* Tablets */
+@media (min-width: 576px) and (max-width: 991px) {
+  .grid-item {
+    width: calc(50% - 20px);
+  }
+}
+
+/* Dispositivos móveis */
 @media (max-width: 768px) {
-  /* Cabeçalho e navegação */
+  /* Ajustes de layout */
   .header {
     padding: 1rem 0;
   }
   
+  .header h1 {
+    font-size: 2.8rem;
+  }
+  
+  .header .portfolio {
+    font-size: 1.2rem;
+  }
+  
+  /* Filtros responsivos */
   .filters {
     margin: 1rem auto;
-    position: relative;
     position: sticky;
     top: 0;
     z-index: 100;
@@ -618,7 +693,7 @@ button:focus,
   }
   
   .filters ul {
-    padding: 10px 5px;
+    padding: 8px 5px;
     border-radius: 25px;
     overflow-x: auto;
     justify-content: flex-start;
@@ -626,7 +701,6 @@ button:focus,
     display: flex;
     flex-wrap: nowrap;
     scrollbar-width: none;
-    padding: 8px 5px;
     margin: 0 10px;
   }
   
@@ -652,7 +726,7 @@ button:focus,
     pointer-events: none;
   }
   
-  /* Grid e imagens */
+  /* Ajustes de Grid */
   .grid-item {
     width: 100%;
     margin: 0 0 15px 0;
@@ -660,6 +734,7 @@ button:focus,
     max-height: 400px;
   }
   
+  /* Mostrar sempre overlay em mobile */
   .grid-item .overlay {
     opacity: 1;
     transform: translateY(0);
@@ -667,24 +742,12 @@ button:focus,
     padding: 10px;
   }
   
-  /* Popup e navegação */
-  .mfp-figure {
-    padding: 0 !important;
+  /* Remover efeitos de hover para touch */
+  .grid-item:hover img {
+    transform: none;
   }
   
-  .mfp-bottom-bar {
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.7);
-  }
-  
-  .mfp-arrow {
-    transform: scale(0.8);
-  }
-  
-  .mfp-container {
-    padding: 0;
-  }
-  
+  /* Melhorias para popup */
   .mfp-container::before {
     content: '';
     position: absolute;
@@ -715,11 +778,12 @@ button:focus,
     opacity: 0.7;
   }
   
-  /* Botões e controles */
+  /* Exibir instruções mobile */
   .mobile-instructions {
     display: block;
   }
   
+  /* Ajustar botões flutuantes */
   .scroll-to-top {
     bottom: 30px;
     right: 30px;
@@ -739,37 +803,30 @@ button:focus,
     height: 35px;
   }
   
-  .swipe-indicator {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    background-color: rgba(0, 0, 0, 0.7);
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 14px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: 10;
+  /* Otimizações para touch */
+  .grid-item {
+    touch-action: pan-y !important;
+    -webkit-touch-callout: none;
   }
   
-  .grid-item:first-child .swipe-indicator {
-    opacity: 1;
-    animation: fadeOut 3s forwards;
+  .mfp-arrow {
+    padding: 0;
+    width: 60px !important;
+    height: 60px !important;
+    transform: scale(1.5);
+    opacity: 0.8 !important;
+  }
+  
+  .mfp-close {
+    padding: 0 !important;
+    width: 60px !important;
+    height: 60px !important;
+    line-height: 60px !important;
   }
 }
 
+/* Dispositivos muito pequenos */
 @media (max-width: 480px) {
-  .header h1 {
-    font-size: 2.8rem;
-  }
-  
-  .header .portfolio {
-    font-size: 1.2rem;
-  }
-  
   .header {
     padding-top: 40px;
   }
@@ -805,19 +862,14 @@ button:focus,
     font-size: 20px;
   }
   
-  .pager-item {
-    width: 35px !important;
-    height: 35px !important;
-    line-height: 35px !important;
-    margin: 0 3px !important;
-  }
-  
   .loading-indicator {
     width: 40px;
     height: 40px;
   }
 }
 
+/* =========== 16. PREFERÊNCIAS DE USUÁRIO =========== */
+/* Redução de movimento */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
@@ -835,6 +887,7 @@ button:focus,
   }
 }
 
+/* Modo de alto contraste */
 @media (forced-colors: active) {
   .filters li.active {
     border: 2px solid CanvasText;
@@ -845,306 +898,4 @@ button:focus,
   [role="button"]:focus {
     outline: 2px solid CanvasText;
   }
-}
-
-/* Adicione este código ao seu arquivo CSS ou crie um novo arquivo */
-
-/* Correção para overflow horizontal */
-body {
-  overflow-x: hidden; /* Previne rolagem horizontal em toda a página */
-}
-
-#container {
-  margin: 0 auto;
-  max-width: 95%; /* Limita a largura a 95% da viewport */
-  padding: 0;
-  box-sizing: border-box;
-  width: 100%; /* Garante que o contêiner ocupe apenas a largura disponível */
-  display: flex;
-  flex-wrap: wrap; /* Permite que os itens fluam para a próxima linha quando não houver espaço */
-  justify-content: center; /* Centraliza os itens na horizontal */
-}
-
-.grid-item {
-  max-width: 100%; /* Garante que nenhuma imagem ultrapasse o contêiner pai */
-  height: auto;
-  border-radius: 10px;
-  overflow: hidden; /* Garante que o conteúdo não ultrapasse os limites */
-  position: relative;
-  margin: 10px; /* Espaçamento uniforme entre os itens */
-  flex-grow: 0; /* Impede que os itens cresçam além do tamanho definido */
-  width: calc(100% - 20px); /* Por padrão em telas pequenas será 100% */
-}
-
-/* Ajustes responsivos */
-@media (min-width: 576px) {
-  .grid-item {
-    width: calc(50% - 20px); /* 2 itens por linha em tablets */
-  }
-}
-
-@media (min-width: 992px) {
-  .grid-item {
-    width: calc(33.333% - 20px); /* 3 itens por linha em desktops */
-  }
-}
-
-@media (min-width: 1200px) {
-  .grid-item {
-    width: calc(25% - 20px); /* 4 itens por linha em telas grandes */
-  }
-}
-
-/* Ajustar o layout do Isotope */
-.isotope {
-  width: 100% !important; /* Força o Isotope a respeitar a largura do contêiner pai */
-  max-width: 1400px; /* Limita a largura máxima */
-  margin: 0 auto; /* Centraliza na página */
-}
-
-/* Garantir que as imagens se ajustem corretamente */
-.grid-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block; /* Remove espaços indesejados */
-}
-
-/* Adicione este CSS no final do seu arquivo style.css */
-
-/* Melhorias para interação touch em dispositivos móveis */
-
-/* Permitir scroll ao tocar nas imagens */
-.grid-item {
-  touch-action: pan-y; /* Permitir scroll vertical mesmo ao tocar na imagem */
-}
-
-/* Efeito de feedback ao tocar em uma imagem */
-@media (hover: none) {
-  .grid-item {
-    -webkit-tap-highlight-color: transparent; /* Remover highlight padrão do navegador */
-  }
-  
-  .grid-item:active {
-    opacity: 0.8;
-    transform: scale(0.98);
-    transition: opacity 0.1s ease, transform 0.1s ease;
-  }
-}
-
-/* Melhorar área de toque */
-.grid-item a {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* Indicação visual para tocar */
-.touch-indicator {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  padding: 10px 15px;
-  border-radius: 20px;
-  font-size: 14px;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.grid-item:first-child .touch-indicator {
-  opacity: 1;
-  animation: fadeOutDelayed 3s forwards;
-}
-
-@keyframes fadeOutDelayed {
-  0%, 70% { opacity: 1; }
-  100% { opacity: 0; }
-}
-
-/* Melhorar navegação no Magnific Popup para mobile */
-.mfp-container {
-  touch-action: pan-y pinch-zoom;
-}
-
-.mfp-arrow {
-  transform: scale(1.2); /* Área de toque maior para as setas */
-  opacity: 0.7 !important;
-}
-
-/* Ajustar botões para serem mais fáceis de tocar */
-.mfp-close {
-  padding: 15px !important;
-  width: 50px !important;
-  height: 50px !important;
-  line-height: 20px !important;
-}
-
-/* Indicadores visuais claros para swipe */
-.mfp-container::before,
-.mfp-container::after {
-  width: 40px !important;
-  height: 40px !important;
-  border-width: 4px !important;
-}
-
-/* Menos opacidade nas imagens não selecionadas para mostrar que são interativas */
-.isotope-hidden {
-  opacity: 0.5;
-  transition: opacity 0.3s ease;
-}
-
-/* Estilos para o indicador de carregamento */
-.loading-indicator {
-  z-index: 9999;
-}
-
-/* Adicionar ao final do arquivo style.css */
-
-/* Melhorias para comportamento de touch em dispositivos móveis */
-@media (max-width: 768px) {
-  /* Permitir scroll vertical natural ao tocar nas imagens */
-  .grid-item {
-    touch-action: pan-y !important;
-    -webkit-touch-callout: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  }
-
-  /* Feedback visual ao tocar */
-  .grid-item.touch-active::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.2);
-    z-index: 1;
-    border-radius: 10px;
-  }
-
-  /* Melhorar área de toque para navegação em galeria */
-  .mfp-arrow {
-    padding: 0;
-    width: 60px !important;
-    height: 60px !important;
-    transform: scale(1.5);
-    opacity: 0.8 !important;
-  }
-  
-  .mfp-arrow:active {
-    transform: scale(1.5) translateY(2px);
-  }
-
-  /* Indicadores para swipe lateral em galeria */
-  .mfp-container::before,
-  .mfp-container::after {
-    width: 40px !important;
-    height: 40px !important;
-    border-width: 4px !important;
-    opacity: 0.7;
-  }
-  
-  /* Garantir que imagens não causem problemas de layout horizontal */
-  .grid-item img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  /* Aumentar a área de toque para fechar */
-  .mfp-close {
-    padding: 0 !important;
-    width: 60px !important;
-    height: 60px !important;
-    line-height: 60px !important;
-  }
-  
-  /* Indicador visual de swipe para navegação entre fotos */
-  .swipe-indicator {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: white;
-    padding: 10px 15px;
-    border-radius: 20px;
-    font-size: 14px;
-    z-index: 10;
-    pointer-events: none;
-    animation: fadeOut 3s forwards;
-  }
-
-  /* Animação para desaparecer o indicador */
-  @keyframes fadeOut {
-    0%, 70% { opacity: 1; }
-    100% { opacity: 0; }
-  }
-  
-  /* Melhorar experiência da galeria quando aberta */
-  .mfp-container {
-    padding: 0 !important;
-    touch-action: pan-y pinch-zoom;
-  }
-  
-  .mfp-figure {
-    padding: 0 !important;
-  }
-  
-  .mfp-bottom-bar {
-    padding: 10px;
-    background: rgba(0, 0, 0, 0.7);
-  }
-  
-  /* Corrigir problema com overflow horizontal */
-  #container {
-    margin: 0 auto;
-    width: 100% !important;
-    max-width: 95% !important;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Garantir que os grid items tenham dimensões corretas */
-  .grid-item {
-    max-width: 100%;
-    height: auto;
-    width: calc(100% - 20px);
-    position: relative;
-    overflow: hidden;
-    margin: 10px;
-  }
-}
-
-/* Melhorias específicas para eventos de toque */
-@media (hover: none) {
-  /* Remover efeitos de hover que podem causar problemas em touch */
-  .grid-item:hover img {
-    transform: none;
-  }
-  
-  /* Sempre mostrar overlay em dispositivos touch para melhor compreensão */
-  .grid-item .overlay {
-    opacity: 1;
-    transform: translateY(0);
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
-    padding: 10px;
-  }
-}
-
-/* Estados ativos para feedback tátil */
-.touch-feedback {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%, -50%) scale(0);
-  background-color: rgba(255, 255, 255, 0.3);
-  width: 100px;
-  height: 100px;
-  z-index: 9999;
-  animation: touch-ripple 0.5s ease-out;
 }
