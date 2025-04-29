@@ -3,6 +3,9 @@ $(document).ready(function () {
     var $container = $("#container");
     var $loadingIndicator = $(".loading-indicator");
     
+    // Verificar se é um dispositivo móvel
+    var isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+    
     // Exibir indicador de carregamento
     if ($loadingIndicator.length > 0) {
         $loadingIndicator.show();
@@ -12,9 +15,6 @@ $(document).ready(function () {
         $loadingIndicator = $(".loading-indicator");
         $loadingIndicator.show();
     }
-    
-    // Verificar se é um dispositivo móvel
-    var isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
     
     // Verificar e corrigir caminhos de imagens
     function verificarImagem(src) {
@@ -91,94 +91,105 @@ $(document).ready(function () {
     
     // Função para configurar a visualização de imagens - VERSÃO CORRIGIDA
     function setupImageViewer() {
-        // Inicializar Magnific Popup com configurações padrão
-        $('.popupimg').magnificPopup({
-            type: 'image',
-            gallery: {
-                enabled: true,
-                navigateByImgClick: true,
-                preload: [0, 1]
-            },
-            image: {
-                titleSrc: function(item) {
-                    return item.el.closest('.grid-item').find('.overlay').text();
-                }
-            },
-            callbacks: {
-                // CORREÇÃO: Garantir que a imagem correta seja aberta
-                open: function() {
-                    var magnificPopup = $.magnificPopup.instance;
-                    // Isso garante que a posição correta na galeria seja usada
-                    console.log("Imagem sendo aberta:", magnificPopup.currItem.src);
-                }
-            }
+        // CORREÇÃO: remover inicialização de galeria global para evitar problemas
+        // Desvincula quaisquer handlers anteriores para evitar conflitos
+        $('.popupimg').off('click');
+        
+        // Inicializa cada item individualmente para garantir que a foto correta seja aberta
+        $('.grid-item').each(function(index) {
+            var $item = $(this);
+            var $link = $item.find('a.popupimg');
+            
+            // Atribuir um índice de dados para rastreamento
+            $link.attr('data-index', index);
+            
+            // Configurar cada link individualmente
+            $link.on('click', function(e) {
+                e.preventDefault();
+                
+                // Coletar todos os itens visíveis (não filtrados)
+                var visibleLinks = $('.grid-item:not(.isotope-hidden) .popupimg');
+                var items = [];
+                
+                // Construir a matriz de itens para a galeria
+                visibleLinks.each(function() {
+                    var href = $(this).attr('href');
+                    var title = $(this).closest('.grid-item').find('.overlay').text();
+                    items.push({
+                        src: href,
+                        title: title
+                    });
+                });
+                
+                // Encontrar o índice do item atual entre os itens visíveis
+                var currentIndex = visibleLinks.index($(this));
+                
+                // Abrir o Magnific Popup com o item correto
+                $.magnificPopup.open({
+                    items: items,
+                    type: 'image',
+                    gallery: {
+                        enabled: true,
+                        navigateByImgClick: true,
+                        preload: [0, 1]
+                    },
+                    callbacks: {
+                        open: function() {
+                            console.log("Abrindo imagem no índice:", currentIndex);
+                        }
+                    }
+                }, currentIndex);
+            });
         });
         
-        // Para dispositivos móveis, separar o comportamento de toque para scroll e clique
+        // Para dispositivos móveis, separar comportamento de toque para scroll e clique
         if (isMobile) {
-            // CORREÇÃO: Melhor detecção de scroll vs. clique para dispositivos móveis
+            // Primeiro, remover o manipulador de clique padrão para não interferir
+            $('.grid-item a').off('click');
+            
+            // Adicionar controladores de eventos de toque personalizados
             $('.grid-item').each(function() {
                 var $item = $(this);
                 var $link = $item.find('a.popupimg');
-                
-                // Variáveis para detectar movimento
                 var startX, startY;
-                var moveX, moveY;
-                var startTime;
                 var isScrolling = false;
                 
-                // Quando o toque começa
+                // Ao iniciar o toque
                 $item.on('touchstart', function(e) {
-                    // Registrar posição inicial e tempo
                     startX = e.originalEvent.touches[0].pageX;
                     startY = e.originalEvent.touches[0].pageY;
-                    startTime = new Date().getTime();
                     isScrolling = false;
-                    
-                    // Não impedir comportamento padrão para permitir scroll
                 });
                 
                 // Durante o movimento do toque
                 $item.on('touchmove', function(e) {
-                    if (!startX || !startY) return;
+                    // Se o movimento vertical for maior que o horizontal, é um scroll
+                    const touchMoveY = e.originalEvent.touches[0].pageY;
+                    const touchMoveX = e.originalEvent.touches[0].pageX;
+                    const deltaY = Math.abs(touchMoveY - startY);
+                    const deltaX = Math.abs(touchMoveX - startX);
                     
-                    moveX = e.originalEvent.touches[0].pageX;
-                    moveY = e.originalEvent.touches[0].pageY;
-                    
-                    // Calcular a distância em X e Y
-                    var deltaX = Math.abs(moveX - startX);
-                    var deltaY = Math.abs(moveY - startY);
-                    
-                    // Se o movimento for principalmente vertical, considera como scroll
                     if (deltaY > deltaX && deltaY > 10) {
                         isScrolling = true;
-                        // NÃO prevenir comportamento padrão para permitir scroll
+                        // Permite que o scroll padrão funcione
                     }
                 });
                 
                 // Quando o toque termina
                 $item.on('touchend', function(e) {
-                    if (!startX || !startY) return;
+                    const endX = e.changedTouches[0].pageX;
+                    const endY = e.changedTouches[0].pageY;
                     
-                    var endX = e.originalEvent.changedTouches[0].pageX;
-                    var endY = e.originalEvent.changedTouches[0].pageY;
-                    var endTime = new Date().getTime();
+                    // Calcular distância do toque
+                    const diffX = Math.abs(endX - startX);
+                    const diffY = Math.abs(endY - startY);
                     
-                    // Calcular a distância total percorrida
-                    var distanceX = Math.abs(endX - startX);
-                    var distanceY = Math.abs(endY - startY);
-                    var touchDuration = endTime - startTime;
-                    
-                    // Se foi um toque rápido sem muito movimento, considere como clique
-                    if (touchDuration < 300 && distanceX < 10 && distanceY < 10 && !isScrolling) {
+                    // Se foi um toque rápido com pouco movimento e não identificado como scrolling
+                    if (diffX < 10 && diffY < 10 && !isScrolling) {
                         e.preventDefault();
-                        
-                        // CORREÇÃO: Abrir o popup com a imagem específica
-                        $link.magnificPopup('open');
+                        // Disparar o clique manualmente para abrir a galeria
+                        $link.trigger('click');
                     }
-                    
-                    // Resetar variáveis
-                    startX = startY = null;
                 });
             });
         }
@@ -196,6 +207,12 @@ $(document).ready(function () {
         // Atualizar propriedades ARIA
         $(".filters li a").attr("aria-current", "false");
         $(this).attr("aria-current", "true");
+        
+        // Reinicializar o visualizador de imagens após filtrar
+        // Isso é importante para garantir que os índices sejam atualizados
+        setTimeout(function() {
+            setupImageViewer();
+        }, 300);
     });
     
     // Função de fallback para carregar imagens diretamente
