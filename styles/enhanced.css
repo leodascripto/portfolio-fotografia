@@ -1,30 +1,32 @@
-/* Enhanced CSS for Leo Oli Photography Portfolio - Versão corrigida */
+/* Enhanced CSS - Versão compatível que preserva a funcionalidade dos filtros */
 
-/* =========== ENHANCED ANIMATIONS =========== */
-/* Animações que não interferem com o carregamento original */
-.animate-on-scroll {
-  opacity: 1; /* Modificado para não esconder elementos */
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+/* Animações sutis que não quebram a funcionalidade */
+.animation-ready {
+  transition: transform 0.4s ease, opacity 0.4s ease;
 }
 
-.animate-on-scroll.animated {
-  animation: fadeInUp 0.5s ease forwards;
+.animation-ready.animated {
+  animation: subtle-fade 0.5s ease forwards;
 }
 
-@keyframes fadeInUp {
-  0% { opacity: 0.9; transform: translateY(10px); }
+@keyframes subtle-fade {
+  0% { opacity: 0.95; transform: translateY(5px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Logo animations */
-#logo.hover {
-  transform: scale(1.05);
+/* Melhorias visuais para hover */
+.grid-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  z-index: 2;
 }
 
-/* Não definimos lazy-loading para não interferir com o carregamento existente */
-/* Melhorias visuais que não interferem com o funcionamento */
+.filters li.hover-enhanced {
+  background: rgba(227, 202, 102, 0.15);
+  transform: translateY(-2px);
+}
 
-/* Scroll indicator styles */
+/* Indicadores de scroll para filtros */
 .filters.scrollable {
   position: relative;
 }
@@ -66,49 +68,40 @@
   font-size: 16px;
 }
 
-/* Enhanced accessibility */
-body.keyboard-navigation a:focus,
-body.keyboard-navigation button:focus,
-body.keyboard-navigation [role="button"]:focus,
-body.keyboard-navigation [tabindex="0"]:focus {
-  outline: 3px solid var(--primary-gold);
-  outline-offset: 3px;
-}
-
-/* Mobile instruction improvements */
-.mobile-instructions {
-  transition: opacity 0.5s ease, transform 0.5s ease;
+/* Melhorias para dispositivos móveis */
+.touch-optimized {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .mobile-instructions.animated {
-  animation: slideUp 0.5s ease forwards;
+  animation: slide-up 0.5s ease forwards;
 }
 
-@keyframes slideUp {
+@keyframes slide-up {
   0% { opacity: 0.8; transform: translateY(5px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* Enhanced hover effects */
-.grid-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+/* Melhorias para o WhatsApp */
+.float:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.float:active {
+  transform: scale(0.95);
+}
+
+/* Tema toggle */
+.theme-toggle {
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .theme-toggle:hover {
-  transform: rotate(30deg);
-  background-color: rgba(40, 40, 40, 0.9);
+  transform: rotate(15deg);
 }
 
-/* Screen reader only content */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+/* Scroll to top */
+.scroll-to-top:hover {
+  transform: translateY(-3px);
 }
