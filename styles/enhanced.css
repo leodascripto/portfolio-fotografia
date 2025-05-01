@@ -1,71 +1,30 @@
-/* Enhanced CSS for Leo Oli Photography Portfolio */
-/* Versão otimizada do CSS */
+/* Enhanced CSS for Leo Oli Photography Portfolio - Versão corrigida */
 
 /* =========== ENHANCED ANIMATIONS =========== */
+/* Animações que não interferem com o carregamento original */
 .animate-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1; /* Modificado para não esconder elementos */
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
 .animate-on-scroll.animated {
-  opacity: 1;
-  transform: translateY(0);
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0.9; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 /* Logo animations */
-#logo {
-  transition: transform 0.4s ease;
-}
-
-#logo.animated {
-  animation: logoReveal 1s ease forwards;
-}
-
 #logo.hover {
   transform: scale(1.05);
 }
 
-@keyframes logoReveal {
-  0% { opacity: 0; transform: translateY(-20px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
+/* Não definimos lazy-loading para não interferir com o carregamento existente */
+/* Melhorias visuais que não interferem com o funcionamento */
 
-/* Lazy loading styles */
-.grid-item {
-  position: relative;
-  background-color: rgba(40, 40, 40, 0.3);
-}
-
-.grid-item img.lazy {
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.grid-item img.loaded {
-  opacity: 1;
-}
-
-.image-placeholder {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, rgba(40, 40, 40, 0.5) 25%, rgba(60, 60, 60, 0.5) 50%, rgba(40, 40, 40, 0.5) 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  z-index: 1;
-  pointer-events: none;
-  border-radius: var(--grid-radius);
-}
-
-.grid-item.loaded .image-placeholder {
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-/* Mobile filter improvements */
+/* Scroll indicator styles */
 .filters.scrollable {
   position: relative;
 }
@@ -116,21 +75,6 @@ body.keyboard-navigation [tabindex="0"]:focus {
   outline-offset: 3px;
 }
 
-/* Loading animation improvements */
-.loading-indicator {
-  animation: spin 1s linear infinite, pulse 2s ease-in-out infinite;
-}
-
-.loading-indicator.fadeout {
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(227, 202, 102, 0.5); }
-  50% { box-shadow: 0 0 0 10px rgba(227, 202, 102, 0); }
-}
-
 /* Mobile instruction improvements */
 .mobile-instructions {
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -140,14 +84,20 @@ body.keyboard-navigation [tabindex="0"]:focus {
   animation: slideUp 0.5s ease forwards;
 }
 
-.mobile-instructions.hiding {
-  opacity: 0;
-  transform: translateY(20px);
+@keyframes slideUp {
+  0% { opacity: 0.8; transform: translateY(5px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes slideUp {
-  0% { opacity: 0; transform: translateY(20px); }
-  100% { opacity: 1; transform: translateY(0); }
+/* Enhanced hover effects */
+.grid-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.theme-toggle:hover {
+  transform: rotate(30deg);
+  background-color: rgba(40, 40, 40, 0.9);
 }
 
 /* Screen reader only content */
