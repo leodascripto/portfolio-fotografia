@@ -899,3 +899,423 @@ body.light-mode .grid-item {
     outline: 2px solid CanvasText;
   }
 }
+
+/**
+ * Enhanced CSS for Leo Oli Photography Portfolio
+ * These styles should be added to your existing CSS for improved UI
+ */
+
+/* =========== ENHANCED ANIMATIONS =========== */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Add staggered animation to grid items */
+.grid-item {
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), 
+              box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.grid-item:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+/* Add hover effect to overlay text */
+.grid-item .overlay {
+  transition: opacity 0.3s ease, transform 0.3s ease, background 0.3s ease;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+}
+
+.grid-item:hover .overlay {
+  opacity: 1;
+  transform: translateY(0);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 70%, rgba(0, 0, 0, 0.1) 100%);
+}
+
+/* Animate logo */
+#logo {
+  transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+#logo:hover {
+  transform: scale(1.03);
+}
+
+/* =========== IMPROVED LOADING STATES =========== */
+/* Enhanced loading indicator */
+.loading-indicator {
+  border: 3px solid rgba(227, 202, 102, 0.1);
+  border-top: 3px solid var(--primary-gold);
+  border-right: 3px solid var(--primary-gold);
+  animation: spin 1s cubic-bezier(0.17, 0.67, 0.83, 0.67) infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Image loading placeholders */
+.image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    rgba(40, 40, 40, 0.5) 0%, 
+    rgba(60, 60, 60, 0.5) 50%, 
+    rgba(40, 40, 40, 0.5) 100%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite linear;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: var(--grid-radius);
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* =========== IMPROVED GALLERY STYLES =========== */
+/* Enhanced Magnific Popup */
+.mfp-bg {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.mfp-bg.mfp-ready {
+  opacity: 0.9;
+}
+
+.mfp-bg.mfp-removing {
+  opacity: 0;
+}
+
+.mfp-container {
+  padding: 0;
+  overflow: hidden;
+}
+
+.mfp-content {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.3s ease;
+}
+
+.mfp-ready .mfp-content {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mfp-removing .mfp-content {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.mfp-arrow {
+  opacity: 0.6;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mfp-arrow:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.mfp-arrow-left {
+  transform-origin: left center;
+}
+
+.mfp-arrow-right {
+  transform-origin: right center;
+}
+
+.mfp-bottom-bar {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 15px 10px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.mfp-title {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* =========== MOBILE ENHANCEMENTS =========== */
+/* Improved filter navigation */
+@media (max-width: 768px) {
+  .filters ul {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .filters ul::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scroll-indicator {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(35, 35, 35, 0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .scroll-indicator.left {
+    left: 5px;
+  }
+  
+  .scroll-indicator.right {
+    right: 5px;
+  }
+  
+  .scroll-indicator i {
+    color: var(--primary-gold);
+    font-size: 14px;
+  }
+  
+  /* Enhanced touch feedback */
+  .grid-item:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+  
+  /* Improved mobile instructions */
+  .mobile-instructions {
+    background: rgba(30, 30, 30, 0.85);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.5s ease forwards;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* =========== ACCESSIBILITY IMPROVEMENTS =========== */
+/* Focus states */
+a:focus,
+button:focus,
+[role="button"]:focus,
+[tabindex="0"]:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--primary-gold);
+}
+
+/* Keyboard navigation indicator */
+body.keyboard-navigation a:focus,
+body.keyboard-navigation button:focus,
+body.keyboard-navigation [role="button"]:focus,
+body.keyboard-navigation [tabindex="0"]:focus {
+  outline: 3px solid var(--primary-gold);
+  outline-offset: 3px;
+}
+
+/* Hidden screen reader elements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* =========== THEME IMPROVEMENTS =========== */
+/* Enhanced light mode */
+body.light-mode {
+  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+  color: #333;
+}
+
+body.light-mode .grid-item {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .filters ul {
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+body.light-mode .filters li a {
+  color: #555;
+}
+
+body.light-mode .filters li.active a {
+  color: var(--secondary-gold);
+}
+
+body.light-mode .header h1,
+body.light-mode .header .portfolio {
+  text-shadow: 2px 2px 8px rgba(180, 142, 71, 0.2);
+}
+
+body.light-mode .theme-toggle {
+  background: rgba(240, 240, 240, 0.9);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+body.light-mode .scroll-to-top {
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* =========== RESPONSIVE GRID IMPROVEMENTS =========== */
+/* Improved grid layout at different breakpoints */
+@media (min-width: 1400px) {
+  .grid-item {
+    width: calc(20% - 20px);
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .grid-item {
+    width: calc(25% - 20px);
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .grid-item {
+    width: calc(33.333% - 20px);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .grid-item {
+    width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 767px) {
+  .grid-item {
+    width: calc(100% - 20px);
+    max-height: 350px;
+  }
+}
+
+/* =========== ADDITIONAL INTERACTION STATES =========== */
+/* Enhanced filters */
+.filters li {
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.filters li:hover {
+  transform: translateY(-2px);
+  background: rgba(227, 202, 102, 0.15);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.filters li.active {
+  background: linear-gradient(135deg, rgba(227, 202, 102, 0.3), rgba(180, 142, 71, 0.3));
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+/* Button states */
+.float,
+.theme-toggle,
+.scroll-to-top {
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.float:hover,
+.theme-toggle:hover,
+.scroll-to-top:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.float:active,
+.theme-toggle:active,
+.scroll-to-top:active {
+  transform: translateY(1px) scale(0.98);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* =========== PRINT STYLES =========== */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .header, .footer {
+    padding: 1rem 0;
+  }
+  
+  .filters, .float, .theme-toggle, .scroll-to-top {
+    display: none !important;
+  }
+  
+  .grid-item {
+    page-break-inside: avoid;
+    break-inside: avoid;
+    width: 100%;
+    margin: 20px 0;
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  .grid-item img {
+    filter: none !important;
+  }
+  
+  .grid-item .overlay {
+    background: none;
+    color: black;
+    position: static;
+    padding: 10px 0;
+    opacity: 1;
+    transform: none;
+  }
+  
+  a {
+    text-decoration: none;
+    color: black;
+  }
+  
+  a::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    font-style: italic;
+  }
+}
