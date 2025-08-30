@@ -1,0 +1,550 @@
+/* 
+ * Leo Oli - Portfolio Fotográfico
+ * CSS Principal - Mobile First
+ */
+
+/* =========== VARIÁVEIS =========== */
+:root {
+  --primary-gold: #e3ca66;
+  --secondary-gold: #b48e47;
+  --dark-bg: #212121;
+  --darker-bg: #171717;
+  --text-light: #d4d4d4;
+  --text-lighter: #f5f5f5;
+  --transition-speed: 0.3s;
+  --grid-gap: 15px;
+  --border-radius: 10px;
+  --whatsapp-color: #25d366;
+}
+
+/* =========== RESET =========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========== BASE =========== */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text-light);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* =========== LOADING =========== */
+.loading-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--dark-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity 0.3s ease;
+}
+
+.loading-indicator.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(227, 202, 102, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-gold);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* =========== HEADER =========== */
+.header {
+  padding: 20px 15px;
+  text-align: center;
+}
+
+#logo {
+  width: 90%;
+  max-width: 350px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.portfolio-text {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+
+/* =========== FILTROS =========== */
+.filters {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(25, 25, 25, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 10px 0;
+  margin-bottom: 20px;
+}
+
+.filters-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0 15px;
+}
+
+.filters-container::-webkit-scrollbar {
+  display: none;
+}
+
+.filters-list {
+  display: flex;
+  list-style: none;
+  gap: 8px;
+  padding: 8px 0;
+  white-space: nowrap;
+}
+
+.filters-list li {
+  flex: 0 0 auto;
+}
+
+.filters-list button {
+  background: transparent;
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  color: var(--text-light);
+  padding: 8px 16px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  white-space: nowrap;
+  touch-action: manipulation;
+}
+
+.filters-list button:active {
+  transform: scale(0.95);
+}
+
+.filters-list li.active button {
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  color: var(--darker-bg);
+  border-color: transparent;
+}
+
+/* =========== GALERIA =========== */
+.gallery {
+  padding: 0 15px;
+  margin-bottom: 80px;
+  min-height: 50vh;
+}
+
+.grid-item {
+  width: 100%;
+  margin-bottom: 15px;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background: var(--darker-bg);
+  position: relative;
+  cursor: pointer;
+  transition: transform var(--transition-speed) ease;
+}
+
+.grid-item:active {
+  transform: scale(0.98);
+}
+
+.grid-item a {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%; /* Aspect ratio 1:1 */
+  overflow: hidden;
+}
+
+.grid-item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.grid-item .overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  transform: translateY(0);
+  opacity: 1;
+  transition: all var(--transition-speed) ease;
+}
+
+/* Estado oculto do Isotope */
+.grid-item.isotope-hidden {
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.001);
+}
+
+/* =========== INSTRUÇÕES MOBILE =========== */
+.mobile-instructions {
+  background: rgba(30, 30, 30, 0.95);
+  border-radius: var(--border-radius);
+  padding: 12px;
+  margin: 0 15px 20px;
+  text-align: center;
+  font-size: 13px;
+  animation: slideUp 0.5s ease;
+}
+
+.mobile-instructions p {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.mobile-instructions i {
+  color: var(--primary-gold);
+}
+
+.mobile-instructions.hidden {
+  display: none;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========== BOTÕES FLUTUANTES =========== */
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(35, 35, 35, 0.9);
+  border: none;
+  color: var(--primary-gold);
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-speed) ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  background: var(--whatsapp-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  z-index: 200;
+  transition: all var(--transition-speed) ease;
+  text-decoration: none;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(37, 211, 102, 0.5);
+  }
+  70% {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 15px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 85px;
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  color: var(--darker-bg);
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px);
+  transition: all var(--transition-speed) ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 200;
+}
+
+.scroll-to-top.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* =========== FOOTER =========== */
+.footer {
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  padding: 20px 15px;
+  text-align: center;
+  color: var(--darker-bg);
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.footer a {
+  color: var(--darker-bg);
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--transition-speed) ease;
+}
+
+.footer a:hover {
+  border-bottom-color: var(--darker-bg);
+}
+
+/* =========== TEMA CLARO =========== */
+body.light-mode {
+  background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+  color: #333;
+}
+
+body.light-mode .loading-indicator {
+  background: #f5f5f5;
+}
+
+body.light-mode .filters {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+body.light-mode .filters-list button {
+  color: #555;
+  border-color: rgba(180, 142, 71, 0.3);
+}
+
+body.light-mode .filters-list li.active button {
+  color: white;
+}
+
+body.light-mode .theme-toggle {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+body.light-mode .mobile-instructions {
+  background: rgba(255, 255, 255, 0.95);
+  color: #333;
+}
+
+body.light-mode .grid-item {
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* =========== MAGNIFIC POPUP CUSTOMIZADO =========== */
+.mfp-bg {
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.mfp-figure::after {
+  box-shadow: none;
+}
+
+.mfp-bottom-bar {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px;
+}
+
+.mfp-title {
+  font-size: 14px;
+  color: white;
+  line-height: 1.4;
+}
+
+.mfp-counter {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.mfp-arrow {
+  opacity: 0.8;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mfp-arrow:active {
+  opacity: 1;
+}
+
+/* Botão de fechar maior para mobile */
+.mfp-close {
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  font-size: 32px;
+  opacity: 0.8;
+}
+
+/* =========== TABLETS =========== */
+@media (min-width: 576px) {
+  .gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--grid-gap);
+  }
+  
+  .grid-item {
+    width: calc(50% - var(--grid-gap) / 2);
+    margin-bottom: 0;
+  }
+  
+  .filters-list {
+    justify-content: center;
+  }
+  
+  #logo {
+    max-width: 400px;
+  }
+}
+
+/* =========== DESKTOP =========== */
+@media (min-width: 768px) {
+  .grid-item {
+    width: calc(33.333% - var(--grid-gap) * 2 / 3);
+  }
+  
+  .grid-item .overlay {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .grid-item:hover .overlay {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  .grid-item:hover img {
+    transform: scale(1.05);
+  }
+  
+  .mobile-instructions {
+    display: none;
+  }
+  
+  .filters-list button:hover {
+    background: rgba(227, 202, 102, 0.1);
+    border-color: var(--primary-gold);
+    transform: translateY(-2px);
+  }
+}
+
+@media (min-width: 992px) {
+  .gallery {
+    max-width: 1200px;
+    margin: 0 auto 80px;
+  }
+  
+  .grid-item {
+    width: calc(25% - var(--grid-gap) * 3 / 4);
+  }
+}
+
+@media (min-width: 1200px) {
+  .gallery {
+    max-width: 1400px;
+  }
+  
+  .grid-item {
+    width: calc(20% - var(--grid-gap) * 4 / 5);
+  }
+}
+
+/* =========== UTILIDADES =========== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Prevenir seleção de texto em elementos interativos */
+button, a, .grid-item {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Focus para acessibilidade */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--primary-gold);
+  outline-offset: 2px;
+}
+
+/* Redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

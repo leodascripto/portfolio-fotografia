@@ -1,0 +1,150 @@
+/**
+ * Módulo Principal da Aplicação
+ * Coordena todos os outros módulos
+ */
+
+const App = (function() {
+  'use strict';
+  
+  /**
+   * Inicializa a aplicação
+   */
+  function init() {
+    setupScrollToTop();
+    setupFooterYear();
+    setupWindowEvents();
+    
+    // Log de inicialização
+    console.log('Portfolio Leo Oli - Inicializado');
+  }
+  
+  /**
+   * Configura o botão de voltar ao topo
+   */
+  function setupScrollToTop() {
+    const $button = $('.scroll-to-top');
+    
+    // Mostrar/esconder baseado no scroll
+    $(window).on('scroll', function() {
+      if ($(this).scrollTop() > 300) {
+        $button.addClass('visible');
+      } else {
+        $button.removeClass('visible');
+      }
+    });
+    
+    // Clique para voltar ao topo
+    $button.on('click', function() {
+      $('html, body').animate({
+        scrollTop: 0
+      }, 500);
+    });
+  }
+  
+  /**
+   * Atualiza o ano no footer
+   */
+  function setupFooterYear() {
+    $('#year').text(new Date().getFullYear());
+  }
+  
+  /**
+   * Configura eventos da janela
+   */
+  function setupWindowEvents() {
+    let resizeTimer;
+    
+    // Redimensionamento da janela
+    $(window).on('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        // Atualizar layout da galeria
+        if (window.Gallery) {
+          Gallery.updateLayout();
+        }
+        
+        // Verificar filtros scrolláveis
+        if (window.Filters) {
+          Filters.init();
+        }
+      }, 250);
+    });
+    
+    // Prevenir arrastar imagens
+    $('img').on('dragstart', function(e) {
+      e.preventDefault();
+    });
+    
+    // Melhorar acessibilidade
+    setupAccessibility();
+  }
+  
+  /**
+   * Configura melhorias de acessibilidade
+   */
+  function setupAccessibility() {
+    // Navegação por teclado
+    $(document).on('keydown', function(e) {
+      // ESC fecha o popup se estiver aberto
+      if (e.keyCode === 27 && $.magnificPopup.instance.isOpen) {
+        $.magnificPopup.close();
+      }
+    });
+    
+    // Focus visible apenas com teclado
+    let usingKeyboard = false;
+    
+    $(document).on('keydown', function(e) {
+      if (e.keyCode === 9) { // Tab
+        usingKeyboard = true;
+        $('body').addClass('keyboard-nav');
+      }
+    });
+    
+    $(document).on('mousedown', function() {
+      usingKeyboard = false;
+      $('body').removeClass('keyboard-nav');
+    });
+  }
+  
+  // API pública
+  return {
+    init: init
+  };
+})();
+
+// Inicializar quando o documento estiver pronto
+$(document).ready(function() {
+  App.init();
+});
+
+// Adicionar estilos para acessibilidade
+const appStyles = `
+<style>
+/* Focus apenas quando usando teclado */
+body:not(.keyboard-nav) *:focus {
+  outline: none;
+}
+
+body.keyboard-nav *:focus {
+  outline: 2px solid var(--primary-gold);
+  outline-offset: 2px;
+}
+
+/* Animação suave para scroll-to-top */
+.scroll-to-top {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-to-top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-to-top:active {
+  transform: translateY(-1px);
+}
+</style>
+`;
+
+$('head').append(appStyles);

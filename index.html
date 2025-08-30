@@ -1,172 +1,126 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfolio fotográfico de Leo Oli - Fotógrafo profissional especializado em retratos e ensaios fotográficos." />
-    <meta name="theme-color" content="#212121" />
-    <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Portfolio fotográfico de Leo Oli - Fotógrafo profissional especializado em retratos e ensaios fotográficos.">
+    <meta name="theme-color" content="#212121">
+    <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
     <title>Leo Oli - Portfolio Fotográfico</title>
 
-    <link rel="stylesheet" href="./styles/style.css" />
-    <link rel="stylesheet" href="./styles/enhanced.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Parisienne&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet" />
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Fontes -->
+    <link href="https://fonts.googleapis.com/css?family=Parisienne&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet">
+    
+    <!-- Ícones -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="./styles/main.css">
+    
+    <!-- Magnific Popup CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet">
 </head>
-
 <body>
-    <!-- Botão de alternância de tema -->
-    <div class="theme-toggle" aria-label="Alternar tema claro/escuro" role="button" tabindex="0">
-        <i class="fa fa-sun-o" aria-hidden="true"></i>
-        <span class="sr-only">Alternar tema</span>
+    <!-- Loading -->
+    <div class="loading-indicator" aria-hidden="true">
+        <div class="spinner"></div>
     </div>
 
-    <!-- Link do WhatsApp -->
-    <a href="https://wa.me/5511983157973?text=Me+chama+pra+fotografar+%F0%9F%98%AD%F0%9F%" class="float" aria-label="Contato pelo WhatsApp" target="_blank" rel="noopener noreferrer">
-        <i class="fa fa-whatsapp my-float" aria-hidden="true"></i>
-        <span class="sr-only">Contato WhatsApp</span>
+    <!-- Tema Toggle -->
+    <button class="theme-toggle" aria-label="Alternar tema claro/escuro" type="button">
+        <i class="fa fa-sun-o" aria-hidden="true"></i>
+    </button>
+
+    <!-- WhatsApp -->
+    <a href="https://wa.me/5511983157973?text=Me+chama+pra+fotografar+%F0%9F%98%AD%F0%9F%" 
+       class="whatsapp-float" 
+       aria-label="Contato pelo WhatsApp" 
+       target="_blank" 
+       rel="noopener noreferrer">
+        <i class="fa fa-whatsapp" aria-hidden="true"></i>
     </a>
 
-    <!-- Cabeçalho -->
-    <header class="header" role="banner">
+    <!-- Scroll to Top -->
+    <button class="scroll-to-top" aria-label="Voltar ao topo" type="button">
+        <i class="fa fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- Header -->
+    <header class="header">
         <h1>
-            <img id="logo" src="assets/img/logo.png" alt="Leo Oli - Fotógrafo" />
+            <img id="logo" src="assets/img/logo.png" alt="Leo Oli - Fotógrafo">
         </h1>
-        <p class="portfolio">Portfolio</p>
+        <p class="portfolio-text">Portfolio</p>
     </header>
 
-    <!-- Filtros de Navegação -->
-    <nav class="filters filter-button-group" aria-label="Filtros de categorias" role="navigation">
-        <ul>
-            <li class="active"><a href="javascript:void(0);" data-filter="*" role="button" aria-current="true" tabindex="0">Todos</a></li>
-            <li><a href="javascript:void(0);" data-filter=".debora" role="button" aria-current="false" tabindex="0">Débora</a></li>
-            <li><a href="javascript:void(0);" data-filter=".lisa" role="button" aria-current="false" tabindex="0">Lisa</a></li>
-            <li><a href="javascript:void(0);" data-filter=".giovanna" role="button" aria-current="false" tabindex="0">Giovanna</a></li>
-            <li><a href="javascript:void(0);" data-filter=".gustavo" role="button" aria-current="false" tabindex="0">Gustavo</a></li>
-            <li><a href="javascript:void(0);" data-filter=".vitoria" role="button" aria-current="false" tabindex="0">Vitoria</a></li>
-            <li><a href="javascript:void(0);" data-filter=".leooli" role="button" aria-current="false" tabindex="0">Leo Oli</a></li>
-            <li><a href="javascript:void(0);" data-filter=".fernanda" role="button" aria-current="false" tabindex="0">Fernanda</a></li>
-            <li><a href="javascript:void(0);" data-filter=".akira" role="button" aria-current="false" tabindex="0">Akira</a></li>
-            <li><a href="javascript:void(0);" data-filter=".mariana" role="button" aria-current="false" tabindex="0">Mariana</a></li>
-        </ul>
+    <!-- Filtros -->
+    <nav class="filters" role="navigation" aria-label="Filtros de categorias">
+        <div class="filters-container">
+            <ul class="filters-list">
+                <li class="active">
+                    <button type="button" data-filter="*">Todos</button>
+                </li>
+                <li>
+                    <button type="button" data-filter=".debora">Débora</button>
+                </li>
+                <li>
+                    <button type="button" data-filter=".lisa">Lisa</button>
+                </li>
+                <li>
+                    <button type="button" data-filter=".giovanna">Giovanna</button>
+                </li>
+                <li>
+                    <button type="button" data-filter=".gustavo">Gustavo</button>
+                </li>
+                <li>
+                    <button type="button" data-filter=".vitoria">Vitoria</button>
+                </li>
+                <li>
+                    <button type="button" data-filter=".leooli">Leo Oli</button>
+                </li>
+                <li>
+                    <button type="button" data-filter=".fernanda">Fernanda</button>
+                </li>
+                <li>
+                    <button type="button" data-filter=".akira">Akira</button>
+                </li>
+                <li>
+                    <button type="button" data-filter=".mariana">Mariana</button>
+                </li>
+            </ul>
+        </div>
     </nav>
 
-    <!-- Indicador de Carregamento -->
-    <div aria-hidden="true" class="loading-indicator"></div>
-
-    <!-- Container Principal da Galeria -->
-    <main id="container" class="isotope" role="main" aria-label="Galeria de fotos">
-        <!-- Itens serão inseridos aqui via JavaScript -->
-    </main>
-
-    <!-- Paginação -->
-    <div class="isotope-pager" role="navigation" aria-label="Paginação da galeria"></div>
-
-    <!-- Instruções para Mobile (visível apenas em dispositivos móveis) -->
-    <div class="mobile-instructions">
-        <p><i class="fa fa-hand-o-up" aria-hidden="true"></i> Toque na imagem para ampliar</p>
-        <p><i class="fa fa-arrows-h" aria-hidden="true"></i> Deslize para navegar entre as fotos</p>
+    <!-- Instruções Mobile -->
+    <div class="mobile-instructions" aria-hidden="true">
+        <p><i class="fa fa-hand-o-up"></i> Toque para ampliar</p>
+        <p><i class="fa fa-arrows-h"></i> Deslize para navegar</p>
     </div>
 
-    <!-- Rodapé -->
-    <footer class="footer" role="contentinfo">
-        <p>&copy;
-            <script>document.write(new Date().getFullYear());</script>
-            Todos os direitos reservados.
+    <!-- Container Principal -->
+    <main id="gallery-container" class="gallery" role="main">
+        <!-- Imagens serão inseridas aqui via JavaScript -->
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; <span id="year"></span> Todos os direitos reservados.
             <a href="https://www.instagram.com/leooli321/" target="_blank" rel="noopener noreferrer">Leo Oli</a>
         </p>
     </footer>
 
-<!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js"></script>
-<script src="js/imagesLoaded.js"></script>
-<script src="js/carregafotos.js"></script>
-
-<!-- Carregar apenas o novo script unificado -->
-<script src="js/unified-fix.js"></script>
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/2.2.2/isotope.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
     
-    <!-- Script para adicionar funcionalidades extras -->
-    <script>
-        $(document).ready(function() {
-            // Botão para voltar ao topo
-            const scrollToTop = $('<div class="scroll-to-top" aria-label="Voltar ao topo" role="button" tabindex="0"><i class="fa fa-chevron-up"></i></div>');
-            $('body').append(scrollToTop);
-            
-            // Mostrar/esconder botão conforme a rolagem
-            $(window).scroll(function() {
-                if ($(this).scrollTop() > 300) {
-                    scrollToTop.addClass('visible');
-                } else {
-                    scrollToTop.removeClass('visible');
-                }
-            });
-            
-            // Ação do botão
-            scrollToTop.click(function() {
-                $('html, body').animate({ scrollTop: 0 }, 500);
-                return false;
-            });
-            
-            // Alternar tema claro/escuro
-            $('.theme-toggle').click(function() {
-                $('body').toggleClass('light-mode');
-                const icon = $(this).find('i');
-                
-                if ($('body').hasClass('light-mode')) {
-                    icon.removeClass('fa-sun-o').addClass('fa-moon-o');
-                } else {
-                    icon.removeClass('fa-moon-o').addClass('fa-sun-o');
-                }
-                
-                // Re-layout do isotope após mudança de tema
-                if ($.fn.isotope) {
-                    $('#container').isotope('layout');
-                }
-            });
-            
-            // Feedback tátil para dispositivos móveis
-            if ('ontouchstart' in window) {
-                $(document).on('touchstart', 'a, button, [role="button"], .grid-item', function() {
-                    const feedback = $('<div class="touch-feedback"></div>');
-                    $('body').append(feedback);
-                    
-                    const touch = event.touches[0];
-                    feedback.css({
-                        'left': touch.clientX + 'px',
-                        'top': touch.clientY + 'px'
-                    });
-                    
-                    setTimeout(function() {
-                        feedback.remove();
-                    }, 600);
-                });
-            }
-            
-            // Adicionar navegação por teclado para acessibilidade
-            $(document).keydown(function(e) {
-                // Navegação na galeria com as setas do teclado quando aberta
-                if ($.magnificPopup && $.magnificPopup.instance.isOpen) {
-                    // Seta esquerda - imagem anterior
-                    if (e.keyCode === 37) {
-                        $.magnificPopup.instance.prev();
-                    }
-                    // Seta direita - próxima imagem
-                    else if (e.keyCode === 39) {
-                        $.magnificPopup.instance.next();
-                    }
-                    // ESC - fechar
-                    else if (e.keyCode === 27) {
-                        $.magnificPopup.instance.close();
-                    }
-                }
-            });
-        });
-    </script>
+    <!-- Scripts do Portfolio -->
+    <script src="js/gallery.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/mobile.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/app.js"></script>
 </body>
-
 </html>
