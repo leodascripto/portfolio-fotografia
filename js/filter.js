@@ -29,8 +29,13 @@ const Filters = (function() {
       e.stopPropagation();
       
       const $button = $(this);
-      const filterValue = $button.data('filter');
+      let filterValue = $button.data('filter');
       
+      // Adiciona o ponto no início do valor do filtro
+      if (filterValue !== '*' && !filterValue.startsWith('.')) {
+        filterValue = '.' + filterValue;
+      }
+
       // Evitar duplo clique
       if (filterValue === currentFilter) return;
       
