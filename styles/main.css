@@ -160,19 +160,26 @@ body {
 /* =========== GALERIA =========== */
 .gallery {
   padding: 0 15px;
-  margin-bottom: 80px;
+  margin: 0 auto 80px;
   min-height: 50vh;
+  max-width: 100%;
+  display: block;
 }
 
+/* Garante o alinhamento da galeria */
+.gallery.isotope {
+  margin: 0 auto 80px;
+  max-width: 1400px;
+}
 .grid-item {
-  width: 100%;
-  margin-bottom: 15px;
+  width: calc(100% - 30px);
   border-radius: var(--border-radius);
   overflow: hidden;
   background: var(--darker-bg);
   position: relative;
   cursor: pointer;
-  transition: transform var(--transition-speed) ease;
+  transition: all var(--transition-speed) ease;
+  float: left;
 }
 
 .grid-item:active {
@@ -190,11 +197,12 @@ body {
 
 .grid-item img {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 50%;
+  left: 50%;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transform: translate(-50%, -50%);
   transition: transform 0.5s ease;
 }
 
@@ -444,14 +452,13 @@ body.light-mode .grid-item {
 /* =========== TABLETS =========== */
 @media (min-width: 576px) {
   .gallery {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--grid-gap);
+    max-width: 1400px;
+    padding: 0 10px;
   }
   
   .grid-item {
-    width: calc(50% - var(--grid-gap) / 2);
-    margin-bottom: 0;
+    width: calc(50% - 20px);
+    margin: 10px;
   }
   
   .filters-list {
@@ -466,7 +473,8 @@ body.light-mode .grid-item {
 /* =========== DESKTOP =========== */
 @media (min-width: 768px) {
   .grid-item {
-    width: calc(33.333% - var(--grid-gap) * 2 / 3);
+    width: calc(33.333% - 20px);
+    margin: 10px;
   }
   
   .grid-item .overlay {
@@ -480,7 +488,7 @@ body.light-mode .grid-item {
   }
   
   .grid-item:hover img {
-    transform: scale(1.05);
+    transform: translate(-50%, -50%) scale(1.05);
   }
   
   .mobile-instructions {
@@ -501,7 +509,8 @@ body.light-mode .grid-item {
   }
   
   .grid-item {
-    width: calc(25% - var(--grid-gap) * 3 / 4);
+    width: calc(25% - 20px);
+    margin: 10px;
   }
 }
 
@@ -511,7 +520,8 @@ body.light-mode .grid-item {
   }
   
   .grid-item {
-    width: calc(20% - var(--grid-gap) * 4 / 5);
+    width: calc(20% - 20px);
+    margin: 10px;
   }
 }
 

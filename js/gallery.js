@@ -8,6 +8,7 @@ const Gallery = (function() {
   
   let isotope = null;
   let isLoading = false;
+  let $container = null;
   
   // Configuração
   const config = {
@@ -20,6 +21,7 @@ const Gallery = (function() {
    * Inicializa a galeria
    */
   function init() {
+    $container = $(config.container);
     loadPhotos();
   }
   
@@ -56,7 +58,6 @@ const Gallery = (function() {
    * Renderiza as fotos no DOM
    */
   function renderPhotos(photos) {
-    const $container = $(config.container);
     $container.empty();
     
     // Criar HTML das fotos
@@ -84,24 +85,26 @@ const Gallery = (function() {
    * Inicializa o Isotope para layout e filtros
    */
   function initIsotope() {
-    const $container = $(config.container);
-    
     // Destruir instância anterior se existir
     if (isotope) {
       isotope.destroy();
+      isotope = null;
     }
     
+    // Adicionar classe isotope ao container
+    $container.addClass('isotope');
+    
     // Inicializar Isotope
-    isotope = new Isotope(config.container, {
+    $container.isotope({
       itemSelector: config.itemSelector,
       layoutMode: 'masonry',
       masonry: {
         columnWidth: config.itemSelector,
-        gutter: 15,
-        fitWidth: true
+        gutter: 0,
+        fitWidth: false
       },
       percentPosition: true,
-      transitionDuration: '0.3s',
+      transitionDuration: '0.4s',
       hiddenStyle: {
         opacity: 0,
         transform: 'scale(0.001)'
@@ -112,9 +115,12 @@ const Gallery = (function() {
       }
     });
     
+    // Armazenar instância
+    isotope = $container.data('isotope');
+    
     // Forçar layout inicial
     setTimeout(function() {
-      isotope.layout();
+      $container.isotope('layout');
     }, 100);
   }
   
@@ -172,24 +178,28 @@ const Gallery = (function() {
    * Aplica filtro na galeria
    */
   function filter(filterValue) {
-    if (!isotope) return;
+    if (!$container || !$container.data('isotope')) {
+      console.error('Isotope não inicializado');
+      return;
+    }
     
-    isotope.arrange({
-      filter: filterValue
-    });
+    console.log('Aplicando filtro:', filterValue);
+    
+    // Aplicar filtro
+    $container.isotope({ filter: filterValue });
     
     // Re-inicializar Magnific Popup após filtrar
     setTimeout(function() {
       initMagnificPopup();
-    }, 350);
+    }, 450);
   }
   
   /**
    * Atualiza layout da galeria
    */
   function updateLayout() {
-    if (isotope) {
-      isotope.layout();
+    if ($container && $container.data('isotope')) {
+      $container.isotope('layout');
     }
   }
   
