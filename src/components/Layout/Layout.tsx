@@ -14,15 +14,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta name="description" content="Portfolio fotográfico de Leo Oli - Fotógrafo profissional especializado em retratos e ensaios fotográficos." />
         <meta name="theme-color" content="#212121" />
-        <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon" />
+        <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon" />
         <title>Leo Oli - Portfolio Fotográfico</title>
-
-        {/* Fontes */}
-        <link href="https://fonts.googleapis.com/css?family=Parisienne&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap" rel="stylesheet" />
-        
-        {/* Ícones */}
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" />
       </Head>
 
       <motion.div
