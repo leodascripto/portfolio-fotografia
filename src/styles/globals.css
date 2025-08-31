@@ -1199,3 +1199,552 @@ a:focus-visible {
 .section-particle:nth-child(7n) {
   animation: particleTwinkle 6s ease-in-out infinite;
 }
+
+/* Mobile Premium Features CSS - Adicionar ao globals.css */
+
+/* =========== ADVANCED IMAGE VIEWER =========== */
+.advanced-image-viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.98);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.image-container-advanced {
+  position: relative;
+  max-width: 100%;
+  max-height: 100%;
+  cursor: grab;
+  touch-action: manipulation;
+}
+
+.image-container-advanced:active {
+  cursor: grabbing;
+}
+
+.image-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(227, 202, 102, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-gold);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Zoom Controls */
+.zoom-controls {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  padding: 10px 20px;
+  z-index: 2001;
+}
+
+.zoom-control {
+  width: 40px;
+  height: 40px;
+  background: rgba(227, 202, 102, 0.2);
+  border: 2px solid rgba(227, 202, 102, 0.5);
+  border-radius: 50%;
+  color: var(--primary-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.zoom-control:hover {
+  background: rgba(227, 202, 102, 0.3);
+  border-color: var(--primary-gold);
+}
+
+.zoom-indicator {
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  min-width: 50px;
+  text-align: center;
+}
+
+.reset-zoom {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(227, 202, 102, 0.5);
+  border-radius: 50%;
+  color: var(--primary-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 2001;
+}
+
+.close-advanced-viewer {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 2001;
+  transition: all 0.3s ease;
+}
+
+.close-advanced-viewer:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+}
+
+.viewer-instructions {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  background: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
+  padding: 10px 15px;
+  border-radius: 20px;
+  font-size: 12px;
+  backdrop-filter: blur(10px);
+}
+
+/* =========== PULL TO REFRESH =========== */
+.pull-to-refresh-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.pull-to-refresh-indicator {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  background: rgba(33, 33, 33, 0.95);
+  border-radius: 0 0 20px 20px;
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  min-width: 200px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.refresh-icon-container {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--darker-bg);
+  font-size: 18px;
+  box-shadow: 0 4px 15px rgba(227, 202, 102, 0.3);
+}
+
+.refresh-text {
+  color: var(--text-light);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  margin: 0;
+}
+
+.refresh-progress {
+  width: 100px;
+  height: 4px;
+  background: rgba(227, 202, 102, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary-gold), var(--secondary-gold));
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.pull-to-refresh-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========== PWA INSTALL PROMPT =========== */
+.pwa-install-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  padding: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.pwa-install-prompt {
+  background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+  border-radius: 20px;
+  padding: 0;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  overflow: hidden;
+}
+
+.pwa-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(227, 202, 102, 0.1);
+  border-bottom: 1px solid rgba(227, 202, 102, 0.2);
+  position: relative;
+}
+
+.pwa-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pwa-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pwa-info h3 {
+  color: var(--primary-gold);
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.pwa-info p {
+  color: var(--text-light);
+  margin: 2px 0 0;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.pwa-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: var(--text-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pwa-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.pwa-content {
+  padding: 20px;
+}
+
+.pwa-content h4 {
+  color: white;
+  margin: 0 0 15px;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.pwa-benefits {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.benefit {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.benefit i {
+  color: var(--primary-gold);
+  font-size: 20px;
+}
+
+.benefit span {
+  color: var(--text-light);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.pwa-description {
+  color: var(--text-light);
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  margin: 0;
+  opacity: 0.9;
+}
+
+/* iOS Instructions */
+.ios-instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.ios-step {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.ios-step i {
+  color: var(--primary-gold);
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+}
+
+.ios-step p {
+  color: var(--text-light);
+  margin: 0;
+  font-size: 14px;
+}
+
+.ios-step strong {
+  color: white;
+}
+
+/* PWA Actions */
+.pwa-actions {
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.pwa-install-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  color: var(--darker-bg);
+  border: none;
+  border-radius: 12px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.pwa-install-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(227, 202, 102, 0.4);
+}
+
+.pwa-secondary-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.pwa-maybe-later,
+.pwa-dismiss {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+}
+
+.pwa-maybe-later:hover,
+.pwa-dismiss:hover {
+  background: rgba(255, 255, 255, 0.1);
+  opacity: 1;
+}
+
+/* =========== RESPONSIVE MOBILE FEATURES =========== */
+@media (max-width: 768px) {
+  .zoom-controls {
+    bottom: 20px;
+    gap: 10px;
+    padding: 8px 16px;
+  }
+  
+  .zoom-control {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+  
+  .close-advanced-viewer,
+  .reset-zoom {
+    top: 20px;
+    width: 45px;
+    height: 45px;
+    font-size: 16px;
+  }
+  
+  .close-advanced-viewer {
+    right: 20px;
+  }
+  
+  .reset-zoom {
+    left: 20px;
+  }
+  
+  .viewer-instructions {
+    display: none; /* Ocultar em mobile para economizar espaço */
+  }
+  
+  .pwa-install-prompt {
+    margin: 10px;
+  }
+  
+  .pwa-benefits {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .benefit {
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+    padding: 12px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pull-to-refresh-indicator {
+    min-width: 180px;
+    padding: 15px;
+  }
+  
+  .refresh-icon-container {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
+  
+  .refresh-progress {
+    width: 80px;
+    height: 3px;
+  }
+}
+
+/* =========== ACCESSIBILITY & PERFORMANCE =========== */
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .loading-spinner {
+    animation: none;
+  }
+  
+  .refresh-icon-container {
+    animation: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .pwa-install-prompt {
+    border: 3px solid white;
+  }
+  
+  .zoom-control {
+    border-color: white;
+  }
+}
+
+/* Touch targets - minimum 44px for accessibility */
+@media (pointer: coarse) {
+  .zoom-control,
+  .close-advanced-viewer,
+  .reset-zoom {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}

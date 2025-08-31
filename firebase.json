@@ -8,7 +8,7 @@
     ],
     "headers": [
       {
-        "source": "**/*.@(jpg|jpeg|gif|png|webp|svg)",
+        "source": "**/*.@(jpg|jpeg|gif|png|webp|svg|ico)",
         "headers": [
           {
             "key": "Cache-Control",
@@ -24,6 +24,15 @@
             "value": "max-age=31536000"
           }
         ]
+      },
+      {
+        "source": "**/*.@(html|json)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=3600"
+          }
+        ]
       }
     ],
     "rewrites": [
@@ -31,6 +40,8 @@
         "source": "**",
         "destination": "/index.html"
       }
-    ]
+    ],
+    "cleanUrls": true,
+    "trailingSlash": false
   }
 }
