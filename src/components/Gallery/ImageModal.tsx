@@ -1,7 +1,9 @@
+// src/components/Gallery/ImageModal.tsx
 import React, { useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { Photo } from '@/types';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ImageModalProps {
   isOpen: boolean;
@@ -20,6 +22,8 @@ const ImageModal: React.FC<ImageModalProps> = ({
   onNext,
   onPrev
 }) => {
+  const { t } = useLanguage();
+
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     if (!isOpen) return;
 
@@ -136,6 +140,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
             onClick={onClose}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            aria-label={t.modal.close}
           >
             <i className="fa fa-times" />
           </motion.button>
@@ -147,6 +152,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
               onClick={onPrev}
               whileHover={{ scale: 1.1, x: -5 }}
               whileTap={{ scale: 0.9 }}
+              aria-label={t.modal.previous}
             >
               <i className="fa fa-chevron-left" />
             </motion.button>
@@ -158,6 +164,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
               onClick={onNext}
               whileHover={{ scale: 1.1, x: 5 }}
               whileTap={{ scale: 0.9 }}
+              aria-label={t.modal.next}
             >
               <i className="fa fa-chevron-right" />
             </motion.button>
@@ -189,7 +196,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
             transition={{ delay: 0.2 }}
           >
             <h3>{currentImage.name}</h3>
-            <p>{currentIndex + 1} de {images.length}</p>
+            <p>{currentIndex + 1} {t.gallery.imageInfo} {images.length}</p>
           </motion.div>
 
           {/* Mobile Swipe Hint */}
@@ -202,6 +209,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
 
 const MobileSwipeHint: React.FC = () => {
   const [showHint, setShowHint] = React.useState(false);
+  const { t } = useLanguage();
 
   React.useEffect(() => {
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
@@ -222,7 +230,7 @@ const MobileSwipeHint: React.FC = () => {
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.5 }}
     >
-      Deslize para navegar
+      {t.gallery.swipeHint}
     </motion.div>
   );
 };

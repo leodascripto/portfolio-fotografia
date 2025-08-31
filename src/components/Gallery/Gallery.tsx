@@ -1,7 +1,10 @@
+// src/components/Gallery/Gallery.tsx - Updated with particles
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { GalleryProps, Photo } from '@/types';
+import { useLanguage } from '@/contexts/LanguageContext';
+import SectionParticles from '@/components/SectionParticles/SectionParticles';
 import ImageModal from './ImageModal';
 
 const Gallery: React.FC<GalleryProps> = ({ photos, activeFilter }) => {
@@ -88,10 +91,18 @@ const Gallery: React.FC<GalleryProps> = ({ photos, activeFilter }) => {
         id="gallery-container"
         className="gallery"
         role="main"
+        style={{ position: 'relative', overflow: 'hidden' }}
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
+        {/* Particles Background */}
+        <SectionParticles 
+          section="gallery" 
+          intensity="medium" 
+          className="gallery-content"
+        />
+
         <AnimatePresence mode="wait">
           <motion.div 
             key={activeFilter}
@@ -100,11 +111,12 @@ const Gallery: React.FC<GalleryProps> = ({ photos, activeFilter }) => {
             initial="hidden"
             animate="visible"
             exit="hidden"
+            style={{ position: 'relative', zIndex: 2 }}
           >
             {filteredPhotos.map((photo, index) => (
               <motion.div
                 key={`${photo.filter}-${photo.name}-${index}`}
-                className="grid-item"
+                className="grid-item interactive-particles"
                 variants={itemVariants}
                 layout
                 whileHover={{ 
@@ -159,6 +171,7 @@ const Gallery: React.FC<GalleryProps> = ({ photos, activeFilter }) => {
 
 const MobileInstructions: React.FC = () => {
   const [showInstructions, setShowInstructions] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
@@ -187,10 +200,10 @@ const MobileInstructions: React.FC = () => {
       transition={{ duration: 0.5 }}
     >
       <p>
-        <i className="fa fa-hand-o-up"></i> Toque para ampliar
+        <i className="fa fa-hand-o-up"></i> {t.gallery.mobileInstructions.tap}
       </p>
       <p>
-        <i className="fa fa-arrows-h"></i> Deslize para navegar
+        <i className="fa fa-arrows-h"></i> {t.gallery.mobileInstructions.swipe}
       </p>
     </motion.div>
   );

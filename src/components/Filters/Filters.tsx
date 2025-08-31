@@ -1,11 +1,14 @@
+// src/components/Filters/Filters.tsx
 import React, { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { FilterProps } from '@/types';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Filters: React.FC<FilterProps> = ({ filters, activeFilter, onFilterChange }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [showLeftIndicator, setShowLeftIndicator] = useState(false);
   const [showRightIndicator, setShowRightIndicator] = useState(false);
+  const { t } = useLanguage();
 
   const checkScrollable = () => {
     if (containerRef.current) {
@@ -56,6 +59,14 @@ const Filters: React.FC<FilterProps> = ({ filters, activeFilter, onFilterChange 
     }
   };
 
+  // Traduzir os labels dos filtros
+  const getFilterLabel = (filter: any) => {
+    if (filter.value === '*') {
+      return t.navigation.all;
+    }
+    return filter.label;
+  };
+
   return (
     <motion.nav
       className="filters"
@@ -100,7 +111,7 @@ const Filters: React.FC<FilterProps> = ({ filters, activeFilter, onFilterChange 
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  {filter.label}
+                  {getFilterLabel(filter)}
                 </motion.button>
               </motion.li>
             ))}

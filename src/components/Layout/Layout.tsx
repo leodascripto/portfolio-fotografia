@@ -1,6 +1,9 @@
+// src/components/Layout/Layout.tsx
 import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
+import LanguageSelector from '@/components/LanguageSelector/LanguageSelector';
+import GlobalParticles from '@/components/GlobalParticles/GlobalParticles';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -18,12 +21,30 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <title>Leo Oli - Portfolio Fotográfico</title>
       </Head>
 
+      {/* Global Particles Background */}
+      <GlobalParticles 
+        density={12}
+        speed={1.2}
+        opacity={0.1}
+        size={3}
+      />
+
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
         {children}
+      </motion.div>
+
+      {/* Language Selector */}
+      <motion.div 
+        className="header-language-selector"
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.8, duration: 0.5 }}
+      >
+        <LanguageSelector showLabel={false} position="top-left" />
       </motion.div>
 
       {/* WhatsApp Float */}

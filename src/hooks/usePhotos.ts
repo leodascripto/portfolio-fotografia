@@ -1,3 +1,4 @@
+// src/hooks/usePhotos.ts
 import { useState, useEffect } from 'react';
 import { Photo, FilterOption } from '@/types';
 
@@ -56,6 +57,7 @@ export const usePhotos = () => {
     );
 
     // Criar array de filtros com labels amigáveis
+    // O label "Todos" será traduzido no componente Filters
     const filterOptions: FilterOption[] = [
       { label: 'Todos', value: '*', className: 'all' }
     ];

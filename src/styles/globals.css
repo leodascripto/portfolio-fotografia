@@ -512,3 +512,690 @@ a:focus-visible {
     transition: none !important;
   }
 }
+
+/* Welcome Screen Styles - Adicionar ao final do globals.css */
+
+/* =========== WELCOME SCREEN =========== */
+.welcome-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 50%, var(--darker-bg) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  overflow: hidden;
+}
+
+.welcome-content {
+  text-align: center;
+  padding: 20px;
+  max-width: 600px;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+.welcome-logo {
+  margin-bottom: 40px;
+}
+
+.welcome-texts {
+  margin-bottom: 50px;
+}
+
+.welcome-title {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 15px;
+  line-height: 1.2;
+}
+
+.welcome-subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: var(--text-light);
+  opacity: 0.9;
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+
+/* Language Selection */
+.language-selection {
+  margin-bottom: 40px;
+}
+
+.language-label {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.language-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.language-option {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  border-radius: 12px;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  min-width: 120px;
+}
+
+.language-option:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(227, 202, 102, 0.6);
+  transform: translateY(-2px);
+}
+
+.language-option.active {
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  border-color: transparent;
+  color: var(--darker-bg);
+}
+
+.language-option.active .language-name {
+  color: var(--darker-bg);
+  font-weight: 600;
+}
+
+.language-flag {
+  font-size: 24px;
+}
+
+.language-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-light);
+  transition: color var(--transition-speed) ease;
+}
+
+/* Enter Button */
+.welcome-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.enter-button {
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  color: var(--darker-bg);
+  border: none;
+  padding: 15px 40px;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all var(--transition-speed) ease;
+  box-shadow: 0 8px 25px rgba(227, 202, 102, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.enter-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(227, 202, 102, 0.4);
+}
+
+.enter-button i {
+  font-size: 16px;
+}
+
+/* Particle Background */
+.particle-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--primary-gold);
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .welcome-content {
+    padding: 20px 15px;
+  }
+  
+  .language-options {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .language-option {
+    width: 100%;
+    max-width: 200px;
+    justify-content: center;
+  }
+  
+  .welcome-logo {
+    margin-bottom: 30px;
+  }
+  
+  .welcome-texts {
+    margin-bottom: 40px;
+  }
+  
+  .language-selection {
+    margin-bottom: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-title {
+    font-size: 1.6rem;
+  }
+  
+  .welcome-subtitle {
+    font-size: 0.95rem;
+  }
+  
+  .enter-button {
+    padding: 12px 30px;
+    font-size: 1rem;
+  }
+}
+
+/* Dark mode enhancements */
+@media (prefers-color-scheme: dark) {
+  .language-option {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  
+  .language-option:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .particle {
+    animation: none !important;
+  }
+  
+  .enter-button i {
+    animation: none !important;
+  }
+}
+
+/* Language Selector Styles - Add to globals.css */
+
+/* =========== LANGUAGE SELECTOR =========== */
+.language-selector-container {
+  position: relative;
+  display: inline-block;
+  z-index: 1000;
+}
+
+.language-selector-trigger {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--text-light);
+  font-size: 14px;
+  min-width: 80px;
+}
+
+.language-selector-trigger:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(227, 202, 102, 0.6);
+}
+
+.current-language-flag {
+  font-size: 18px;
+}
+
+.current-language-name {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.language-selector-trigger i {
+  font-size: 12px;
+  margin-left: auto;
+}
+
+/* Dropdown */
+.language-dropdown {
+  position: absolute;
+  background: rgba(25, 25, 25, 0.98);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  border-radius: 8px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  min-width: 140px;
+  overflow: hidden;
+  z-index: 1001;
+}
+
+.language-dropdown.top-right {
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+}
+
+.language-dropdown.top-left {
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+}
+
+.language-dropdown.bottom-right {
+  bottom: 100%;
+  right: 0;
+  margin-bottom: 8px;
+}
+
+.language-dropdown.bottom-left {
+  bottom: 100%;
+  left: 0;
+  margin-bottom: 8px;
+}
+
+.language-dropdown-option {
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all var(--transition-speed) ease;
+  color: var(--text-light);
+  font-size: 14px;
+  text-align: left;
+}
+
+.language-dropdown-option:hover {
+  background: rgba(227, 202, 102, 0.1);
+}
+
+.language-dropdown-option.active {
+  background: rgba(227, 202, 102, 0.15);
+  color: var(--primary-gold);
+}
+
+.language-option-flag {
+  font-size: 16px;
+}
+
+.language-option-name {
+  font-weight: 500;
+  flex: 1;
+}
+
+.language-dropdown-option i.fa-check {
+  color: var(--primary-gold);
+  font-size: 12px;
+  margin-left: auto;
+}
+
+/* Overlay */
+.language-selector-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: transparent;
+  z-index: 999;
+}
+
+/* Fixed position variant for header */
+.header-language-selector {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 200;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .language-selector-trigger {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  
+  .current-language-flag {
+    font-size: 16px;
+  }
+  
+  .language-dropdown {
+    min-width: 120px;
+  }
+  
+  .language-dropdown-option {
+    padding: 12px 10px;
+  }
+  
+  .header-language-selector {
+    top: 15px;
+    right: 15px;
+  }
+}
+
+/* Hide language name on very small screens */
+@media (max-width: 480px) {
+  .current-language-name {
+    display: none;
+  }
+  
+  .language-selector-trigger {
+    min-width: 60px;
+    justify-content: center;
+  }
+}
+
+/* Particles CSS - Adicionar ao globals.css */
+
+/* =========== GLOBAL PARTICLES =========== */
+.global-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.global-particle {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(0.5px);
+}
+
+/* =========== SECTION PARTICLES =========== */
+.section-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.section-particle {
+  filter: blur(0.3px);
+  box-shadow: 0 0 10px rgba(227, 202, 102, 0.3);
+}
+
+/* Header Particles */
+.header-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: 0;
+}
+
+.header-particles .section-particle {
+  filter: blur(0.4px);
+  box-shadow: 0 0 8px rgba(227, 202, 102, 0.2);
+}
+
+/* Gallery Particles */
+.gallery-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.gallery-particles .section-particle {
+  background: linear-gradient(45deg, var(--primary-gold), var(--secondary-gold));
+  filter: blur(0.2px);
+  box-shadow: 0 0 6px rgba(227, 202, 102, 0.4);
+}
+
+/* Footer Particles */
+.footer-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.footer-particles .section-particle {
+  background: var(--secondary-gold);
+  filter: blur(0.3px);
+  box-shadow: 0 0 12px rgba(180, 142, 71, 0.5);
+}
+
+/* Welcome Particles */
+.welcome-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+}
+
+.welcome-particles .section-particle {
+  background: radial-gradient(circle, var(--primary-gold), transparent);
+  filter: blur(0.6px);
+  box-shadow: 0 0 15px rgba(227, 202, 102, 0.6);
+}
+
+/* =========== INTERACTIVE PARTICLES =========== */
+/* Partículas que reagem ao hover */
+.interactive-particles {
+  position: relative;
+}
+
+.interactive-particles:hover .section-particle {
+  animation-play-state: paused;
+  transform: scale(1.2) !important;
+  opacity: 0.6 !important;
+  transition: all 0.3s ease;
+}
+
+/* =========== PARTICLE VARIANTS =========== */
+/* Partículas douradas */
+.golden-particles .section-particle {
+  background: linear-gradient(45deg, 
+    var(--primary-gold), 
+    var(--secondary-gold), 
+    #f4d03f
+  );
+  box-shadow: 
+    0 0 10px rgba(227, 202, 102, 0.4),
+    0 0 20px rgba(227, 202, 102, 0.2),
+    0 0 30px rgba(227, 202, 102, 0.1);
+}
+
+/* Partículas sutis */
+.subtle-particles .section-particle {
+  opacity: 0.1 !important;
+  filter: blur(1px);
+  background: rgba(227, 202, 102, 0.3);
+}
+
+/* Partículas intensas */
+.intense-particles .section-particle {
+  opacity: 0.5 !important;
+  filter: blur(0px);
+  box-shadow: 
+    0 0 15px rgba(227, 202, 102, 0.6),
+    0 0 30px rgba(227, 202, 102, 0.3);
+}
+
+/* =========== RESPONSIVE PARTICLES =========== */
+@media (max-width: 768px) {
+  .global-particles,
+  .section-particles {
+    display: block; /* Manter em mobile */
+  }
+  
+  .global-particle,
+  .section-particle {
+    width: 3px !important;
+    height: 3px !important;
+    filter: blur(0.2px);
+  }
+  
+  /* Reduzir densidade em mobile */
+  .header-particles .section-particle:nth-child(n+4) {
+    display: none;
+  }
+  
+  .gallery-particles .section-particle:nth-child(n+8) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Reduzir ainda mais em telas muito pequenas */
+  .section-particle {
+    width: 2px !important;
+    height: 2px !important;
+  }
+  
+  .gallery-particles .section-particle:nth-child(n+5) {
+    display: none;
+  }
+}
+
+/* =========== PERFORMANCE OPTIMIZATIONS =========== */
+/* GPU acceleration */
+.global-particle,
+.section-particle {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .global-particles,
+  .section-particles,
+  .welcome-particles {
+    display: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .global-particle,
+  .section-particle {
+    opacity: 0.05 !important;
+    filter: none;
+    box-shadow: none;
+  }
+}
+
+/* Battery saving mode (if supported) */
+@media (prefers-reduced-data: reduce) {
+  .global-particles,
+  .section-particles {
+    display: none;
+  }
+}
+
+/* =========== PARTICLE ANIMATIONS =========== */
+/* Keyframes para variações */
+@keyframes particleFloat {
+  0% {
+    transform: translateY(100vh) scale(0.3) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-10vh) scale(0.1) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+@keyframes particlePulse {
+  0%, 100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes particleTwinkle {
+  0%, 100% {
+    opacity: 0.1;
+    filter: brightness(1);
+  }
+  25% {
+    opacity: 0.3;
+    filter: brightness(1.2);
+  }
+  50% {
+    opacity: 0.5;
+    filter: brightness(1.5);
+  }
+  75% {
+    opacity: 0.3;
+    filter: brightness(1.2);
+  }
+}
+
+/* Aplicar animações alternativas ocasionalmente */
+.section-particle:nth-child(5n) {
+  animation: particlePulse 4s ease-in-out infinite;
+}
+
+.section-particle:nth-child(7n) {
+  animation: particleTwinkle 6s ease-in-out infinite;
+}
