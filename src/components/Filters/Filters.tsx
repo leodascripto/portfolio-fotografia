@@ -4,6 +4,20 @@ import { motion } from 'framer-motion';
 import { FilterProps } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
 
+// Mapeamento de ícones por categoria
+const categoryIcons: Record<string, string> = {
+  '*': '🎨',        // Todos
+  'debora': '👤',   // Retratos
+  'giovanna': '✨', // Ensaios
+  'lisa': '💫',     // Artístico
+  'gustavo': '🎭',  // Criativo
+  'fernanda': '🌸', // Delicado
+  'akira': '⚡',    // Energético
+  'leooli': '📸',   // Portfolio
+  'mariana': '🌺',  // Feminino
+  'vitoria': '👑'   // Elegante
+};
+
 const Filters: React.FC<FilterProps> = ({ filters, activeFilter, onFilterChange }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [showLeftIndicator, setShowLeftIndicator] = useState(false);
@@ -46,7 +60,6 @@ const Filters: React.FC<FilterProps> = ({ filters, activeFilter, onFilterChange 
   const handleFilterClick = (filterValue: string) => {
     onFilterChange(filterValue);
     
-    // Scroll suave para a galeria em mobile
     if (window.matchMedia('(max-width: 768px)').matches) {
       const galleryElement = document.getElementById('gallery-container');
       if (galleryElement) {
@@ -59,12 +72,15 @@ const Filters: React.FC<FilterProps> = ({ filters, activeFilter, onFilterChange 
     }
   };
 
-  // Traduzir os labels dos filtros
   const getFilterLabel = (filter: any) => {
     if (filter.value === '*') {
-      return t.navigation.all;
+      return t.navigation.all || 'Ver Tudo';
     }
     return filter.label;
+  };
+
+  const getFilterIcon = (filterValue: string): string => {
+    return categoryIcons[filterValue] || '📷';
   };
 
   return (
@@ -77,7 +93,6 @@ const Filters: React.FC<FilterProps> = ({ filters, activeFilter, onFilterChange 
       transition={{ delay: 0.6, duration: 0.5 }}
     >
       <div className="filters-wrapper">
-        {/* Indicador esquerdo */}
         {showLeftIndicator && (
           <motion.div
             className="scroll-indicator left"
@@ -92,7 +107,6 @@ const Filters: React.FC<FilterProps> = ({ filters, activeFilter, onFilterChange 
           </motion.div>
         )}
 
-        {/* Container dos filtros */}
         <div className="filters-container" ref={containerRef}>
           <ul className="filters-list">
             {filters.map((filter, index) => (
@@ -111,14 +125,14 @@ const Filters: React.FC<FilterProps> = ({ filters, activeFilter, onFilterChange 
                   whileTap={{ scale: 0.95 }}
                   transition={{ type: "spring", stiffness: 400, damping: 17 }}
                 >
-                  {getFilterLabel(filter)}
+                  <span className="filter-icon">{getFilterIcon(filter.value)}</span>
+                  <span className="filter-label">{getFilterLabel(filter)}</span>
                 </motion.button>
               </motion.li>
             ))}
           </ul>
         </div>
 
-        {/* Indicador direito */}
         {showRightIndicator && (
           <motion.div
             className="scroll-indicator right"

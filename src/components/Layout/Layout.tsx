@@ -4,30 +4,35 @@ import Head from 'next/head';
 import { motion } from 'framer-motion';
 import LanguageSelector from '@/components/LanguageSelector/LanguageSelector';
 import GlobalParticles from '@/components/GlobalParticles/GlobalParticles';
+import { usePerformance } from '@/hooks/usePerformance'; // NOVO
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+  const performanceConfig = usePerformance(); // NOVO
+
   return (
     <>
       <Head>
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta name="description" content="Portfolio fotográfico de Leo Oli - Fotógrafo profissional especializado em retratos e ensaios fotográficos." />
+        <meta name="description" content="Leo Oli - Fotógrafo Profissional em São Paulo. Formado pela FIAP. Especialista em ensaios fotográficos, retratos e eventos." />
         <meta name="theme-color" content="#212121" />
         <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon" />
-        <title>Leo Oli - Portfolio Fotográfico</title>
+        <title>Leo Oli - Fotógrafo Profissional | São Paulo</title>
       </Head>
 
-      {/* Global Particles Background */}
-      <GlobalParticles 
-        density={12}
-        speed={1.2}
-        opacity={0.1}
-        size={3}
-      />
+      {/* Global Particles (adaptativo) */}
+      {performanceConfig.enableParticles && (
+        <GlobalParticles 
+          density={performanceConfig.particleDensity === 'low' ? 6 : 12}
+          speed={1.2}
+          opacity={0.1}
+          size={3}
+        />
+      )}
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -47,21 +52,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <LanguageSelector showLabel={false} position="top-left" />
       </motion.div>
 
-      {/* WhatsApp Float */}
-      <motion.a
-        href="https://wa.me/5511983157973?text=Me+chama+pra+fotografar+%F0%9F%98%AD%F0%9F%"
-        className="whatsapp-float"
-        aria-label="Contato pelo WhatsApp"
-        target="_blank"
-        rel="noopener noreferrer"
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 1, type: "spring", stiffness: 260, damping: 20 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-      >
-        <i className="fa fa-whatsapp" aria-hidden="true"></i>
-      </motion.a>
+      {/* REMOVIDO: WhatsApp Float antigo (agora é SmartCTA) */}
 
       {/* Scroll to Top */}
       <ScrollToTop />

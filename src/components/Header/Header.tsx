@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SectionParticles from '@/components/SectionParticles/SectionParticles';
+import AvailabilityBadge from '@/components/AvailabilityBadge/AvailabilityBadge';
 
 const Header: React.FC = () => {
   const { t } = useLanguage();
@@ -16,7 +17,6 @@ const Header: React.FC = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      {/* Particles Background */}
       <SectionParticles 
         section="header" 
         intensity="low" 
@@ -46,11 +46,33 @@ const Header: React.FC = () => {
         />
       </motion.h1>
       
+      {/* Tagline Profissional */}
+      <motion.div
+        className="header-tagline"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.6 }}
+        style={{ position: 'relative', zIndex: 2 }}
+      >
+        <h2 className="main-tagline">
+          {t.header?.mainTagline || 'Fotógrafo Profissional em São Paulo'}
+        </h2>
+        <p className="sub-tagline">
+          {t.header?.subTagline || 'Ensaios • Eventos • Retratos Artísticos'}
+        </p>
+        <p className="credentials">
+          📸 {t.header?.credentials || 'Formado em Fotografia Digital pela FIAP'}
+        </p>
+      </motion.div>
+
+      {/* Badge de Disponibilidade */}
+      <AvailabilityBadge variant="limited" />
+
       <motion.p 
         className="portfolio-text"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.4, duration: 0.6 }}
+        transition={{ delay: 0.6, duration: 0.6 }}
         style={{ position: 'relative', zIndex: 2 }}
       >
         {t.navigation.portfolio}

@@ -1,9 +1,8 @@
 // src/components/Welcome/Welcome.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
-import { languages } from '@/lib/i18n';
 import SectionParticles from '@/components/SectionParticles/SectionParticles';
 
 interface WelcomeProps {
@@ -11,17 +10,19 @@ interface WelcomeProps {
 }
 
 const Welcome: React.FC<WelcomeProps> = ({ onComplete }) => {
-  const { language, setLanguage, t } = useLanguage();
-  const [selectedLang, setSelectedLang] = useState(language);
+  const { setLanguage, t } = useLanguage();
 
-  const handleLanguageSelect = (langCode: string) => {
-    setSelectedLang(langCode);
-    setLanguage(langCode);
-  };
+  // Detecção automática de idioma
+  useEffect(() => {
+    const detectLanguage = () => {
+      const browserLang = navigator.language.split('-')[0];
+      const supportedLanguages = ['pt', 'en', 'ja'];
+      const detectedLang = supportedLanguages.includes(browserLang) ? browserLang : 'pt';
+      setLanguage(detectedLang);
+    };
 
-  const handleEnter = () => {
-    onComplete();
-  };
+    detectLanguage();
+  }, [setLanguage]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -54,18 +55,6 @@ const Welcome: React.FC<WelcomeProps> = ({ onComplete }) => {
     }
   };
 
-  const logoVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut"
-      }
-    }
-  };
-
   return (
     <motion.div
       className="welcome-screen"
@@ -75,8 +64,8 @@ const Welcome: React.FC<WelcomeProps> = ({ onComplete }) => {
       exit="exit"
     >
       <div className="welcome-content">
-        {/* Logo */}
-        <motion.div className="welcome-logo" variants={logoVariants}>
+        {/* Logo (já contém o nome) */}
+        <motion.div className="welcome-logo" variants={itemVariants}>
           <Image
             src="/assets/img/logo.png"
             alt="Leo Oli - Fotógrafo"
@@ -91,29 +80,41 @@ const Welcome: React.FC<WelcomeProps> = ({ onComplete }) => {
           />
         </motion.div>
 
-        {/* Textos de boas-vindas */}
-        <motion.div className="welcome-texts" variants={itemVariants}>
-          <h1 className="welcome-title">{t.welcome.title}</h1>
-          <p className="welcome-subtitle">{t.welcome.subtitle}</p>
+        {/* Foto Profissional do Leo */}
+        <motion.div className="welcome-profile" variants={itemVariants}>
+          <div className="profile-image-container">
+            <Image
+              src="/assets/img/leo-profile.jpg"
+              alt="Leo Oli - Fotógrafo Profissional"
+              width={180}
+              height={180}
+              priority
+              style={{
+                width: '100%',
+                height: 'auto',
+                borderRadius: '50%',
+                border: '4px solid var(--primary-gold)',
+                boxShadow: '0 8px 30px rgba(227, 202, 102, 0.3)'
+              }}
+            />
+          </div>
         </motion.div>
 
-        {/* Seleção de idioma */}
-        <motion.div className="language-selection" variants={itemVariants}>
-          <h2 className="language-label">{t.welcome.selectLanguage}</h2>
-          <div className="language-options">
-            {languages.map((lang) => (
-              <motion.button
-                key={lang.code}
-                className={`language-option ${selectedLang === lang.code ? 'active' : ''}`}
-                onClick={() => handleLanguageSelect(lang.code)}
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <span className="language-flag">{lang.flag}</span>
-                <span className="language-name">{lang.name}</span>
-              </motion.button>
-            ))}
+        {/* Tagline & Credenciais (SEM repetir o nome) */}
+        <motion.div className="welcome-credentials" variants={itemVariants}>
+          <p className="welcome-tagline">
+            {t.welcome?.tagline || 'Transformo momentos em arte que conta histórias'}
+          </p>
+          <div className="credentials-badges">
+            <span className="credential-badge">
+              🎓 {t.welcome?.education || 'Formado em Fotografia Digital - FIAP'}
+            </span>
+            <span className="credential-badge">
+              📍 {t.welcome?.location || 'São Paulo, Brasil'}
+            </span>
+            <span className="credential-badge">
+              ⭐ {t.welcome?.experience || 'Especialista em Retratos & Ensaios'}
+            </span>
           </div>
         </motion.div>
 
@@ -121,12 +122,12 @@ const Welcome: React.FC<WelcomeProps> = ({ onComplete }) => {
         <motion.div className="welcome-actions" variants={itemVariants}>
           <motion.button
             className="enter-button"
-            onClick={handleEnter}
+            onClick={onComplete}
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
-            {t.welcome.enter}
+            {t.welcome?.enter || 'Ver Meus Trabalhos'}
             <motion.i
               className="fa fa-arrow-right"
               initial={{ x: 0 }}
@@ -140,9 +141,16 @@ const Welcome: React.FC<WelcomeProps> = ({ onComplete }) => {
             />
           </motion.button>
         </motion.div>
+
+        {/* Nota de idioma */}
+        <motion.p 
+          className="language-note"
+          variants={itemVariants}
+        >
+          {t.welcome?.languageNote || 'Idioma detectado automaticamente • Altere no menu'}
+        </motion.p>
       </div>
 
-      {/* Partículas decorativas */}
       <SectionParticles 
         section="welcome" 
         intensity="high" 
