@@ -1,6 +1,6 @@
 {
   "projects": {
-    "Portfolio": "leooli-portfolio"
+    "default": "leooli-portfolio"
   },
   "targets": {},
   "etags": {}
