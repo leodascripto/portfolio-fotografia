@@ -516,6 +516,7 @@ a:focus-visible {
     transition: none !important;
   }
 }
+
 /* =========== WELCOME SCREEN - ESPAÇAMENTOS AUMENTADOS =========== */
 /* SUBSTITUIR a seção Welcome Screen no globals.css */
 
@@ -544,7 +545,8 @@ a:focus-visible {
 
 /* Logo no topo - ESPAÇO REDUZIDO */
 .welcome-logo {
-  margin-bottom: 20px;  /* Antes: 25px */
+  margin-bottom: 20px;
+  /* Antes: 25px */
 }
 
 .welcome-logo img {
@@ -553,7 +555,8 @@ a:focus-visible {
 
 /* Foto profissional - TAMANHO MENOR + MUITO MAIS ESPAÇO INFERIOR */
 .welcome-profile {
-  margin: 0 auto 50px;  /* AUMENTADO de 35px para 50px */
+  margin: 0 auto 50px;
+  /* AUMENTADO de 35px para 50px */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -561,8 +564,10 @@ a:focus-visible {
 
 .profile-image-wrapper {
   position: relative;
-  width: 145px;         /* REDUZIDO de 160px */
-  height: 190px;        /* REDUZIDO de 210px */
+  width: 145px;
+  /* REDUZIDO de 160px */
+  height: 190px;
+  /* REDUZIDO de 210px */
   border-radius: 50% / 60%;
   background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
   padding: 4px;
@@ -576,14 +581,16 @@ a:focus-visible {
 .profile-image-wrapper::before {
   content: '';
   position: absolute;
-  top: -8px;            /* REDUZIDO de -10px */
+  top: -8px;
+  /* REDUZIDO de -10px */
   left: -8px;
   right: -8px;
   bottom: -8px;
   background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
   border-radius: 50% / 60%;
   opacity: 0.2;
-  filter: blur(20px);   /* REDUZIDO de 25px */
+  filter: blur(20px);
+  /* REDUZIDO de 25px */
   z-index: -1;
   animation: pulseGlow 3s ease-in-out infinite;
 }
@@ -597,7 +604,8 @@ a:focus-visible {
 
 /* Tagline principal - MAIS ESPAÇO */
 .welcome-tagline {
-  margin: 0 0 35px 0;   /* AUMENTADO de 30px para 35px */
+  margin: 0 0 35px 0;
+  /* AUMENTADO de 30px para 35px */
   padding: 0 15px;
 }
 
@@ -612,13 +620,15 @@ a:focus-visible {
 
 /* Credenciais - MAIS ESPAÇO */
 .welcome-credentials {
-  margin: 0 0 40px 0;   /* AUMENTADO de 30px para 40px */
+  margin: 0 0 40px 0;
+  /* AUMENTADO de 30px para 40px */
 }
 
 .credentials-list {
   display: flex;
   flex-direction: column;
-  gap: 11px;            /* AUMENTADO de 10px */
+  gap: 11px;
+  /* AUMENTADO de 10px */
   max-width: 520px;
   margin: 0 auto;
 }
@@ -700,12 +710,15 @@ a:focus-visible {
 
 /* Animações */
 @keyframes pulseGlow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow:
       0 0 40px rgba(227, 202, 102, 0.4),
       0 0 80px rgba(227, 202, 102, 0.2),
       inset 0 0 20px rgba(227, 202, 102, 0.1);
   }
+
   50% {
     box-shadow:
       0 0 50px rgba(227, 202, 102, 0.6),
@@ -730,8 +743,10 @@ a:focus-visible {
   }
 
   .profile-image-wrapper {
-    width: 130px;       /* REDUZIDO */
-    height: 170px;      /* REDUZIDO */
+    width: 130px;
+    /* REDUZIDO */
+    height: 170px;
+    /* REDUZIDO */
   }
 
   .profile-image-wrapper::before {
@@ -743,7 +758,8 @@ a:focus-visible {
   }
 
   .welcome-profile {
-    margin-bottom: 40px;  /* AUMENTADO */
+    margin-bottom: 40px;
+    /* AUMENTADO */
   }
 
   .welcome-tagline {
@@ -870,7 +886,8 @@ a:focus-visible {
   }
 
   .welcome-profile {
-    margin-bottom: 60px;   /* MUITO espaço em telas grandes */
+    margin-bottom: 60px;
+    /* MUITO espaço em telas grandes */
   }
 
   .welcome-tagline {
@@ -884,15 +901,17 @@ a:focus-visible {
 
 /* Preferência de movimento reduzido */
 @media (prefers-reduced-motion: reduce) {
+
   .profile-image-wrapper,
   .profile-image-wrapper::before {
     animation: none !important;
   }
-  
+
   .welcome-enter-button i {
     animation: none !important;
   }
 }
+
 .credentials-list {
   display: flex;
   flex-direction: column;
@@ -1001,15 +1020,16 @@ a:focus-visible {
   .welcome-content {
     padding: 30px 15px;
   }
-  
-.profile-image-wrapper {
-  width: 140px;
-  height: 185px;
-}
 
-.welcome-logo img {
-  max-width: 280px !important;
-}
+  .profile-image-wrapper {
+    width: 140px;
+    height: 185px;
+  }
+
+  .welcome-logo img {
+    max-width: 280px !important;
+  }
+
   .credentials-list {
     gap: 10px;
   }
@@ -1025,14 +1045,15 @@ a:focus-visible {
 }
 
 @media (max-width: 480px) {
-.profile-image-wrapper {
-  width: 130px;
-  height: 170px;
-}
+  .profile-image-wrapper {
+    width: 130px;
+    height: 170px;
+  }
 
-.welcome-logo img {
-  max-width: 240px !important;
-}
+  .welcome-logo img {
+    max-width: 240px !important;
+  }
+
   .credential-item {
     padding: 8px 16px;
     font-size: 13px;
@@ -2695,5 +2716,326 @@ a:focus-visible {
   .cta-pulse-ring,
   .status-dot {
     animation: none !important;
+  }
+}
+
+/* =========== UX/UI ENHANCEMENTS =========== */
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+  /* Compensa header fixo */
+}
+
+/* Focus visível para acessibilidade */
+button:focus-visible,
+a:focus-visible,
+.grid-item:focus-visible {
+  outline: 3px solid var(--primary-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Hover states mais suaves */
+.grid-item {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.grid-item:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(227, 202, 102, 0.2),
+    0 6px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Loading skeleton para imagens */
+.image-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      rgba(227, 202, 102, 0.05) 0%,
+      rgba(227, 202, 102, 0.15) 50%,
+      rgba(227, 202, 102, 0.05) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  z-index: 0;
+}
+
+.image-container img {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Feedback visual em botões */
+.filters-list button,
+.cta-inline-button,
+.cta-sticky-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.filters-list button::before,
+.cta-inline-button::before,
+.cta-sticky-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.filters-list button:active::before,
+.cta-inline-button:active::before,
+.cta-sticky-button:active::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Espaçamento melhorado */
+.gallery {
+  padding: 0 15px 100px;
+  /* Mais espaço inferior */
+}
+
+/* Transições suaves nos filtros */
+.filters-list li {
+  transition: opacity 0.3s ease;
+}
+
+.filters-list li:not(.active):hover {
+  opacity: 0.8;
+}
+
+/* Inline CTA com mais destaque */
+.smart-cta-inline {
+  margin: 80px auto 60px;
+  /* Mais espaço */
+  padding: 0 20px;
+  max-width: 1000px;
+}
+
+.cta-inline-content {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efeito de brilho sutil no CTA inline */
+.cta-inline-content::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle,
+      rgba(227, 202, 102, 0.1) 0%,
+      transparent 70%);
+  animation: glow 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glow {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+    opacity: 0.3;
+  }
+
+  50% {
+    transform: translate(10%, 10%);
+    opacity: 0.6;
+  }
+}
+
+/* Scroll indicator sutil */
+.gallery::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg,
+      var(--primary-gold) 0%,
+      var(--primary-gold) var(--scroll-progress, 0%),
+      transparent var(--scroll-progress, 0%));
+  z-index: 9999;
+  pointer-events: none;
+}
+
+/* Melhor legibilidade */
+.cta-inline-text h3,
+.cta-inline-text p {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Estados de carregamento */
+.loading-indicator {
+  backdrop-filter: blur(10px);
+}
+
+/* Animação de entrada mais suave para galeria */
+.gallery-grid {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Espaçamento consistente */
+.header {
+  padding: 30px 15px 20px;
+}
+
+.filters {
+  margin-bottom: 30px;
+}
+
+/* Mobile: melhor área de toque */
+@media (max-width: 768px) {
+  .filters-list button {
+    padding: 10px 18px;
+    min-height: 44px;
+    /* Acessibilidade mobile */
+  }
+
+  .cta-inline-button {
+    min-height: 48px;
+  }
+
+  /* Espaçamento otimizado mobile */
+  .smart-cta-inline {
+    margin: 60px auto 40px;
+  }
+
+  .gallery {
+    padding-bottom: 120px;
+    /* Espaço para CTAs mobile */
+  }
+}
+
+/* Sticky CTA: aparece apenas no final */
+.smart-cta-sticky {
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Reduzir motion para quem preferir */
+@media (prefers-reduced-motion: reduce) {
+  .grid-item:hover {
+    transform: none !important;
+  }
+
+  /* Aplique 'animation: none' nos elementos que usam as animações, 
+     e não dentro do @keyframes */
+  .gallery-grid, 
+  .elemento-com-shimmer, 
+  .elemento-com-glow {
+    animation: none !important;
+    transition: none !important; /* Também é bom desativar transições suaves */
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .cta-inline-content {
+    border-width: 3px;
+  }
+
+  .filters-list button {
+    border-width: 3px;
+  }
+}
+
+/* =========== MOBILE MINIMAL CTA =========== */
+
+.smart-cta-floating.mobile-minimal {
+  width: 52px;
+  height: 52px;
+  font-size: 26px;
+  bottom: 15px;
+  right: 15px;
+  box-shadow: 
+    0 4px 12px rgba(37, 211, 102, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.smart-cta-floating.mobile-minimal:active {
+  box-shadow: 
+    0 2px 8px rgba(37, 211, 102, 0.4),
+    0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Remover pulse ring em mobile */
+.smart-cta-floating.mobile-minimal .cta-pulse-ring {
+  display: none;
+}
+
+/* Animação de rotação mais sutil em mobile */
+.smart-cta-floating.mobile-minimal .cta-icon {
+  animation: none;
+}
+
+/* Sticky CTA: ocultar em mobile */
+@media (max-width: 768px) {
+  .smart-cta-sticky {
+    display: none;
+  }
+  
+  .smart-cta-inline {
+    display: none;
+  }
+  
+  /* Ajuste do espaço inferior em mobile */
+  .gallery {
+    padding-bottom: 80px;
+  }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 480px) {
+  .smart-cta-floating.mobile-minimal {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+    bottom: 12px;
+    right: 12px;
+  }
+}
+
+/* Safe area para iPhones com notch */
+@supports (padding: max(0px)) {
+  .smart-cta-floating.mobile-minimal {
+    bottom: max(15px, env(safe-area-inset-bottom));
+    right: max(15px, env(safe-area-inset-right));
   }
 }

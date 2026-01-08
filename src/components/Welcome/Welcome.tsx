@@ -1,7 +1,6 @@
 // src/components/Welcome/Welcome.tsx
 import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 import SectionParticles from '@/components/SectionParticles/SectionParticles';
 
@@ -12,7 +11,6 @@ interface WelcomeProps {
 const Welcome: React.FC<WelcomeProps> = ({ onComplete }) => {
   const { setLanguage, t } = useLanguage();
 
-  // Detecção automática de idioma
   useEffect(() => {
     const detectLanguage = () => {
       const browserLang = navigator.language.split('-')[0];
@@ -64,64 +62,71 @@ const Welcome: React.FC<WelcomeProps> = ({ onComplete }) => {
       exit="exit"
     >
       <div className="welcome-content">
-        {/* Logo (já contém o nome) */}
+        {/* Logo */}
         <motion.div className="welcome-logo" variants={itemVariants}>
-          <Image
+          <img
             src="/assets/img/logo.png"
             alt="Leo Oli - Fotógrafo"
-            width={400}
-            height={230}
-            priority
             style={{
-              width: '100%',
+              width: '90%',
               maxWidth: '400px',
-              height: 'auto'
+              height: 'auto',
+              display: 'block',
+              margin: '0 auto'
             }}
           />
         </motion.div>
 
-        {/* Foto Profissional do Leo */}
+        {/* Foto Profissional - CORRIGIDO */}
         <motion.div className="welcome-profile" variants={itemVariants}>
-          <div className="profile-image-container">
-            <Image
+          <div className="profile-image-wrapper">
+            <img
+              className="profile-image"
               src="/assets/img/leo-profile.jpg"
               alt="Leo Oli - Fotógrafo Profissional"
-              width={180}
-              height={180}
-              priority
               style={{
                 width: '100%',
-                height: 'auto',
-                borderRadius: '50%',
-                border: '4px solid var(--primary-gold)',
-                boxShadow: '0 8px 30px rgba(227, 202, 102, 0.3)'
+                height: '100%',
+                objectFit: 'cover',
+                borderRadius: '50% / 60%'
               }}
             />
           </div>
         </motion.div>
 
-        {/* Tagline & Credenciais (SEM repetir o nome) */}
+        {/* Tagline & Credenciais */}
         <motion.div className="welcome-credentials" variants={itemVariants}>
           <p className="welcome-tagline">
-            {t.welcome?.tagline || 'Transformo momentos em arte que conta histórias'}
+            <span className="main-quote">
+              {t.welcome?.tagline || 'Transformo momentos em arte que conta histórias'}
+            </span>
           </p>
-          <div className="credentials-badges">
-            <span className="credential-badge">
-              🎓 {t.welcome?.education || 'Formado em Fotografia Digital - FIAP'}
-            </span>
-            <span className="credential-badge">
-              📍 {t.welcome?.location || 'São Paulo, Brasil'}
-            </span>
-            <span className="credential-badge">
-              ⭐ {t.welcome?.experience || 'Especialista em Retratos & Ensaios'}
-            </span>
+          <div className="credentials-list">
+            <div className="credential-item">
+              <span className="credential-icon">🎓</span>
+              <span className="credential-text">
+                {t.welcome?.education || 'Formado em Fotografia Digital - FIAP'}
+              </span>
+            </div>
+            <div className="credential-item">
+              <span className="credential-icon">📍</span>
+              <span className="credential-text">
+                {t.welcome?.location || 'São Paulo, Brasil'}
+              </span>
+            </div>
+            <div className="credential-item">
+              <span className="credential-icon">⭐</span>
+              <span className="credential-text">
+                {t.welcome?.experience || 'Especialista em Retratos & Ensaios'}
+              </span>
+            </div>
           </div>
         </motion.div>
 
         {/* Botão de entrada */}
         <motion.div className="welcome-actions" variants={itemVariants}>
           <motion.button
-            className="enter-button"
+            className="welcome-enter-button"
             onClick={onComplete}
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
@@ -144,7 +149,7 @@ const Welcome: React.FC<WelcomeProps> = ({ onComplete }) => {
 
         {/* Nota de idioma */}
         <motion.p 
-          className="language-note"
+          className="language-auto-note"
           variants={itemVariants}
         >
           {t.welcome?.languageNote || 'Idioma detectado automaticamente • Altere no menu'}

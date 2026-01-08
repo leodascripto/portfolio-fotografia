@@ -12,13 +12,23 @@ const SmartCTA: React.FC<SmartCTAProps> = ({ variant = 'floating' }) => {
   const [showInlineCTA, setShowInlineCTA] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [scrollDepth, setScrollDepth] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Detectar mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+
     const handleScroll = () => {
       const scrollPercent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
       setScrollDepth(scrollPercent);
       
-      if (scrollPercent > 30 && !showInlineCTA) {
+      // Inline CTA aparece após 40% scroll
+      if (scrollPercent > 40 && !showInlineCTA) {
         setShowInlineCTA(true);
       }
 
@@ -28,7 +38,10 @@ const SmartCTA: React.FC<SmartCTAProps> = ({ variant = 'floating' }) => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', checkMobile);
+    };
   }, [showInlineCTA]);
 
   const whatsappMessages = {
@@ -50,75 +63,95 @@ const SmartCTA: React.FC<SmartCTAProps> = ({ variant = 'floating' }) => {
     }
   };
 
-  if (variant === 'floating') {
+  // MOBILE: Apenas Floating (sempre visível, mais discreto)
+  if (isMobile && variant === 'floating') {
     return (
       <motion.a
         href={whatsappLink}
-        className="smart-cta-floating"
+        className="smart-cta-floating mobile-minimal"
         target="_blank"
         rel="noopener noreferrer"
-        onClick={() => handleCTAClick('floating')}
-        initial={{ scale: 0, rotate: -180 }}
-        animate={{ 
-          scale: 1, 
-          rotate: 0,
-          y: hasScrolled ? [0, -5, 0] : 0
-        }}
-        transition={{ 
-          type: "spring", 
-          stiffness: 260, 
-          damping: 20,
-          y: {
-            repeat: hasScrolled ? Infinity : 0,
-            duration: 2,
-            ease: "easeInOut"
-          }
-        }}
-        whileHover={{ scale: 1.1, rotate: 5 }}
+        onClick={() => handleCTAClick('floating-mobile')}
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        aria-label="Agendar sessão via WhatsApp"
+        aria-label="Contato via WhatsApp"
       >
-        <motion.div 
-          className="cta-icon"
-          animate={{ rotate: [0, 10, -10, 0] }}
-          transition={{ 
-            repeat: Infinity, 
-            duration: 3,
-            ease: "easeInOut"
-          }}
-        >
-          <i className="fa fa-whatsapp" />
-        </motion.div>
-        
-        <motion.div
-          className="cta-pulse-ring"
-          initial={{ scale: 1, opacity: 0.5 }}
-          animate={{ scale: 1.5, opacity: 0 }}
-          transition={{
-            repeat: Infinity,
-            duration: 2,
-            ease: "easeOut"
-          }}
-        />
-
-        <AnimatePresence>
-          {hasScrolled && (
-            <motion.div
-              className="cta-badge"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 50 }}
-              transition={{ delay: 0.5 }}
-            >
-              {t.cta?.scheduleBadge || 'Agendar Sessão'}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <i className="fa fa-whatsapp" />
       </motion.a>
     );
   }
 
-  if (variant === 'inline' && showInlineCTA) {
+  // MOBILE: Ocultar Inline e Sticky
+  if (isMobile && (variant === 'inline' || variant === 'sticky-bottom')) {
+    return null;
+  }
+
+  // DESKTOP: Floating - esconde quando inline aparece
+  if (variant === 'floating' && !isMobile) {
+    const shouldHide = showInlineCTA && scrollDepth < 70;
+    
+    return (
+      <AnimatePresence>
+        {!shouldHide && (
+          <motion.a
+            href={whatsappLink}
+            className="smart-cta-floating"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => handleCTAClick('floating')}
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ 
+              scale: 1, 
+              rotate: 0,
+              y: hasScrolled ? [0, -5, 0] : 0
+            }}
+            exit={{ scale: 0, opacity: 0 }}
+            transition={{ 
+              type: "spring", 
+              stiffness: 260, 
+              damping: 20,
+              y: {
+                repeat: hasScrolled ? Infinity : 0,
+                duration: 2,
+                ease: "easeInOut"
+              }
+            }}
+            whileHover={{ scale: 1.1, rotate: 5 }}
+            whileTap={{ scale: 0.95 }}
+            aria-label="Agendar sessão via WhatsApp"
+          >
+            <motion.div 
+              className="cta-icon"
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ 
+                repeat: Infinity, 
+                duration: 3,
+                ease: "easeInOut"
+              }}
+            >
+              <i className="fa fa-whatsapp" />
+            </motion.div>
+            
+            <motion.div
+              className="cta-pulse-ring"
+              initial={{ scale: 1, opacity: 0.5 }}
+              animate={{ scale: 1.5, opacity: 0 }}
+              transition={{
+                repeat: Infinity,
+                duration: 2,
+                ease: "easeOut"
+              }}
+            />
+          </motion.a>
+        )}
+      </AnimatePresence>
+    );
+  }
+
+  // DESKTOP: Inline CTA
+  if (variant === 'inline' && showInlineCTA && !isMobile) {
     return (
       <motion.div
         className="smart-cta-inline"
@@ -153,7 +186,8 @@ const SmartCTA: React.FC<SmartCTAProps> = ({ variant = 'floating' }) => {
     );
   }
 
-  if (variant === 'sticky-bottom' && scrollDepth > 20) {
+  // DESKTOP: Sticky Bottom - apenas no final (>85%)
+  if (variant === 'sticky-bottom' && scrollDepth > 85 && !isMobile) {
     return (
       <motion.div
         className="smart-cta-sticky"
