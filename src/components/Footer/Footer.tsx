@@ -2,7 +2,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
-import SectionParticles from '@/components/SectionParticles/SectionParticles';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
@@ -11,20 +10,12 @@ const Footer: React.FC = () => {
   return (
     <motion.footer 
       className="footer"
-      style={{ position: 'relative', overflow: 'hidden' }}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       viewport={{ once: true }}
     >
-      {/* Particles Background */}
-      <SectionParticles 
-        section="footer" 
-        intensity="medium" 
-        className="footer-content golden-particles"
-      />
-
-      <p style={{ position: 'relative', zIndex: 2 }}>
+      <p>
         &copy; {currentYear} {t.footer.copyright}{' '}
         <motion.a
           href="https://www.instagram.com/leooli321/"

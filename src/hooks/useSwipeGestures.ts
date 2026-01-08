@@ -63,18 +63,20 @@ export const useSwipeGestures = (
     progress: 0
   });
 
-  // Haptic feedback function
+  // Haptic feedback function - FIX: Mover patterns para dentro da função
   const triggerHaptic = useCallback((type: 'light' | 'medium' | 'heavy' = 'light') => {
     if (!finalConfig.hapticFeedback) return;
     
     if (typeof window !== 'undefined' && 'navigator' in window) {
+      // Definir patterns AQUI
+      const patterns = {
+        light: [10],
+        medium: [20],
+        heavy: [30]
+      };
+
       // @ts-ignore - Haptic feedback API
       if (navigator.vibrate) {
-        const patterns = {
-          light: [10],
-          medium: [20],
-          heavy: [30]
-        };
         navigator.vibrate(patterns[type]);
       }
       
@@ -89,7 +91,6 @@ export const useSwipeGestures = (
     }
   }, [finalConfig.hapticFeedback]);
 
-  // Get touch/mouse coordinates
   const getCoordinates = useCallback((event: TouchEvent | MouseEvent): TouchPoint => {
     const isTouch = 'touches' in event;
     const clientX = isTouch ? event.touches[0]?.clientX : (event as MouseEvent).clientX;
@@ -102,12 +103,10 @@ export const useSwipeGestures = (
     };
   }, []);
 
-  // Calculate distance between two points
   const calculateDistance = useCallback((start: TouchPoint, end: TouchPoint): number => {
     return Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
   }, []);
 
-  // Determine swipe direction
   const getSwipeDirection = useCallback((start: TouchPoint, end: TouchPoint): SwipeDirection => {
     const deltaX = end.x - start.x;
     const deltaY = end.y - start.y;
@@ -119,18 +118,15 @@ export const useSwipeGestures = (
     }
   }, []);
 
-  // Calculate velocity
   const calculateVelocity = useCallback((start: TouchPoint, end: TouchPoint, distance: number): number => {
     const timeDelta = end.time - start.time;
     return timeDelta > 0 ? distance / timeDelta : 0;
   }, []);
 
-  // Calculate progress (0-1) based on distance and threshold
   const calculateProgress = useCallback((distance: number): number => {
     return Math.min(distance / finalConfig.threshold, 1);
   }, [finalConfig.threshold]);
 
-  // Handle start
   const handleStart = useCallback((event: TouchEvent | MouseEvent) => {
     if (!finalConfig.trackTouch && 'touches' in event) return;
     if (!finalConfig.trackMouse && !('touches' in event)) return;
@@ -149,7 +145,6 @@ export const useSwipeGestures = (
     triggerHaptic('light');
   }, [finalConfig.trackTouch, finalConfig.trackMouse, getCoordinates, triggerHaptic]);
 
-  // Handle move
   const handleMove = useCallback((event: TouchEvent | MouseEvent) => {
     const state = swipeStateRef.current;
     if (!state.isActive || !state.start) return;
@@ -173,17 +168,14 @@ export const useSwipeGestures = (
       progress
     };
 
-    // Trigger haptic feedback at 50% progress
     if (progress >= 0.5 && state.progress < 0.5) {
       triggerHaptic('medium');
     }
 
-    // Call onSwipeStart when direction is first determined
     if (direction && !state.direction && handlers.onSwipeStart) {
       handlers.onSwipeStart(direction);
     }
 
-    // Call onSwipeMove
     if (handlers.onSwipeMove && direction) {
       handlers.onSwipeMove(progress, direction);
     }
@@ -198,7 +190,6 @@ export const useSwipeGestures = (
     handlers
   ]);
 
-  // Handle end
   const handleEnd = useCallback(() => {
     const state = swipeStateRef.current;
     if (!state.isActive || !state.start || !state.current) return;
@@ -208,7 +199,6 @@ export const useSwipeGestures = (
     const meetsVelocity = velocity >= finalConfig.velocity;
 
     if ((meetsThreshold || meetsVelocity) && direction) {
-      // Trigger appropriate handler
       switch (direction) {
         case 'left':
           if (handlers.onSwipeLeft) {
@@ -237,7 +227,6 @@ export const useSwipeGestures = (
       }
     }
 
-    // Reset state
     swipeStateRef.current = {
       start: null,
       current: null,
@@ -253,12 +242,10 @@ export const useSwipeGestures = (
     }
   }, [finalConfig.threshold, finalConfig.velocity, handlers, triggerHaptic]);
 
-  // Setup event listeners
   useEffect(() => {
     const element = elementRef.current;
     if (!element) return;
 
-    // Touch events
     if (finalConfig.trackTouch) {
       element.addEventListener('touchstart', handleStart, { passive: false });
       element.addEventListener('touchmove', handleMove, { passive: !finalConfig.preventDefaultTouchmoveEvent });
@@ -266,7 +253,6 @@ export const useSwipeGestures = (
       element.addEventListener('touchcancel', handleEnd, { passive: true });
     }
 
-    // Mouse events
     if (finalConfig.trackMouse) {
       element.addEventListener('mousedown', handleStart);
       element.addEventListener('mousemove', handleMove);

@@ -8,20 +8,27 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "clean": "rm -rf .next dist",
-    "prebuild": "npm run clean",
-    "deploy": "npm run build && firebase deploy --only hosting",
-    "deploy:preview": "npm run build && firebase hosting:channel:deploy preview"
+    "clean": "rm -rf .next out dist node_modules/.cache",
+    "predeploy": "bun run clean && bun run build"
   },
   "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@types/node": "^20.10.5",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "browser-image-compression": "^2.0.2",
+    "firebase": "^12.7.0",
+    "firebase-admin": "^13.6.0",
+    "framer-motion": "^10.16.16",
     "next": "14.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "framer-motion": "^10.16.16",
-    "typescript": "^5.3.3",
-    "@types/node": "^20.10.5",
-    "@types/react": "^18.2.45",
-    "@types/react-dom": "^18.2.18"
+    "react-dropzone": "^14.3.8",
+    "react-hot-toast": "^2.6.0",
+    "react-icons": "^5.5.0",
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "^15.5.2",

@@ -24,6 +24,8 @@ yarn-debug.log*
 yarn-error.log*
 
 # Local env files
+.env
+.env.local
 .env*.local
 
 # Vercel
@@ -45,3 +47,7 @@ firebase-debug.*.log*
 # Logs
 logs
 *.log
+
+# Bun
+.bun-cache
+bun.lockb

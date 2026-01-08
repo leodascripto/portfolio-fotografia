@@ -1,10 +1,9 @@
-// src/components/Gallery/Gallery.tsx - Updated with particles
+// src/components/Gallery/Gallery.tsx
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { GalleryProps, Photo } from '@/types';
 import { useLanguage } from '@/contexts/LanguageContext';
-import SectionParticles from '@/components/SectionParticles/SectionParticles';
 import ImageModal from './ImageModal';
 
 const Gallery: React.FC<GalleryProps> = ({ photos, activeFilter }) => {
@@ -83,26 +82,16 @@ const Gallery: React.FC<GalleryProps> = ({ photos, activeFilter }) => {
 
   return (
     <>
-      {/* Mobile Instructions */}
       <MobileInstructions />
 
-      {/* Gallery */}
       <motion.main
         id="gallery-container"
         className="gallery"
         role="main"
-        style={{ position: 'relative', overflow: 'hidden' }}
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        {/* Particles Background */}
-        <SectionParticles 
-          section="gallery" 
-          intensity="medium" 
-          className="gallery-content"
-        />
-
         <AnimatePresence mode="wait">
           <motion.div 
             key={activeFilter}
@@ -111,12 +100,11 @@ const Gallery: React.FC<GalleryProps> = ({ photos, activeFilter }) => {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            style={{ position: 'relative', zIndex: 2 }}
           >
             {filteredPhotos.map((photo, index) => (
               <motion.div
                 key={`${photo.filter}-${photo.name}-${index}`}
-                className="grid-item interactive-particles"
+                className="grid-item"
                 variants={itemVariants}
                 layout
                 whileHover={{ 
@@ -156,7 +144,6 @@ const Gallery: React.FC<GalleryProps> = ({ photos, activeFilter }) => {
         </AnimatePresence>
       </motion.main>
 
-      {/* Image Modal */}
       <ImageModal
         isOpen={selectedImage !== null}
         images={filteredPhotos}

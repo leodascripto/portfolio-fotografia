@@ -3,16 +3,12 @@ import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
 import LanguageSelector from '@/components/LanguageSelector/LanguageSelector';
-import GlobalParticles from '@/components/GlobalParticles/GlobalParticles';
-import { usePerformance } from '@/hooks/usePerformance'; // NOVO
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const performanceConfig = usePerformance(); // NOVO
-
   return (
     <>
       <Head>
@@ -23,16 +19,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <link rel="shortcut icon" href="/assets/img/favicon.png" type="image/x-icon" />
         <title>Leo Oli - Fotógrafo Profissional | São Paulo</title>
       </Head>
-
-      {/* Global Particles (adaptativo) */}
-      {performanceConfig.enableParticles && (
-        <GlobalParticles 
-          density={performanceConfig.particleDensity === 'low' ? 6 : 12}
-          speed={1.2}
-          opacity={0.1}
-          size={3}
-        />
-      )}
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -51,8 +37,6 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       >
         <LanguageSelector showLabel={false} position="top-left" />
       </motion.div>
-
-      {/* REMOVIDO: WhatsApp Float antigo (agora é SmartCTA) */}
 
       {/* Scroll to Top */}
       <ScrollToTop />

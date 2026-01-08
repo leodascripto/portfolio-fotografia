@@ -1,6 +1,6 @@
 // src/components/Gallery/AdvancedImageViewer.tsx
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
+import { motion, useMotionValue, PanInfo } from 'framer-motion';
 import Image from 'next/image';
 import { Photo } from '@/types';
 
@@ -33,12 +33,10 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
   
-  // Motion values para controle suave
   const scale = useMotionValue(1);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   
-  // Estados do gesto
   const [gestureState, setGestureState] = useState<GestureState>({
     scale: 1,
     x: 0,
@@ -52,10 +50,9 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
   const [imageLoaded, setImageLoaded] = useState(false);
   const [doubleTapTimeout, setDoubleTapTimeout] = useState<NodeJS.Timeout | null>(null);
 
-  // Haptic feedback (apenas iOS)
   const triggerHaptic = useCallback((type: 'light' | 'medium' | 'heavy' = 'light') => {
     if (typeof window !== 'undefined' && 'navigator' in window) {
-      // @ts-ignore - Haptic feedback para iOS
+      // @ts-ignore
       if (navigator.vibrate) {
         const patterns = {
           light: [10],
@@ -67,8 +64,8 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     }
   }, []);
 
-  // Calcular distância entre dois toques
-  const getDistance = useCallback((touches: TouchList): number => {
+  // FIX: Converter React.TouchList para array
+  const getDistance = useCallback((touches: React.TouchList): number => {
     if (touches.length < 2) return 0;
     const touch1 = touches[0];
     const touch2 = touches[1];
@@ -78,8 +75,7 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     );
   }, []);
 
-  // Calcular centro entre dois toques
-  const getCenter = useCallback((touches: TouchList): TouchPoint => {
+  const getCenter = useCallback((touches: React.TouchList): TouchPoint => {
     if (touches.length < 2) return { x: touches[0].clientX, y: touches[0].clientY };
     return {
       x: (touches[0].clientX + touches[1].clientX) / 2,
@@ -87,7 +83,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     };
   }, []);
 
-  // Limitar posição dentro dos bounds
   const constrainPosition = useCallback((newX: number, newY: number, currentScale: number) => {
     if (!containerRef.current) return { x: newX, y: newY };
     
@@ -101,7 +96,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     };
   }, []);
 
-  // Reset da imagem
   const resetImage = useCallback(() => {
     scale.set(1);
     x.set(0);
@@ -110,12 +104,10 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     triggerHaptic('light');
   }, [scale, x, y, triggerHaptic]);
 
-  // Zoom para posição específica
   const zoomToPosition = useCallback((targetScale: number, centerX: number, centerY: number) => {
     const currentScale = gestureState.scale;
     const scaleRatio = targetScale / currentScale;
     
-    // Calcular nova posição baseada no centro do zoom
     const newX = (gestureState.x - centerX) * scaleRatio + centerX;
     const newY = (gestureState.y - centerY) * scaleRatio + centerY;
     
@@ -135,12 +127,10 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     triggerHaptic('medium');
   }, [gestureState, scale, x, y, constrainPosition, triggerHaptic]);
 
-  // Handle touch start
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     e.preventDefault();
     
     if (e.touches.length === 2) {
-      // Início do pinch
       const distance = getDistance(e.touches);
       const center = getCenter(e.touches);
       
@@ -152,7 +142,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
         isPanning: false
       }));
     } else if (e.touches.length === 1) {
-      // Início do pan
       setGestureState(prev => ({
         ...prev,
         isPanning: true,
@@ -161,12 +150,10 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     }
   }, [getDistance, getCenter]);
 
-  // Handle touch move
   const handleTouchMove = useCallback((e: React.TouchEvent) => {
     e.preventDefault();
     
     if (e.touches.length === 2 && gestureState.isPinching) {
-      // Pinch zoom
       const distance = getDistance(e.touches);
       const center = getCenter(e.touches);
       
@@ -174,7 +161,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
         const scaleChange = distance / gestureState.lastDistance;
         const newScale = Math.max(0.5, Math.min(5, gestureState.scale * scaleChange));
         
-        // Ajustar posição baseada no centro do pinch
         const centerDeltaX = center.x - gestureState.lastCenter.x;
         const centerDeltaY = center.y - gestureState.lastCenter.y;
         
@@ -199,7 +185,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     }
   }, [gestureState, getDistance, getCenter, scale, x, y, constrainPosition]);
 
-  // Handle touch end
   const handleTouchEnd = useCallback(() => {
     setGestureState(prev => ({
       ...prev,
@@ -208,7 +193,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     }));
   }, []);
 
-  // Handle pan (quando não está fazendo pinch)
   const handlePan = useCallback((event: any, info: PanInfo) => {
     if (gestureState.isPinching || gestureState.scale <= 1) return;
     
@@ -227,10 +211,8 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     }));
   }, [gestureState, x, y, constrainPosition]);
 
-  // Handle double tap
   const handleTap = useCallback((e: React.TouchEvent) => {
     if (doubleTapTimeout) {
-      // Double tap detectado
       clearTimeout(doubleTapTimeout);
       setDoubleTapTimeout(null);
       
@@ -247,7 +229,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
         }
       }
     } else {
-      // Primeiro tap
       const timeout = setTimeout(() => {
         setDoubleTapTimeout(null);
       }, 300);
@@ -255,7 +236,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     }
   }, [doubleTapTimeout, gestureState.scale, resetImage, zoomToPosition]);
 
-  // Cleanup
   useEffect(() => {
     return () => {
       if (doubleTapTimeout) {
@@ -264,7 +244,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
     };
   }, [doubleTapTimeout]);
 
-  // Reset quando muda de imagem
   useEffect(() => {
     if (isActive) {
       resetImage();
@@ -284,16 +263,14 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      onTap={handleTap}
+      onTouchEndCapture={handleTap}
     >
-      {/* Loading indicator */}
       {!imageLoaded && (
         <div className="image-loading">
           <div className="loading-spinner" />
         </div>
       )}
 
-      {/* Zoom controls */}
       <div className="zoom-controls">
         <button 
           className="zoom-control zoom-out"
@@ -322,7 +299,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
         </button>
       </div>
 
-      {/* Reset button */}
       {gestureState.scale > 1 && (
         <motion.button
           className="reset-zoom"
@@ -335,7 +311,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
         </motion.button>
       )}
 
-      {/* Image container */}
       <motion.div
         ref={imageRef}
         className="image-container-advanced"
@@ -368,7 +343,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
         />
       </motion.div>
 
-      {/* Close button */}
       <button 
         className="close-advanced-viewer"
         onTouchStart={(e) => e.stopPropagation()}
@@ -377,7 +351,6 @@ const AdvancedImageViewer: React.FC<AdvancedImageViewerProps> = ({
         <i className="fa fa-times" />
       </button>
 
-      {/* Instructions */}
       <div className="viewer-instructions">
         <p>Pinça para zoom • Arraste para mover • Toque duplo para zoom rápido</p>
       </div>

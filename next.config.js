@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'export',
-  
-  // IMPORTANTE: Não usar trailingSlash com Firebase
+  distDir: 'out', // MUDANÇA: usar 'out' em vez de 'dist'
   trailingSlash: false,
   
   images: {
@@ -16,11 +15,10 @@ const nextConfig = {
     ],
   },
   
-  distDir: 'dist',
-  
-  // Garantir que assets sejam servidos corretamente
-  assetPrefix: '',
-  basePath: '',
+  // IMPORTANTE: Garantir que gere index.html no root
+  generateBuildId: async () => {
+    return 'build'
+  },
 }
 
 module.exports = nextConfig
