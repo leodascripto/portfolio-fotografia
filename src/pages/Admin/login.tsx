@@ -48,7 +48,6 @@ const AdminLogin: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Logo */}
           <div className="admin-login-logo">
             <Image
               src="/assets/img/logo.png"
@@ -60,7 +59,6 @@ const AdminLogin: React.FC = () => {
             <h1>Painel Administrativo</h1>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="admin-login-form">
             {error && (
               <motion.div
@@ -132,13 +130,11 @@ const AdminLogin: React.FC = () => {
             </motion.button>
           </form>
 
-          {/* Security Notice */}
           <div className="admin-security-notice">
             <i className="fa fa-shield" />
             <p>Área restrita e protegida</p>
           </div>
 
-          {/* Back to site */}
           <motion.a
             href="/"
             className="admin-back-link"
@@ -149,7 +145,6 @@ const AdminLogin: React.FC = () => {
           </motion.a>
         </motion.div>
 
-        {/* Background particles */}
         <div className="admin-login-bg" />
       </div>
     </>

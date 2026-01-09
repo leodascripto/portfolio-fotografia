@@ -2,7 +2,7 @@
 import React from 'react';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
-import ProtectedRoute from '@/pages/Admin/ProtectedRoute';
+import ProtectedRoute from '@/components/Admin/ProtectedRoute';
 import { useAuth } from '@/contexts/AuthContext';
 
 const AdminDashboard: React.FC = () => {
