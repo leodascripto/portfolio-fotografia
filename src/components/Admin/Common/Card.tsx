@@ -1,4 +1,4 @@
-
+// src/components/Admin/Common/Card.tsx
 import React from 'react';
 import { motion } from 'framer-motion';
 
@@ -27,3 +27,5 @@ const Card: React.FC<CardProps> = ({ children, title, actions, className = '' })
     </motion.div>
   );
 };
+
+export default Card;

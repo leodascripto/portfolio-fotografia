@@ -49,44 +49,44 @@ const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title=\"Editar Foto\" size=\"medium\">
-      <form onSubmit={handleSubmit} className=\"edit-photo-form\">
+    <Modal isOpen={isOpen} onClose={onClose} title="Editar Foto" size="medium">
+      <form onSubmit={handleSubmit} className="edit-photo-form">
         {error && (
-          <div className=\"form-error\">
-            <i className=\"fa fa-exclamation-circle\" />
+          <div className="form-error">
+            <i className="fa fa-exclamation-circle" />
             {error}
           </div>
         )}
 
-        <div className=\"form-group\">
-          <label htmlFor=\"photo-name\">
-            <i className=\"fa fa-tag\" />
+        <div className="form-group">
+          <label htmlFor="photo-name">
+            <i className="fa fa-tag" />
             Nome da Foto
           </label>
           <input
-            id=\"photo-name\"
-            type=\"text\"
+            id="photo-name"
+            type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder=\"Ex: Retrato Débora\"
+            placeholder="Ex: Retrato Débora"
             required
             disabled={saving}
           />
         </div>
 
-        <div className=\"form-group\">
-          <label htmlFor=\"photo-category\">
-            <i className=\"fa fa-folder\" />
+        <div className="form-group">
+          <label htmlFor="photo-category">
+            <i className="fa fa-folder" />
             Categoria
           </label>
           <select
-            id=\"photo-category\"
+            id="photo-category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
             disabled={saving}
           >
-            <option value=\"\">Selecione uma categoria</option>
+            <option value="">Selecione uma categoria</option>
             {categories.map((cat) => (
               <option key={cat.id} value={cat.id}>
                 {cat.icon} {cat.name}
@@ -95,30 +95,30 @@ const EditPhotoModal: React.FC<EditPhotoModalProps> = ({
           </select>
         </div>
 
-        <div className=\"form-actions\">
+        <div className="form-actions">
           <button
-            type=\"button\"
-            className=\"btn btn-secondary\"
+            type="button"
+            className="btn btn-secondary"
             onClick={onClose}
             disabled={saving}
           >
             Cancelar
           </button>
           <motion.button
-            type=\"submit\"
-            className=\"btn btn-primary\"
+            type="submit"
+            className="btn btn-primary"
             disabled={saving}
             whileHover={{ scale: saving ? 1 : 1.02 }}
             whileTap={{ scale: saving ? 1 : 0.98 }}
           >
             {saving ? (
               <>
-                <i className=\"fa fa-spinner fa-spin\" />
+                <i className="fa fa-spinner fa-spin" />
                 Salvando...
               </>
             ) : (
               <>
-                <i className=\"fa fa-save\" />
+                <i className="fa fa-save" />
                 Salvar
               </>
             )}

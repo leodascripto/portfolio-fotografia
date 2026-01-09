@@ -85,28 +85,28 @@ const UploadZone: React.FC<UploadZoneProps> = ({
   });
 
   return (
-    <div className=\"upload-zone-wrapper\">
+    <div className="upload-zone-wrapper">
       <motion.div
         {...getRootProps()}
-        className={\upload-zone \ \\}
+        className={`upload-zone ${isDragActive ? 'drag-active' : ''} ${uploading ? 'uploading' : ''}`}
         whileHover={{ scale: uploading ? 1 : 1.02 }}
         whileTap={{ scale: uploading ? 1 : 0.98 }}
       >
         <input {...getInputProps()} />
 
         {uploading ? (
-          <div className=\"upload-progress\">
+          <div className="upload-progress">
             <motion.div
-              className=\"progress-circle\"
+              className="progress-circle"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
             >
-              <svg viewBox=\"0 0 100 100\">
-                <circle cx=\"50\" cy=\"50\" r=\"45\" />
+              <svg viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="45" />
                 <motion.circle
-                  cx=\"50\"
-                  cy=\"50\"
-                  r=\"45\"
+                  cx="50"
+                  cy="50"
+                  r="45"
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: progress / 100 }}
                   transition={{ duration: 0.3 }}
@@ -117,8 +117,8 @@ const UploadZone: React.FC<UploadZoneProps> = ({
             <p>Fazendo upload...</p>
           </div>
         ) : (
-          <div className=\"upload-content\">
-            <i className=\"fa fa-cloud-upload\" />
+          <div className="upload-content">
+            <i className="fa fa-cloud-upload" />
             <h3>
               {isDragActive ? 'Solte a imagem aqui' : 'Arraste uma imagem ou clique'}
             </h3>
@@ -129,11 +129,11 @@ const UploadZone: React.FC<UploadZoneProps> = ({
 
       {error && (
         <motion.div
-          className=\"upload-error\"
+          className="upload-error"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <i className=\"fa fa-exclamation-triangle\" />
+          <i className="fa fa-exclamation-triangle" />
           {error}
         </motion.div>
       )}

@@ -42,3 +42,5 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children, size = 
     </AnimatePresence>
   );
 };
+
+export default Modal;

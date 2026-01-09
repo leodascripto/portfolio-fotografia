@@ -64,16 +64,16 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title=\"Adicionar Nova Foto\" size=\"large\">
-      <form onSubmit={handleSubmit} className=\"add-photo-form\">
+    <Modal isOpen={isOpen} onClose={onClose} title="Adicionar Nova Foto" size="large">
+      <form onSubmit={handleSubmit} className="add-photo-form">
         {error && (
-          <div className=\"form-error\">
-            <i className=\"fa fa-exclamation-circle\" />
+          <div className="form-error">
+            <i className="fa fa-exclamation-circle" />
             {error}
           </div>
         )}
 
-        <div className=\"form-section\">
+        <div className="form-section">
           <h4>1. Upload da Imagem</h4>
           {imageUrl ? (
             <div className="image-preview">
@@ -97,38 +97,38 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({
         </div>
 
         {imageUrl && (
-          <div className=\"form-section\">
+          <div className="form-section">
             <h4>2. Informações da Foto</h4>
             
-            <div className=\"form-group\">
-              <label htmlFor=\"add-photo-name\">
-                <i className=\"fa fa-tag\" />
+            <div className="form-group">
+              <label htmlFor="add-photo-name">
+                <i className="fa fa-tag" />
                 Nome da Foto
               </label>
               <input
-                id=\"add-photo-name\"
-                type=\"text\"
+                id="add-photo-name"
+                type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder=\"Ex: Retrato Débora\"
+                placeholder="Ex: Retrato Débora"
                 required
                 disabled={saving}
               />
             </div>
 
-            <div className=\"form-group\">
-              <label htmlFor=\"add-photo-category\">
-                <i className=\"fa fa-folder\" />
+            <div className="form-group">
+              <label htmlFor="add-photo-category">
+                <i className="fa fa-folder" />
                 Categoria
               </label>
               <select
-                id=\"add-photo-category\"
+                id="add-photo-category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 required
                 disabled={saving}
               >
-                <option value=\"\">Selecione uma categoria</option>
+                <option value="">Selecione uma categoria</option>
                 {categories.map((cat) => (
                   <option key={cat.id} value={cat.id}>
                     {cat.icon} {cat.name}
@@ -139,30 +139,30 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({
           </div>
         )}
 
-        <div className=\"form-actions\">
+        <div className="form-actions">
           <button
-            type=\"button\"
-            className=\"btn btn-secondary\"
+            type="button"
+            className="btn btn-secondary"
             onClick={imageUrl ? handleReset : onClose}
             disabled={saving || uploading}
           >
             {imageUrl ? 'Resetar' : 'Cancelar'}
           </button>
           <motion.button
-            type=\"submit\"
-            className=\"btn btn-primary\"
+            type="submit"
+            className="btn btn-primary"
             disabled={!imageUrl || saving || uploading}
             whileHover={{ scale: saving || uploading ? 1 : 1.02 }}
             whileTap={{ scale: saving || uploading ? 1 : 0.98 }}
           >
             {saving ? (
               <>
-                <i className=\"fa fa-spinner fa-spin\" />
+                <i className="fa fa-spinner fa-spin" />
                 Salvando...
               </>
             ) : (
               <>
-                <i className=\"fa fa-plus\" />
+                <i className="fa fa-plus" />
                 Adicionar Foto
               </>
             )}
