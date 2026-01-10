@@ -1304,3 +1304,478 @@
     max-height: 500px;
   }
 }
+
+/* CORREÇÕES DE RESPONSIVIDADE - ADICIONAR AO FINAL DO admin.css */
+
+/* =========== MODAL RESPONSIVO =========== */
+.modal-container {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal-small {
+  width: 90%;
+  max-width: 400px;
+  max-height: 85vh;
+}
+
+.modal-medium {
+  width: 90%;
+  max-width: 600px;
+  max-height: 85vh;
+}
+
+.modal-large {
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+}
+
+.modal-body {
+  max-height: calc(90vh - 150px);
+  overflow-y: auto;
+}
+
+/* =========== UPLOAD ZONE RESPONSIVO =========== */
+.upload-zone {
+  padding: 40px 20px;
+  min-height: 200px;
+}
+
+.upload-content h3 {
+  font-size: 16px;
+}
+
+.upload-content p {
+  font-size: 14px;
+}
+
+/* =========== IMAGE PREVIEW RESPONSIVO =========== */
+.image-preview {
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.image-preview img {
+  max-height: 400px;
+  object-fit: contain;
+}
+
+/* =========== PREVIEW SIDEBAR DESKTOP =========== */
+.admin-main-with-preview {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.admin-main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-preview-sidebar {
+  width: 400px;
+  background: rgba(33, 33, 33, 0.95);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  border-radius: 15px;
+  position: sticky;
+  top: 20px;
+  height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.preview-header {
+  padding: 15px 20px;
+  background: rgba(227, 202, 102, 0.1);
+  border-bottom: 2px solid rgba(227, 202, 102, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.preview-header h3 {
+  color: var(--primary-gold);
+  font-size: 16px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preview-header button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.preview-header button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.preview-content {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+}
+
+.preview-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: white;
+}
+
+.preview-footer {
+  padding: 12px 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 2px solid rgba(227, 202, 102, 0.2);
+  flex-shrink: 0;
+}
+
+.preview-footer a {
+  color: var(--primary-gold);
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: opacity 0.3s ease;
+}
+
+.preview-footer a:hover {
+  opacity: 0.8;
+}
+
+/* =========== RESPONSIVE FIXES =========== */
+@media (max-width: 1400px) {
+  .admin-preview-sidebar {
+    width: 350px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .admin-main-with-preview {
+    flex-direction: column;
+  }
+  
+  .admin-preview-sidebar {
+    width: 100%;
+    position: relative;
+    height: 600px;
+    top: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-header {
+    padding: 20px;
+  }
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .modal-header h2 {
+    font-size: 20px;
+  }
+  
+  .upload-zone {
+    padding: 30px 15px;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .form-actions .btn {
+    width: 100%;
+  }
+  
+  .admin-preview-sidebar {
+    height: 500px;
+  }
+  
+  .admin-actions-bar {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .actions-left,
+  .actions-right {
+    width: 100%;
+    flex-direction: column;
+  }
+  
+  .search-box input {
+    width: 100%;
+  }
+  
+  .category-filter {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-header {
+    padding: 15px;
+  }
+  
+  .modal-body {
+    padding: 15px;
+  }
+  
+  .upload-zone {
+    padding: 25px 10px;
+  }
+  
+  .upload-content h3 {
+    font-size: 14px;
+  }
+  
+  .upload-content p {
+    font-size: 12px;
+  }
+}
+
+/* ESTILOS DA DASHBOARD - ADICIONAR AO admin.css */
+
+/* =========== DASHBOARD SECTIONS =========== */
+.dashboard-section {
+  margin: 40px 0;
+}
+
+.section-title {
+  color: var(--primary-gold);
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 25px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-title i {
+  font-size: 28px;
+}
+
+/* =========== STAT CARDS =========== */
+.admin-stat-card {
+  background: rgba(33, 33, 33, 0.95);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.admin-stat-card:hover {
+  border-color: var(--primary-gold);
+  box-shadow: 0 8px 30px rgba(227, 202, 102, 0.2);
+}
+
+.admin-stat-card i {
+  font-size: 48px;
+  color: var(--primary-gold);
+  margin-bottom: 15px;
+}
+
+.admin-stat-card h3 {
+  color: var(--text-light);
+  font-size: 16px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.admin-stat-card .stat-number {
+  color: var(--primary-gold);
+  font-size: 42px;
+  font-weight: 700;
+  margin: 10px 0;
+  line-height: 1;
+}
+
+.stat-link {
+  display: inline-block;
+  color: var(--primary-gold);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+  opacity: 0.8;
+}
+
+.stat-link:hover {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+/* =========== QUICK ACTIONS =========== */
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.quick-action-card {
+  background: rgba(33, 33, 33, 0.95);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  border-radius: 15px;
+  padding: 30px;
+  text-decoration: none;
+  display: block;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.quick-action-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary-gold), var(--secondary-gold));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.quick-action-card:hover::before {
+  transform: scaleX(1);
+}
+
+.quick-action-card:hover {
+  border-color: var(--primary-gold);
+  box-shadow: 0 12px 40px rgba(227, 202, 102, 0.2);
+}
+
+.action-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, rgba(227, 202, 102, 0.2), rgba(180, 142, 71, 0.1));
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--primary-gold);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.quick-action-card:hover .action-icon {
+  transform: scale(1.1) rotate(5deg);
+  background: linear-gradient(135deg, rgba(227, 202, 102, 0.3), rgba(180, 142, 71, 0.2));
+}
+
+.quick-action-card h3 {
+  color: white;
+  font-size: 20px;
+  margin: 0 0 10px 0;
+  font-weight: 700;
+}
+
+.quick-action-card p {
+  color: var(--text-light);
+  font-size: 14px;
+  margin: 0;
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+.action-arrow {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: rgba(227, 202, 102, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-gold);
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.quick-action-card:hover .action-arrow {
+  opacity: 1;
+  transform: translateX(5px);
+}
+
+/* Color variants */
+.quick-action-card.primary {
+  border-color: rgba(227, 202, 102, 0.4);
+}
+
+.quick-action-card.secondary {
+  border-color: rgba(180, 142, 71, 0.4);
+}
+
+.quick-action-card.success {
+  border-color: rgba(76, 175, 80, 0.4);
+}
+
+/* =========== ACTIVITY CARD =========== */
+.activity-card {
+  background: rgba(33, 33, 33, 0.95);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  border-radius: 15px;
+  padding: 40px;
+}
+
+.activity-empty {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.activity-empty i {
+  font-size: 48px;
+  color: rgba(227, 202, 102, 0.5);
+  margin-bottom: 15px;
+}
+
+.activity-empty p {
+  color: var(--text-light);
+  opacity: 0.7;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* =========== RESPONSIVE =========== */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 20px;
+  }
+  
+  .admin-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .quick-actions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .quick-action-card {
+    padding: 25px;
+  }
+  
+  .activity-card {
+    padding: 30px 20px;
+  }
+}

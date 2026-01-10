@@ -1,7 +1,7 @@
 ﻿// src/components/Admin/PhotoManager/UploadZone.tsx
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import imageCompression from 'browser-image-compression';
 import { uploadToImgBB } from '@/lib/imgbb';
 
@@ -49,13 +49,14 @@ const UploadZone: React.FC<UploadZoneProps> = ({
     if (onUploadStart) onUploadStart();
 
     try {
-      // 1. Compressão
+      // Compressão
       const compressedFile = await compressImage(file);
       setProgress(50);
 
-      // 2. Upload
+      // Upload
       const result = await uploadToImgBB(compressedFile);
-      
+      setProgress(75);
+
       if (result.success && result.url) {
         setProgress(100);
         setTimeout(() => {
@@ -83,17 +84,13 @@ const UploadZone: React.FC<UploadZoneProps> = ({
     disabled: uploading
   });
 
-  // CORREÇÃO AQUI: Extraímos a ref manualmente para passar ao motion.div
-  const { ref: dropzoneRef, ...rootProps } = getRootProps();
-
   return (
     <div className="upload-zone-wrapper">
       <motion.div
-        {...rootProps}
-        ref={dropzoneRef} // Passando a ref do dropzone separadamente
         className={`upload-zone ${isDragActive ? 'drag-active' : ''} ${uploading ? 'uploading' : ''}`}
-        whileHover={{ scale: uploading ? 1 : 1.01 }}
-        whileTap={{ scale: uploading ? 1 : 0.99 }}
+        whileHover={{ scale: uploading ? 1 : 1.02 }}
+        whileTap={{ scale: uploading ? 1 : 0.98 }}
+        {...getRootProps()}
       >
         <input {...getInputProps()} />
 
@@ -105,29 +102,19 @@ const UploadZone: React.FC<UploadZoneProps> = ({
               animate={{ scale: 1 }}
             >
               <svg viewBox="0 0 100 100">
-                {/* Círculo de fundo */}
-                <circle 
-                  cx="50" cy="50" r="45" 
-                  fill="none" stroke="rgba(0,0,0,0.1)" strokeWidth="8" 
-                />
-                {/* Círculo de progresso */}
+                <circle cx="50" cy="50" r="45" />
                 <motion.circle
                   cx="50"
                   cy="50"
                   r="45"
-                  fill="none"
-                  stroke="currentColor" // Ele pegará a cor do texto do container
-                  strokeWidth="8"
-                  strokeLinecap="round"
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: progress / 100 }}
                   transition={{ duration: 0.3 }}
-                  style={{ rotate: -90, originX: "50%", originY: "50%" }}
                 />
               </svg>
-              <span className="progress-text">{progress}%</span>
+              <span>{progress}%</span>
             </motion.div>
-            <p>Processando...</p>
+            <p>Fazendo upload...</p>
           </div>
         ) : (
           <div className="upload-content">
@@ -140,19 +127,16 @@ const UploadZone: React.FC<UploadZoneProps> = ({
         )}
       </motion.div>
 
-      <AnimatePresence>
-        {error && (
-          <motion.div
-            className="upload-error"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-          >
-            <i className="fa fa-exclamation-triangle" />
-            <span>{error}</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {error && (
+        <motion.div
+          className="upload-error"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <i className="fa fa-exclamation-triangle" />
+          {error}
+        </motion.div>
+      )}
     </div>
   );
 };

@@ -1,0 +1,79 @@
+/* src/styles/admin/admin-nav.css */
+
+.admin-nav {
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(227, 202, 102, 0.2);
+  margin-top: 15px;
+}
+
+.admin-nav-items {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  padding: 10px 15px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.admin-nav-items::-webkit-scrollbar {
+  display: none;
+}
+
+.admin-nav-item {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.admin-nav-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(227, 202, 102, 0.3);
+}
+
+.admin-nav-item.active {
+  background: rgba(227, 202, 102, 0.15);
+  border-color: rgba(227, 202, 102, 0.5);
+  color: var(--primary-gold);
+}
+
+.admin-nav-item.portfolio-link {
+  margin-left: auto;
+  background: linear-gradient(135deg, rgba(227, 202, 102, 0.2), rgba(180, 142, 71, 0.1));
+  border-color: rgba(227, 202, 102, 0.3);
+  color: var(--primary-gold);
+}
+
+.admin-nav-item i {
+  font-size: 16px;
+}
+
+/* =========== RESPONSIVE =========== */
+@media (max-width: 768px) {
+  .admin-nav-items {
+    padding: 8px 10px;
+  }
+
+  .admin-nav-item span {
+    display: none;
+  }
+
+  .admin-nav-item {
+    padding: 10px;
+    justify-content: center;
+  }
+
+  .admin-nav-item.portfolio-link {
+    margin-left: 0;
+  }
+}

@@ -111,9 +111,12 @@ const PhotosManagement: React.FC = () => {
 
   const handleAddPhoto = async (data: { name: string; url: string; category: string }) => {
     try {
+      const now = new Date().toISOString();
       const newPhoto = {
         ...data,
-        order: photos.length + 1
+        order: photos.length + 1,
+        createdAt: now,
+        updatedAt: now
       };
       
       await createPhoto(newPhoto);
@@ -271,7 +274,7 @@ const PhotosManagement: React.FC = () => {
                   ))}
                 </select>
 
-                
+                <a
                   href="/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -390,7 +393,7 @@ const PhotosManagement: React.FC = () => {
         </main>
       </div>
 
-      {/* Modals - CORRIGIDO */}
+      {/* Modals */}
       <AddPhotoModal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}

@@ -29,8 +29,8 @@ const AdminNav: React.FC = () => {
           </Link>
         ))}
 
-        {/* Link para Portfolio Público - CORRIGIDO */}
-        
+        {/* Link para Portfolio Público */}
+        <a
           href="/"
           target="_blank"
           rel="noopener noreferrer"

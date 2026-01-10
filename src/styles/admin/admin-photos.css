@@ -1,0 +1,72 @@
+/* src/styles/admin/admin-photos.css */
+
+/* =========== LAYOUT PRINCIPAL =========== */
+.admin-main-with-preview {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.admin-main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* =========== ACTIONS BAR =========== */
+.admin-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.actions-left,
+.actions-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-box i.fa-search {
+  position: absolute;
+  left: 15px;
+  color: var(--text-light);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.search-box input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(227, 202, 102, 0.2);
+  border-radius: 25px;
+  padding: 10px 40px 10px 45px;
+  color: white;
+  font-size: 14px;
+  width: 250px;
+  transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: var(--primary-gold);
+  background: rgba(255, 255, 255, 0.08);
+  width: 300px;
+}
+
+/* =========== RESPONSIVE =========== */
+@media (max-width: 768px) {
+  .search-box input {
+    width: 100% !important;
+  }
+}
