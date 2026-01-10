@@ -2,8 +2,8 @@
 import type { AppProps } from 'next/app';
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import { AuthProvider } from '@/contexts/AuthContext';
-import '@/styles/globals.css';
-import '@/styles/admin.css'; // Novo arquivo CSS para admin
+import '@/styles/portfolio-globals.css'; // Portfolio público (modular)
+import '@/styles/admin-globals.css';     // Admin (modular)
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

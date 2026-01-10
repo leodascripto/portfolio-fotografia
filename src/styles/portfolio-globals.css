@@ -1,0 +1,33 @@
+/* 
+ * src/styles/portfolio-globals.css
+ * ARQUIVO PRINCIPAL DE IMPORTAÇÃO PARA O PORTFOLIO PÚBLICO
+ * Importe apenas este arquivo em _app.tsx para o portfolio funcionar
+ */
+
+/* =========== IMPORTAR TODOS OS MÓDULOS DO PORTFOLIO =========== */
+@import './portfolio/portfolio-base.css';
+@import './portfolio/portfolio-header.css';
+@import './portfolio/portfolio-filters.css';
+@import './portfolio/portfolio-gallery.css';
+@import './portfolio/portfolio-modal.css';
+@import './portfolio/portfolio-cta.css';
+@import './portfolio/portfolio-footer.css';
+@import './portfolio/portfolio-components.css';
+@import './portfolio/portfolio-accessibility.css';
+
+/* 
+ * ESTRUTURA MODULAR DO PORTFOLIO:
+ * 
+ * 1. portfolio-base.css         - Variáveis, reset, loading, utilitários
+ * 2. portfolio-header.css        - Header e logo
+ * 3. portfolio-filters.css       - Filtros sticky com scroll horizontal
+ * 4. portfolio-gallery.css       - Grid de fotos e cards
+ * 5. portfolio-modal.css         - Modal de imagem e zoom avançado
+ * 6. portfolio-cta.css           - WhatsApp float, CTAs inline/sticky
+ * 7. portfolio-footer.css        - Footer
+ * 8. portfolio-components.css    - Welcome, Language Selector, PWA, etc
+ * 9. portfolio-accessibility.css - Media queries, acessibilidade, responsive
+ * 
+ * Total: ~15 KB (vs 35 KB do globals.css antigo)
+ * Performance: ✅ Modular, ✅ Organizado, ✅ Manutenível
+ */

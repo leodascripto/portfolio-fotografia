@@ -1,0 +1,40 @@
+/* src/styles/portfolio/portfolio-header.css */
+
+/* =========== HEADER =========== */
+.header {
+  padding: 30px 15px 20px;
+  text-align: center;
+}
+
+.portfolio-text {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+
+/* =========== RESPONSIVE =========== */
+@media (max-width: 768px) {
+  .header {
+    padding: 20px 15px 15px;
+  }
+
+  .portfolio-text {
+    font-size: 1rem;
+    letter-spacing: 1.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 15px 10px 10px;
+  }
+
+  .portfolio-text {
+    font-size: 0.9rem;
+  }
+}

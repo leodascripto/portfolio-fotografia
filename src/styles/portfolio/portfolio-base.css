@@ -1,0 +1,97 @@
+/* src/styles/portfolio/portfolio-base.css */
+
+/* =========== VARIÁVEIS =========== */
+:root {
+  --primary-gold: #e3ca66;
+  --secondary-gold: #b48e47;
+  --dark-bg: #212121;
+  --darker-bg: #171717;
+  --text-light: #d4d4d4;
+  --text-lighter: #f5f5f5;
+  --transition-speed: 0.3s;
+  --grid-gap: 15px;
+  --border-radius: 10px;
+  --whatsapp-color: #25d366;
+}
+
+/* =========== RESET =========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========== BASE =========== */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 80px;
+}
+
+body {
+  background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text-light);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* =========== LOADING =========== */
+.loading-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--dark-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(10px);
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(227, 202, 102, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--primary-gold);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========== UTILIDADES =========== */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+button,
+a,
+.grid-item {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+.grid-item:focus-visible {
+  outline: 3px solid var(--primary-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}

@@ -1,0 +1,45 @@
+/* src/styles/portfolio/portfolio-footer.css */
+
+/* =========== FOOTER =========== */
+.footer {
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  padding: 20px 15px;
+  text-align: center;
+  color: var(--darker-bg);
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 60px;
+}
+
+.footer p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.footer a {
+  color: var(--darker-bg);
+  text-decoration: none;
+  font-weight: 700;
+  border-bottom: 2px solid transparent;
+  transition: border-color var(--transition-speed) ease;
+  padding-bottom: 2px;
+}
+
+.footer a:hover {
+  border-bottom-color: var(--darker-bg);
+}
+
+/* =========== RESPONSIVE =========== */
+@media (max-width: 768px) {
+  .footer {
+    padding: 18px 15px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 15px 10px;
+    font-size: 12px;
+  }
+}

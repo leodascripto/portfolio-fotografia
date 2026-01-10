@@ -1,0 +1,492 @@
+/* src/styles/portfolio/portfolio-components.css */
+
+/* =========== WELCOME SCREEN =========== */
+.welcome-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.welcome-content {
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.welcome-logo {
+  margin-bottom: 40px;
+}
+
+.welcome-logo img {
+  filter: drop-shadow(0 4px 15px rgba(227, 202, 102, 0.3));
+}
+
+.welcome-profile {
+  margin: 40px auto;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-image-wrapper {
+  width: 150px;
+  height: 180px;
+  border: 3px solid var(--primary-gold);
+  border-radius: 50% / 60%;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(227, 202, 102, 0.3);
+  position: relative;
+}
+
+.profile-image {
+  display: block;
+}
+
+.welcome-credentials {
+  margin: 30px 0;
+}
+
+.welcome-tagline {
+  font-size: 20px;
+  color: var(--primary-gold);
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+
+.main-quote {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.credentials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.credential-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  color: var(--text-light);
+  font-size: 15px;
+}
+
+.credential-icon {
+  font-size: 20px;
+}
+
+.credential-text {
+  font-weight: 500;
+}
+
+.welcome-actions {
+  margin-top: 40px;
+}
+
+.welcome-enter-button {
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  border: none;
+  border-radius: 30px;
+  padding: 16px 40px;
+  color: var(--darker-bg);
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 6px 20px rgba(227, 202, 102, 0.3);
+  transition: all 0.3s ease;
+}
+
+.welcome-enter-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(227, 202, 102, 0.5);
+}
+
+.language-auto-note {
+  margin-top: 20px;
+  font-size: 12px;
+  color: var(--text-light);
+  opacity: 0.6;
+}
+
+/* =========== LANGUAGE SELECTOR =========== */
+.header-language-selector {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.language-selector-container {
+  position: relative;
+}
+
+.language-selector-trigger {
+  background: rgba(33, 33, 33, 0.9);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  border-radius: 25px;
+  padding: 8px 16px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.language-selector-trigger:hover {
+  border-color: var(--primary-gold);
+  background: rgba(33, 33, 33, 1);
+}
+
+.current-language-flag {
+  font-size: 20px;
+}
+
+.current-language-name {
+  font-weight: 600;
+}
+
+.language-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: rgba(33, 33, 33, 0.98);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  border-radius: 15px;
+  overflow: hidden;
+  min-width: 150px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.language-dropdown.top-left {
+  right: auto;
+  left: 0;
+}
+
+.language-dropdown-option {
+  background: transparent;
+  border: none;
+  width: 100%;
+  padding: 12px 16px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.language-dropdown-option:hover {
+  background: rgba(227, 202, 102, 0.1);
+}
+
+.language-dropdown-option.active {
+  background: rgba(227, 202, 102, 0.2);
+  color: var(--primary-gold);
+}
+
+.language-option-flag {
+  font-size: 18px;
+}
+
+.language-option-name {
+  flex: 1;
+  text-align: left;
+}
+
+.language-selector-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+/* =========== AVAILABILITY BADGE =========== */
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid;
+  border-radius: 25px;
+  padding: 8px 16px;
+  margin: 15px auto;
+  font-size: 13px;
+  font-weight: 600;
+  backdrop-filter: blur(10px);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-icon {
+  font-size: 16px;
+}
+
+.status-text {
+  color: white;
+}
+
+.availability-badge.mobile-only {
+  display: none;
+}
+
+/* =========== GLOBAL PARTICLES =========== */
+.global-particles,
+.section-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.global-particle,
+.section-particle {
+  position: absolute;
+  pointer-events: none;
+}
+
+/* =========== PWA INSTALL PROMPT =========== */
+.pwa-install-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.pwa-install-prompt {
+  background: var(--dark-bg);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  border-radius: 20px;
+  max-width: 400px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.pwa-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  border-bottom: 1px solid rgba(227, 202, 102, 0.2);
+}
+
+.pwa-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.pwa-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pwa-info h3 {
+  color: var(--primary-gold);
+  font-size: 16px;
+  margin: 0 0 4px 0;
+}
+
+.pwa-info p {
+  color: var(--text-light);
+  font-size: 13px;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.pwa-close {
+  margin-left: auto;
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 5px;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.pwa-close:hover {
+  opacity: 1;
+}
+
+.pwa-content {
+  padding: 25px 20px;
+}
+
+.pwa-content h4 {
+  color: white;
+  font-size: 18px;
+  margin: 0 0 15px 0;
+}
+
+.pwa-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.benefit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+.benefit i {
+  color: var(--primary-gold);
+  font-size: 16px;
+  width: 20px;
+}
+
+.pwa-actions {
+  padding: 20px;
+  border-top: 1px solid rgba(227, 202, 102, 0.2);
+}
+
+.pwa-install-btn {
+  background: linear-gradient(135deg, var(--primary-gold), var(--secondary-gold));
+  border: none;
+  border-radius: 10px;
+  padding: 14px;
+  color: var(--darker-bg);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.3s ease;
+}
+
+.pwa-install-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 15px rgba(227, 202, 102, 0.3);
+}
+
+.pwa-secondary-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.pwa-maybe-later,
+.pwa-dismiss {
+  background: transparent;
+  border: none;
+  color: var(--text-light);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 8px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.pwa-maybe-later:hover,
+.pwa-dismiss:hover {
+  opacity: 1;
+}
+
+/* =========== RESPONSIVE =========== */
+@media (max-width: 768px) {
+  .welcome-tagline {
+    font-size: 18px;
+  }
+
+  .credential-item {
+    font-size: 14px;
+  }
+
+  .credential-icon {
+    font-size: 18px;
+  }
+
+  .profile-image-wrapper {
+    width: 120px;
+    height: 144px;
+  }
+
+  .availability-badge.mobile-only {
+    display: inline-flex;
+  }
+
+  .header-language-selector {
+    top: 15px;
+    right: 15px;
+  }
+
+  .language-selector-trigger {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-tagline {
+    font-size: 16px;
+  }
+
+  .welcome-enter-button {
+    padding: 14px 32px;
+    font-size: 14px;
+  }
+
+  .credential-item {
+    font-size: 13px;
+  }
+
+  .profile-image-wrapper {
+    width: 100px;
+    height: 120px;
+  }
+
+  .pwa-install-prompt {
+    max-width: 350px;
+  }
+
+  .pwa-content h4 {
+    font-size: 16px;
+  }
+}

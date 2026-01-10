@@ -1,0 +1,355 @@
+/* src/styles/portfolio/portfolio-modal.css */
+
+/* =========== MODAL DE IMAGEM =========== */
+.image-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.image-modal-container {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =========== MODAL CONTROLS =========== */
+.modal-close {
+  position: absolute;
+  top: -50px;
+  right: -20px;
+  width: 44px;
+  height: 44px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+.modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.modal-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  transition: all 0.3s ease;
+}
+
+.modal-nav:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.modal-nav-prev {
+  left: -70px;
+}
+
+.modal-nav-next {
+  right: -70px;
+}
+
+/* =========== MODAL IMAGE =========== */
+.modal-image-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  max-height: 80vh;
+}
+
+.modal-image-container img {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* =========== MODAL INFO =========== */
+.modal-info {
+  margin-top: 20px;
+  text-align: center;
+  color: white;
+}
+
+.modal-info h3 {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: var(--primary-gold);
+}
+
+.modal-info p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* =========== SWIPE HINT =========== */
+.swipe-hint {
+  position: absolute;
+  bottom: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: white;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+/* =========== ADVANCED IMAGE VIEWER =========== */
+.advanced-image-viewer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.98);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.image-loading .loading-spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(227, 202, 102, 0.3);
+  border-top-color: var(--primary-gold);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* =========== ZOOM CONTROLS =========== */
+.zoom-controls {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 10px 20px;
+  border-radius: 30px;
+  z-index: 2001;
+}
+
+.zoom-control {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(227, 202, 102, 0.5);
+  border-radius: 50%;
+  color: var(--primary-gold);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.zoom-control:active {
+  transform: scale(0.9);
+}
+
+.zoom-indicator {
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  min-width: 60px;
+  text-align: center;
+}
+
+.reset-zoom {
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(227, 202, 102, 0.9);
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  color: var(--darker-bg);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 2001;
+}
+
+.close-advanced-viewer {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.8);
+  border: 2px solid rgba(227, 202, 102, 0.5);
+  border-radius: 50%;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2001;
+  transition: all 0.3s ease;
+}
+
+.close-advanced-viewer:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(90deg);
+}
+
+.viewer-instructions {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: white;
+  font-size: 13px;
+  text-align: center;
+  z-index: 2001;
+}
+
+/* =========== RESPONSIVE =========== */
+@media (min-width: 768px) {
+  .modal-close {
+    top: -60px;
+    right: -30px;
+  }
+
+  .modal-nav-prev {
+    left: -100px;
+  }
+
+  .modal-nav-next {
+    right: -100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-close {
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .modal-nav {
+    width: 44px;
+    height: 44px;
+    font-size: 18px;
+  }
+
+  .modal-nav-prev {
+    left: 10px;
+  }
+
+  .modal-nav-next {
+    right: 10px;
+  }
+
+  .modal-info h3 {
+    font-size: 18px;
+  }
+
+  .modal-info p {
+    font-size: 13px;
+  }
+
+  .zoom-controls {
+    bottom: 20px;
+    padding: 8px 15px;
+    gap: 12px;
+  }
+
+  .zoom-control {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .zoom-indicator {
+    font-size: 14px;
+    min-width: 50px;
+  }
+
+  .viewer-instructions {
+    font-size: 11px;
+    padding: 8px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-nav {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .swipe-hint {
+    font-size: 12px;
+    padding: 8px 15px;
+  }
+
+  .zoom-controls {
+    bottom: 15px;
+    padding: 6px 12px;
+    gap: 10px;
+  }
+
+  .zoom-control {
+    width: 32px;
+    height: 32px;
+    font-size: 14px;
+  }
+}
