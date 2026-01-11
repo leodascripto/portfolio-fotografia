@@ -9,13 +9,14 @@
 @import './admin/admin-header.css';
 @import './admin/admin-nav.css';
 @import './admin/admin-modal.css';
-@import './admin/admin-modal-fixes.css'; /* CORREÇÕES FINAIS MODAL */
+@import './admin/admin-modal-fixes.css'; 
 @import './admin/admin-form.css';
 @import './admin/admin-upload.css';
 @import './admin/admin-cards.css';
 @import './admin/admin-actions.css';
 @import './admin/admin-preview.css';
 @import './admin/admin-dashboard.css';
+@import './admin/admin-categories.css'; 
 
 /* =========== LOGIN STYLES =========== */
 .admin-login-container {

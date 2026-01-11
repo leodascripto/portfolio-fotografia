@@ -1,3 +1,56 @@
+/* =========== PHOTOS GRID =========== */
+.photos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.photo-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(227, 202, 102, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.photo-card-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--darker-bg);
+}
+
+.photo-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-card-info {
+  padding: 15px;
+}
+
+.photo-card-info h4 {
+  color: white;
+  font-size: 16px;
+  margin: 0 0 10px 0;
+}
+
+.photo-card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.photo-card-meta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--text-light);
+  font-size: 13px;
+}
+
 /* =========== ADMIN PHOTOS MANAGEMENT =========== */
 
 .admin-actions-bar {

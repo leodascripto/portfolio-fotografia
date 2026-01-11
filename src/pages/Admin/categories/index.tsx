@@ -132,7 +132,79 @@ const CategoriesManagement: React.FC = () => {
         </main>
       </div>
 
-      {/* Modais aqui */}
+      {/* Modal Adicionar */}
+      {showAddModal && (
+        <div className="modal-backdrop" onClick={() => setShowAddModal(false)}>
+          <div className="modal-container modal-medium" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Adicionar Categoria</h2>
+              <button className="modal-close" onClick={() => setShowAddModal(false)}>
+                <i className="fa fa-times" />
+              </button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.currentTarget);
+                handleAdd({
+                  name: formData.get('name') as string,
+                  icon: formData.get('icon') as string
+                });
+              }}>
+                <div className="form-group">
+                  <label>Nome</label>
+                  <input type="text" name="name" required />
+                </div>
+                <div className="form-group">
+                  <label>Ícone (emoji)</label>
+                  <input type="text" name="icon" placeholder="📷" required />
+                </div>
+                <div className="form-actions">
+                  <button type="button" className="btn btn-secondary" onClick={() => setShowAddModal(false)}>Cancelar</button>
+                  <button type="submit" className="btn btn-primary">Adicionar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Editar */}
+      {editingCategory && (
+        <div className="modal-backdrop" onClick={() => setEditingCategory(null)}>
+          <div className="modal-container modal-medium" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Editar Categoria</h2>
+              <button className="modal-close" onClick={() => setEditingCategory(null)}>
+                <i className="fa fa-times" />
+              </button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                const formData = new FormData(e.currentTarget);
+                handleEdit(editingCategory.id, {
+                  name: formData.get('name') as string,
+                  icon: formData.get('icon') as string
+                });
+              }}>
+                <div className="form-group">
+                  <label>Nome</label>
+                  <input type="text" name="name" defaultValue={editingCategory.name} required />
+                </div>
+                <div className="form-group">
+                  <label>Ícone (emoji)</label>
+                  <input type="text" name="icon" defaultValue={editingCategory.icon} required />
+                </div>
+                <div className="form-actions">
+                  <button type="button" className="btn btn-secondary" onClick={() => setEditingCategory(null)}>Cancelar</button>
+                  <button type="submit" className="btn btn-primary">Salvar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </ProtectedRoute>
   );
 };
