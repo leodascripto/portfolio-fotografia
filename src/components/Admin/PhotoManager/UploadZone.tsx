@@ -84,15 +84,21 @@ const UploadZone: React.FC<UploadZoneProps> = ({
     disabled: uploading
   });
 
-  return (
+return (
     <div className="upload-zone-wrapper">
       <motion.div
         className={`upload-zone ${isDragActive ? 'drag-active' : ''} ${uploading ? 'uploading' : ''}`}
         whileHover={{ scale: uploading ? 1 : 1.02 }}
         whileTap={{ scale: uploading ? 1 : 0.98 }}
-        {...getRootProps()}
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+          if (!uploading) {
+            getRootProps().onClick?.(e as any);
+          }
+        }}
       >
-        <input {...getInputProps()} />
+        <div {...getRootProps()}>
+          <input {...getInputProps()} disabled={uploading} />
+        </div>
 
         {uploading ? (
           <div className="upload-progress">
