@@ -9,7 +9,7 @@ interface PhotoCardProps {
   onEdit: (photo: Photo) => void;
   onDelete: (id: string) => void;
   isDragging?: boolean;
-  dragHandleProps?: any; // Props do drag handle (listeners)
+  dragHandleProps?: any;
 }
 
 const PhotoCard: React.FC<PhotoCardProps> = ({ 
@@ -23,7 +23,7 @@ const PhotoCard: React.FC<PhotoCardProps> = ({
   const [deleting, setDeleting] = useState(false);
 
   const handleDelete = async (e: React.MouseEvent) => {
-    e.stopPropagation(); // ✅ Impede drag-and-drop
+    e.stopPropagation();
     
     if (!confirm('Tem certeza que deseja excluir esta foto?')) return;
     
@@ -37,7 +37,7 @@ const PhotoCard: React.FC<PhotoCardProps> = ({
   };
 
   const handleEdit = (e: React.MouseEvent) => {
-    e.stopPropagation(); // ✅ Impede drag-and-drop
+    e.stopPropagation();
     onEdit(photo);
   };
 
@@ -61,14 +61,18 @@ const PhotoCard: React.FC<PhotoCardProps> = ({
           style={{ objectFit: 'cover' }}
         />
         
-        {/* ✅ Drag Handle - SEPARADO dos botões */}
-        <div 
+        {/* ✅ DRAG HANDLE - APENAS ÍCONE */}
+        <motion.div 
           className="photo-card-drag-handle"
-          {...dragHandleProps} // Apenas o handle tem listeners
+          {...dragHandleProps}
+          title="Arraste para reordenar"
+          whileHover={{ scale: 1.15 }}
+          whileTap={{ scale: 0.9, cursor: 'grabbing' }}
         >
           <i className="fa fa-arrows" />
-        </div>
+        </motion.div>
 
+        {/* ✅ BOTÕES - APARECEM NO HOVER */}
         {showActions && !deleting && (
           <motion.div
             className="photo-card-overlay"
@@ -77,25 +81,35 @@ const PhotoCard: React.FC<PhotoCardProps> = ({
           >
             <button
               className="action-btn edit"
-              onClick={handleEdit} // ✅ stopPropagation dentro
-              title="Editar"
+              onClick={handleEdit}
+              title="Editar foto"
             >
               <i className="fa fa-edit" />
             </button>
             <button
               className="action-btn delete"
-              onClick={handleDelete} // ✅ stopPropagation dentro
-              title="Excluir"
+              onClick={handleDelete}
+              title="Excluir foto"
             >
               <i className="fa fa-trash" />
             </button>
           </motion.div>
         )}
 
+        {/* ✅ LOADING AO DELETAR */}
         {deleting && (
-          <div className="photo-card-deleting">
-            <i className="fa fa-spinner fa-spin" />
-          </div>
+          <motion.div
+            className="photo-card-deleting"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <motion.i 
+              className="fa fa-spinner fa-spin"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            />
+            <p>Excluindo...</p>
+          </motion.div>
         )}
       </div>
 
@@ -108,7 +122,7 @@ const PhotoCard: React.FC<PhotoCardProps> = ({
           </span>
           <span className="order">
             <i className="fa fa-sort-numeric-asc" />
-            {photo.order}
+            #{photo.order}
           </span>
         </div>
       </div>

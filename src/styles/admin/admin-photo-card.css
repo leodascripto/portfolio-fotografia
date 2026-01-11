@@ -1,0 +1,295 @@
+/* ========================================
+   PHOTO CARD - DESIGN LIMPO
+   ======================================== */
+
+.photo-card {
+  position: relative;
+  background: var(--card-bg, #1e1e1e);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.photo-card:hover {
+  border-color: rgba(227, 202, 102, 0.3);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.photo-card-image {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  background: #000;
+}
+
+.photo-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.photo-card:hover .photo-card-image img {
+  transform: scale(1.05);
+}
+
+/* ========================================
+   DRAG HANDLE - APENAS ÍCONE
+   ======================================== */
+
+.photo-card-drag-handle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 36px;
+  height: 36px;
+  background: rgba(227, 202, 102, 0.95);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move;
+  z-index: 10;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.photo-card-drag-handle:hover {
+  background: rgb(227, 202, 102);
+  transform: scale(1.15);
+  box-shadow: 0 4px 16px rgba(227, 202, 102, 0.5);
+  border-color: rgba(227, 202, 102, 0.8);
+}
+
+.photo-card-drag-handle:active {
+  cursor: grabbing;
+  transform: scale(0.9);
+}
+
+.photo-card-drag-handle i {
+  color: #212121;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* ========================================
+   OVERLAY COM BOTÕES
+   ======================================== */
+
+.photo-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  z-index: 5;
+  backdrop-filter: blur(4px);
+}
+
+/* ========================================
+   BOTÕES EDITAR/EXCLUIR
+   ======================================== */
+
+.action-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  font-size: 22px;
+  z-index: 6;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.action-btn:hover {
+  transform: scale(1.15) translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.action-btn:active {
+  transform: scale(0.95);
+}
+
+.action-btn.edit {
+  background: linear-gradient(135deg, #e3ca66 0%, #c9b458 100%);
+  color: #212121;
+}
+
+.action-btn.edit:hover {
+  background: linear-gradient(135deg, #f0d97a 0%, #e3ca66 100%);
+  border-color: rgba(227, 202, 102, 0.5);
+  transform: scale(1.15) translateY(-2px) rotate(5deg);
+}
+
+.action-btn.delete {
+  background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+  color: white;
+}
+
+.action-btn.delete:hover {
+  background: linear-gradient(135deg, #ff5a4d 0%, #f44336 100%);
+  border-color: rgba(244, 67, 54, 0.5);
+  transform: scale(1.15) translateY(-2px) rotate(-5deg);
+}
+
+.action-btn i {
+  pointer-events: none;
+}
+
+/* ========================================
+   ESTADOS DO CARD
+   ======================================== */
+
+/* Dragging */
+.photo-card.dragging {
+  opacity: 0.5;
+  transform: scale(0.95) rotate(2deg);
+  box-shadow: 0 12px 32px rgba(227, 202, 102, 0.3);
+}
+
+.photo-card.dragging .photo-card-drag-handle {
+  cursor: grabbing;
+  background: rgb(227, 202, 102);
+  transform: scale(1.1);
+}
+
+/* Deleting */
+.photo-card.deleting {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.photo-card-deleting {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  z-index: 15;
+  backdrop-filter: blur(10px);
+}
+
+.photo-card-deleting i {
+  color: #e3ca66;
+  font-size: 36px;
+}
+
+.photo-card-deleting p {
+  color: white;
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* ========================================
+   INFO DO CARD
+   ======================================== */
+
+.photo-card-info {
+  padding: 14px 16px;
+  background: var(--card-bg, #1e1e1e);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.photo-card-info h4 {
+  margin: 0 0 8px 0;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.photo-card-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.photo-card-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.photo-card-meta i {
+  color: #e3ca66;
+  font-size: 11px;
+}
+
+/* ========================================
+   RESPONSIVO
+   ======================================== */
+
+@media (max-width: 768px) {
+  .photo-card-image {
+    height: 220px;
+  }
+
+  .photo-card-drag-handle {
+    width: 32px;
+    height: 32px;
+    top: 8px;
+    left: 8px;
+  }
+
+  .photo-card-drag-handle i {
+    font-size: 14px;
+  }
+  
+  .action-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+
+  .photo-card-info {
+    padding: 12px 14px;
+  }
+
+  .photo-card-info h4 {
+    font-size: 14px;
+  }
+}
+
+/* ========================================
+   ANIMAÇÕES ADICIONAIS
+   ======================================== */
+
+@keyframes pulse-drag-handle {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(227, 202, 102, 0.4);
+  }
+}
+
+/* Pulsa suavemente para chamar atenção (primeira vez) */
+.photo-card:first-child .photo-card-drag-handle {
+  animation: pulse-drag-handle 2s ease-in-out 3;
+}

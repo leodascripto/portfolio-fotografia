@@ -33,16 +33,28 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({
       return;
     }
 
+    if (!name.trim()) {
+      setError('Digite um nome para a foto');
+      return;
+    }
+
+    if (!category) {
+      setError('Selecione uma categoria');
+      return;
+    }
+
     setError('');
     setSaving(true);
 
     try {
-      await onAdd({ name, url: imageUrl, category });
+      await onAdd({ 
+        name: name.trim(), 
+        url: imageUrl, 
+        category 
+      });
       
       // Reset form
-      setName('');
-      setCategory('');
-      setImageUrl('');
+      handleReset();
       onClose();
     } catch (err: any) {
       setError(err.message || 'Erro ao adicionar foto');
@@ -63,21 +75,34 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({
     setError('');
   };
 
+  const handleClose = () => {
+    if (!saving && !uploading) {
+      handleReset();
+      onClose();
+    }
+  };
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Adicionar Nova Foto" size="large">
-      <form onSubmit={handleSubmit} className="add-photo-form">
+    <Modal 
+      isOpen={isOpen} 
+      onClose={handleClose} 
+      title="📸 Adicionar Nova Foto" 
+      size="large"
+    >
+      <form onSubmit={handleSubmit}>
         {error && (
-          <div className="form-error">
+          <div className="alert alert-error">
             <i className="fa fa-exclamation-circle" />
             {error}
           </div>
         )}
 
+        {/* Seção 1: Upload */}
         <div className="form-section">
-          <h4>1. Upload da Imagem</h4>
+          <h4>1️⃣ Upload da Imagem</h4>
           {imageUrl ? (
-            <div className="image-preview">
-              <img src={imageUrl} alt="Preview" />
+            <div className="image-preview-container">
+              <img src={imageUrl} alt="Preview" className="image-preview" />
               <button
                 type="button"
                 className="btn-remove-image"
@@ -85,7 +110,7 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({
                 disabled={saving}
               >
                 <i className="fa fa-times" />
-                Remover
+                Remover imagem
               </button>
             </div>
           ) : (
@@ -96,62 +121,93 @@ const AddPhotoModal: React.FC<AddPhotoModalProps> = ({
           )}
         </div>
 
+        {/* Seção 2: Informações (só aparece após upload) */}
         {imageUrl && (
           <div className="form-section">
-            <h4>2. Informações da Foto</h4>
+            <h4>2️⃣ Informações da Foto</h4>
             
             <div className="form-group">
-              <label htmlFor="add-photo-name">
+              <label htmlFor="photo-name">
                 <i className="fa fa-tag" />
-                Nome da Foto
+                Nome da Foto *
               </label>
               <input
-                id="add-photo-name"
+                id="photo-name"
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Ex: Retrato Débora"
+                placeholder="Ex: Retrato Fernanda, Ensaio Lisa..."
                 required
                 disabled={saving}
+                maxLength={100}
               />
+              <small>{name.length}/100 caracteres</small>
             </div>
 
             <div className="form-group">
-              <label htmlFor="add-photo-category">
+              <label htmlFor="photo-category">
                 <i className="fa fa-folder" />
-                Categoria
+                Categoria *
               </label>
               <select
-                id="add-photo-category"
+                id="photo-category"
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 required
                 disabled={saving}
               >
                 <option value="">Selecione uma categoria</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.icon} {cat.name}
-                  </option>
-                ))}
+                {categories
+                  .sort((a, b) => a.order - b.order)
+                  .map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.icon} {cat.name}
+                    </option>
+                  ))}
               </select>
+            </div>
+
+            {/* Preview final */}
+            <div className="photo-preview-card">
+              <div className="preview-label">Preview:</div>
+              <div className="preview-content">
+                <img src={imageUrl} alt={name || 'Preview'} />
+                <div className="preview-info">
+                  <strong>{name || 'Nome da foto'}</strong>
+                  <span>
+                    {category 
+                      ? `${categories.find(c => c.id === category)?.icon} ${categories.find(c => c.id === category)?.name}`
+                      : 'Nenhuma categoria selecionada'
+                    }
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         )}
 
-        <div className="form-actions">
+        {/* Footer com botões */}
+        <div className="modal-footer">
           <button
             type="button"
             className="btn btn-secondary"
-            onClick={imageUrl ? handleReset : onClose}
+            onClick={imageUrl ? handleReset : handleClose}
             disabled={saving || uploading}
           >
-            {imageUrl ? 'Resetar' : 'Cancelar'}
+            {imageUrl ? (
+              <>
+                <i className="fa fa-refresh" />
+                Resetar
+              </>
+            ) : (
+              'Cancelar'
+            )}
           </button>
+          
           <motion.button
             type="submit"
             className="btn btn-primary"
-            disabled={!imageUrl || saving || uploading}
+            disabled={!imageUrl || saving || uploading || !name.trim() || !category}
             whileHover={{ scale: saving || uploading ? 1 : 1.02 }}
             whileTap={{ scale: saving || uploading ? 1 : 0.98 }}
           >
