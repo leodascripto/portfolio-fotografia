@@ -1,5 +1,5 @@
 // src/components/LanguageSelector/LanguageSelector.tsx
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { languages } from '@/lib/i18n';
@@ -17,12 +17,49 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 }) => {
   const { language, setLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   
   const currentLanguage = languages.find(lang => lang.code === language) || languages[0];
 
+  // ✅ Fecha dropdown ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
+
+  // ✅ Fecha com ESC
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isOpen]);
+
   const handleLanguageChange = (langCode: string) => {
+    console.log('🌐 Mudando idioma para:', langCode); // Debug
     setLanguage(langCode);
     setIsOpen(false);
+  };
+
+  const toggleDropdown = (e: React.MouseEvent) => {
+    e.stopPropagation(); // ✅ Evita propagação
+    setIsOpen(!isOpen);
+    console.log('🔽 Dropdown toggled:', !isOpen); // Debug
   };
 
   const dropdownVariants = {
@@ -52,14 +89,18 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   };
 
   return (
-    <div className={`language-selector-container ${className}`}>
+    <div 
+      ref={dropdownRef}
+      className={`language-selector-container ${className}`}
+    >
       <motion.button
         className="language-selector-trigger"
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleDropdown}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Selecionar idioma"
         aria-expanded={isOpen}
+        type="button"
       >
         <span className="current-language-flag">{currentLanguage.flag}</span>
         {showLabel && (
@@ -88,6 +129,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
                 onClick={() => handleLanguageChange(lang.code)}
                 whileHover={{ backgroundColor: 'rgba(227, 202, 102, 0.1)' }}
                 whileTap={{ scale: 0.98 }}
+                type="button"
               >
                 <span className="language-option-flag">{lang.flag}</span>
                 <span className="language-option-name">{lang.name}</span>
@@ -104,14 +146,6 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Overlay to close dropdown when clicking outside */}
-      {isOpen && (
-        <div 
-          className="language-selector-overlay"
-          onClick={() => setIsOpen(false)}
-        />
-      )}
     </div>
   );
 };

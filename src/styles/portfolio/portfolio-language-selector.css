@@ -1,0 +1,244 @@
+/* ========================================
+   LANGUAGE SELECTOR - FIXED (dentro da tela)
+   ======================================== */
+
+.language-selector-container {
+  position: relative;
+  z-index: 1000;
+}
+
+/* ========================================
+   TRIGGER BUTTON
+   ======================================== */
+
+.language-selector-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(227, 202, 102, 0.3);
+  border-radius: 12px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  font-weight: 500;
+  backdrop-filter: blur(10px);
+  z-index: 1001;
+  position: relative;
+}
+
+.language-selector-trigger:hover {
+  background: rgba(227, 202, 102, 0.15);
+  border-color: rgba(227, 202, 102, 0.5);
+  box-shadow: 0 4px 12px rgba(227, 202, 102, 0.2);
+}
+
+.current-language-flag {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.current-language-name {
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.language-selector-trigger i {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* ========================================
+   DROPDOWN - SEMPRE DENTRO DA TELA
+   ======================================== */
+
+.language-dropdown {
+  position: absolute;
+  min-width: 160px;
+  background: rgba(30, 30, 30, 0.98);
+  border: 1px solid rgba(227, 202, 102, 0.3);
+  border-radius: 12px;
+  padding: 8px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  z-index: 1002;
+  
+  /* ✅ SEMPRE ABAIXO DO BOTÃO */
+  top: calc(100% + 8px);
+  right: 0; /* ✅ Alinha pela direita */
+  left: auto;
+}
+
+/* ✅ Se estiver muito à direita, alinha pela esquerda */
+.header-language-selector .language-dropdown {
+  right: 0;
+  left: auto;
+}
+
+/* ========================================
+   DROPDOWN OPTIONS
+   ======================================== */
+
+.language-dropdown-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.language-dropdown-option:hover {
+  background: rgba(227, 202, 102, 0.1);
+  color: #ffffff;
+}
+
+.language-dropdown-option.active {
+  background: rgba(227, 202, 102, 0.15);
+  color: var(--primary-gold);
+  font-weight: 600;
+}
+
+.language-option-flag {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.language-option-name {
+  flex: 1;
+  font-size: 14px;
+}
+
+.language-dropdown-option i.fa-check {
+  color: var(--primary-gold);
+  font-size: 14px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ========================================
+   HEADER PLACEMENT (topo direito)
+   ======================================== */
+
+.header-language-selector {
+  position: fixed;
+  top: 20px;
+  right: 20px; /* ✅ Com margem da borda */
+  z-index: 999;
+}
+
+.header-language-selector .language-selector-trigger {
+  background: rgba(33, 33, 33, 0.95);
+  border-color: rgba(227, 202, 102, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   MOBILE - DROPDOWN MENOR E BEM POSICIONADO
+   ======================================== */
+
+@media (max-width: 768px) {
+  .header-language-selector {
+    top: 15px;
+    right: 15px; /* ✅ Com margem */
+  }
+
+  .language-selector-trigger {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .current-language-flag {
+    font-size: 18px;
+  }
+
+  .current-language-name {
+    display: none; /* ✅ Só bandeira no mobile */
+  }
+
+  /* ✅ Dropdown menor no mobile */
+  .language-dropdown {
+    min-width: 140px;
+    right: 0; /* ✅ Sempre pela direita */
+    left: auto;
+  }
+
+  .language-dropdown-option {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .language-option-flag {
+    font-size: 18px;
+  }
+
+  .language-option-name {
+    font-size: 13px;
+  }
+}
+
+/* ========================================
+   EXTRA SMALL SCREENS
+   ======================================== */
+
+@media (max-width: 380px) {
+  .header-language-selector {
+    right: 10px;
+    top: 12px;
+  }
+
+  .language-selector-trigger {
+    padding: 6px 10px;
+  }
+
+  .current-language-flag {
+    font-size: 16px;
+  }
+
+  .language-dropdown {
+    min-width: 120px;
+  }
+
+  .language-dropdown-option {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
+/* ========================================
+   SCROLLBAR DO DROPDOWN (se muitos idiomas)
+   ======================================== */
+
+.language-dropdown {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.language-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.language-dropdown::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.language-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(227, 202, 102, 0.3);
+  border-radius: 3px;
+}
+
+.language-dropdown::-webkit-scrollbar-thumb:hover {
+  background: rgba(227, 202, 102, 0.5);
+}
