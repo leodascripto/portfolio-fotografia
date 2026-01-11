@@ -9,21 +9,36 @@ interface PhotoCardProps {
   onEdit: (photo: Photo) => void;
   onDelete: (id: string) => void;
   isDragging?: boolean;
+  dragHandleProps?: any; // Props do drag handle (listeners)
 }
 
-const PhotoCard: React.FC<PhotoCardProps> = ({ photo, onEdit, onDelete, isDragging }) => {
+const PhotoCard: React.FC<PhotoCardProps> = ({ 
+  photo, 
+  onEdit, 
+  onDelete, 
+  isDragging,
+  dragHandleProps 
+}) => {
   const [showActions, setShowActions] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
-  const handleDelete = async () => {
+  const handleDelete = async (e: React.MouseEvent) => {
+    e.stopPropagation(); // ✅ Impede drag-and-drop
+    
     if (!confirm('Tem certeza que deseja excluir esta foto?')) return;
     
     setDeleting(true);
     try {
       await onDelete(photo.id);
     } catch (error) {
+      console.error('Erro ao deletar:', error);
       setDeleting(false);
     }
+  };
+
+  const handleEdit = (e: React.MouseEvent) => {
+    e.stopPropagation(); // ✅ Impede drag-and-drop
+    onEdit(photo);
   };
 
   return (
@@ -46,7 +61,11 @@ const PhotoCard: React.FC<PhotoCardProps> = ({ photo, onEdit, onDelete, isDraggi
           style={{ objectFit: 'cover' }}
         />
         
-        <div className="photo-card-drag-handle">
+        {/* ✅ Drag Handle - SEPARADO dos botões */}
+        <div 
+          className="photo-card-drag-handle"
+          {...dragHandleProps} // Apenas o handle tem listeners
+        >
           <i className="fa fa-arrows" />
         </div>
 
@@ -58,14 +77,14 @@ const PhotoCard: React.FC<PhotoCardProps> = ({ photo, onEdit, onDelete, isDraggi
           >
             <button
               className="action-btn edit"
-              onClick={() => onEdit(photo)}
+              onClick={handleEdit} // ✅ stopPropagation dentro
               title="Editar"
             >
               <i className="fa fa-edit" />
             </button>
             <button
               className="action-btn delete"
-              onClick={handleDelete}
+              onClick={handleDelete} // ✅ stopPropagation dentro
               title="Excluir"
             >
               <i className="fa fa-trash" />

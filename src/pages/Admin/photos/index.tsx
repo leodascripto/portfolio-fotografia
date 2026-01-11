@@ -17,7 +17,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { getPhotos, getCategories, createPhoto, updatePhoto, deletePhoto, updatePhotosOrder } from '@/lib/firestore';
 import type { Photo, Category } from '@/types/admin';
 
-// Wrapper sortable para PhotoCard
+// ✅ Wrapper sortable CORRIGIDO - listeners apenas no drag handle
 const SortablePhotoCard: React.FC<{
   photo: Photo;
   onEdit: (photo: Photo) => void;
@@ -25,7 +25,7 @@ const SortablePhotoCard: React.FC<{
 }> = ({ photo, onEdit, onDelete }) => {
   const {
     attributes,
-    listeners,
+    listeners, // ✅ Não aplicar aqui!
     setNodeRef,
     transform,
     transition,
@@ -38,12 +38,18 @@ const SortablePhotoCard: React.FC<{
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <div 
+      ref={setNodeRef} 
+      style={style} 
+      {...attributes} 
+      // ❌ NÃO aplicar listeners aqui!
+    >
       <PhotoCard
         photo={photo}
         onEdit={onEdit}
         onDelete={onDelete}
         isDragging={isDragging}
+        dragHandleProps={listeners} // ✅ Passa listeners pro drag handle
       />
     </div>
   );
@@ -323,7 +329,7 @@ const PhotosManagement: React.FC = () => {
                     </p>
                     <p className="drag-hint">
                       <i className="fa fa-hand-pointer-o" />
-                      Arraste as fotos para reordenar
+                      Arraste pelo ícone de setas para reordenar
                     </p>
                   </div>
 

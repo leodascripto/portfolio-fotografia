@@ -1,6 +1,8 @@
 // src/hooks/usePhotos.ts
 import { useState, useEffect } from 'react';
 import { Photo, FilterOption } from '@/types';
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
 
 const fallbackPhotos: Photo[] = [
   { name: "Débora", src: "https://i.ibb.co/SxSv6cY/c73b09db7e992cf19e904c273fc0da6a.jpg", filter: "debora" },
@@ -23,25 +25,65 @@ export const usePhotos = () => {
         setIsLoading(true);
         setError(null);
 
-        const response = await fetch('/json/photos.json');
-        
-        if (!response.ok) {
-          throw new Error('Erro ao carregar fotos do JSON');
+        // 🔥 PRIORIDADE 1: Tentar buscar do Firestore
+        try {
+          console.log('📡 Buscando fotos do Firestore...');
+          const photosRef = collection(db, 'photos');
+          const q = query(photosRef, orderBy('order', 'asc'));
+          const snapshot = await getDocs(q);
+
+          if (!snapshot.empty) {
+            const firestorePhotos: Photo[] = snapshot.docs.map(doc => {
+              const data = doc.data();
+              return {
+                name: data.name,
+                src: data.url, // Firestore usa 'url', mas Photo type usa 'src'
+                filter: data.category // Firestore usa 'category', mas Photo type usa 'filter'
+              };
+            });
+
+            console.log(`✅ ${firestorePhotos.length} fotos carregadas do Firestore`);
+            setPhotos(firestorePhotos);
+            generateFilters(firestorePhotos);
+            setIsLoading(false);
+            return; // ✅ Sucesso! Não precisa tentar JSON
+          }
+        } catch (firestoreError) {
+          console.warn('⚠️ Firestore indisponível, tentando JSON fallback:', firestoreError);
         }
 
-        const data: Photo[] = await response.json();
-        
-        if (!Array.isArray(data) || data.length === 0) {
-          throw new Error('Dados inválidos no JSON');
+        // 📄 FALLBACK 1: Tentar JSON estático
+        try {
+          console.log('📄 Tentando carregar do JSON...');
+          const response = await fetch('/json/photos.json');
+          
+          if (response.ok) {
+            const data: Photo[] = await response.json();
+            
+            if (Array.isArray(data) && data.length > 0) {
+              console.log(`✅ ${data.length} fotos carregadas do JSON`);
+              setPhotos(data);
+              generateFilters(data);
+              setError('⚠️ Usando dados do JSON (Firestore offline)');
+              setIsLoading(false);
+              return;
+            }
+          }
+        } catch (jsonError) {
+          console.warn('⚠️ JSON também falhou:', jsonError);
         }
 
-        setPhotos(data);
-        generateFilters(data);
-      } catch (err) {
-        console.error('Erro ao carregar fotos, usando fallback:', err);
+        // 🆘 FALLBACK 2: Usar fotos hardcoded
+        console.log('🆘 Usando fotos de emergência (hardcoded)');
         setPhotos(fallbackPhotos);
         generateFilters(fallbackPhotos);
-        setError('Usando imagens de demonstração');
+        setError('⚠️ Usando imagens de demonstração');
+
+      } catch (err) {
+        console.error('❌ Erro crítico ao carregar fotos:', err);
+        setPhotos(fallbackPhotos);
+        generateFilters(fallbackPhotos);
+        setError('❌ Erro ao carregar fotos, usando demonstração');
       } finally {
         setIsLoading(false);
       }
