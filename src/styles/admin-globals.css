@@ -9,6 +9,7 @@
 @import './admin/admin-header.css';
 @import './admin/admin-nav.css';
 @import './admin/admin-modal.css';
+@import './admin/admin-modal-fixes.css'; /* CORREÇÕES FINAIS MODAL */
 @import './admin/admin-form.css';
 @import './admin/admin-upload.css';
 @import './admin/admin-cards.css';

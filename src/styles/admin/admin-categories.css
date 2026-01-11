@@ -1,0 +1,82 @@
+.categories-list {
+  display: grid;
+  gap: 15px;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px solid rgba(227, 202, 102, 0.2);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.category-item:hover {
+  border-color: var(--primary-gold);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.category-icon {
+  font-size: 32px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(227, 202, 102, 0.1);
+  border-radius: 10px;
+}
+
+.category-info {
+  flex: 1;
+}
+
+.category-info h4 {
+  color: white;
+  font-size: 18px;
+  margin: 0 0 5px 0;
+}
+
+.category-info span {
+  color: var(--text-light);
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+.category-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-icon.edit {
+  background: rgba(33, 150, 243, 0.2);
+  color: #2196f3;
+}
+
+.btn-icon.edit:hover {
+  background: rgba(33, 150, 243, 0.3);
+}
+
+.btn-icon.delete {
+  background: rgba(244, 67, 54, 0.2);
+  color: #f44336;
+}
+
+.btn-icon.delete:hover {
+  background: rgba(244, 67, 54, 0.3);
+}

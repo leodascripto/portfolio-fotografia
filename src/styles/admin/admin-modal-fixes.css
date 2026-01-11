@@ -1,0 +1,215 @@
+/* src/styles/admin/admin-modal-fixes.css */
+
+/* =========== CORREÇÕES CRÍTICAS MODAL ADICIONAR FOTO =========== */
+
+/* FIX 1: Modal Backdrop - Display flex para centralizar */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 9998;
+  backdrop-filter: blur(5px);
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+/* FIX 2: Modal Container - Sempre centralizado */
+.modal-container {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+  border: 2px solid rgba(227, 202, 102, 0.3);
+  border-radius: 20px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Melhorar scroll do modal body */
+.modal-body {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-gold) rgba(255, 255, 255, 0.1);
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: var(--primary-gold);
+  border-radius: 3px;
+}
+
+/* Upload Zone - garantir visibilidade */
+.add-photo-form .upload-zone {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.add-photo-form .form-section {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Garantir que image preview não quebre layout */
+.add-photo-form .image-preview {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.add-photo-form .image-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Form inputs com width 100% */
+.add-photo-form .form-group input,
+.add-photo-form .form-group select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Actions sempre visíveis */
+.add-photo-form .form-actions {
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(to top, 
+    var(--dark-bg) 0%, 
+    var(--dark-bg) 80%, 
+    transparent 100%
+  );
+  padding: 20px 0 10px 0;
+  margin-top: 20px;
+}
+
+/* =========== MOBILE ESPECÍFICO =========== */
+@media (max-width: 768px) {
+  .modal-container {
+    max-width: 95vw;
+    max-height: 92vh;
+  }
+
+  .modal-large {
+    max-width: 95vw;
+  }
+
+  .add-photo-form .upload-zone {
+    min-height: 180px;
+  }
+
+  .add-photo-form .form-section h4 {
+    font-size: 15px;
+  }
+
+  .add-photo-form .form-actions {
+    padding: 15px 0 8px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-container {
+    max-width: 98vw;
+    max-height: 95vh;
+  }
+
+  .modal-body {
+    padding: 15px;
+  }
+
+  .add-photo-form .upload-zone {
+    min-height: 160px;
+    padding: 30px 10px;
+  }
+
+  .add-photo-form .form-section {
+    margin-bottom: 20px;
+  }
+
+  .add-photo-form .form-section h4 {
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  .add-photo-form .form-group {
+    margin-bottom: 15px;
+  }
+
+  .add-photo-form .form-group label {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .add-photo-form .form-group input,
+  .add-photo-form .form-group select {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .add-photo-form .form-actions {
+    gap: 8px;
+    padding: 12px 0 5px 0;
+  }
+
+  .add-photo-form .btn {
+    padding: 11px 20px;
+    font-size: 14px;
+  }
+}
+
+/* =========== LANDSCAPE MOBILE =========== */
+@media (max-width: 900px) and (orientation: landscape) {
+  .modal-container {
+    max-height: 98vh;
+  }
+
+  .modal-body {
+    max-height: calc(98vh - 120px);
+  }
+
+  .add-photo-form .upload-zone {
+    min-height: 140px;
+    padding: 25px 15px;
+  }
+}
+
+/* =========== TELAS MUITO PEQUENAS =========== */
+@media (max-width: 360px) {
+  .modal-header h2 {
+    font-size: 15px;
+  }
+
+  .modal-close {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+  }
+
+  .add-photo-form .upload-content i {
+    font-size: 30px;
+  }
+
+  .add-photo-form .upload-content h3 {
+    font-size: 13px;
+  }
+
+  .add-photo-form .upload-content p {
+    font-size: 11px;
+  }
+}

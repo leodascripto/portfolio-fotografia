@@ -10,8 +10,7 @@ const AdminNav: React.FC = () => {
   const navItems = [
     { href: '/admin/dashboard', label: 'Dashboard', icon: 'fa-dashboard' },
     { href: '/admin/photos', label: 'Gerenciar Fotos', icon: 'fa-image' },
-    { href: '/admin/categories', label: 'Categorias', icon: 'fa-folder' },
-  ];
+    { href: '/admin/categories', label: 'Categorias', icon: 'fa-folder' },];
 
   return (
     <nav className="admin-nav">
